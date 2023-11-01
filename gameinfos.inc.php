@@ -13,25 +13,25 @@
 $gameinfos = array( 
 
 // Name of the game in English (will serve as the basis for translation) 
-'game_name' => "My Great Game",
+'game_name' => "Duck Soup...The Restaurant Game",
 
 // Game designer (or game designers, separated by commas)
-'designer' => 'John Doe',       
+'designer' => 'Greg and Martin Thompson',       
 
 // Game artist (or game artists, separated by commas)
-'artist' => 'Jane Doe',         
+'artist' => ' Michael Spahitz',         
 
 // Year of FIRST publication of this game. Can be negative.
-'year' => 2000,                 
+'year' => 2011,                 
 
 // Game publisher (use empty string if there is no publisher)
-'publisher' => 'My Publishing Company',                     
+'publisher' => 'BoardGameDesign.com',                     
 
 // Url of game publisher website
-'publisher_website' => 'http://www.mypublishingcompany.com/',   
+'publisher_website' => 'http://www.boardgamedesign.com/',   
 
 // Board Game Geek ID of the publisher
-'publisher_bgg_id' => 1234,
+'publisher_bgg_id' => 5716,
 
 // Board game geek ID of the game
 'bgg_id' => 122352,
@@ -42,7 +42,7 @@ $gameinfos = array(
 
 // Suggest players to play with this number of players. Must be null if there is no such advice, or if there is only one possible player configuration.
 // NB: the automatic lobby will try first the lowest number of players if this is not specified. So you _have to_ specify this parameter if the lowest player number is not compatible with the default options.
-'suggest_player_number' => null,
+'suggest_player_number' => 2,
 
 // Discourage players to play with these numbers of players. Must be null if there is no such advice.
 'not_recommend_player_number' => null,
@@ -50,7 +50,7 @@ $gameinfos = array(
 
 
 // Estimated game duration, in minutes (used only for the launch, afterward the real duration is computed)
-'estimated_duration' => 30,           
+'estimated_duration' => 60,           
 
 // Time in second add to a player when "giveExtraTime" is called (speed profile = fast)
 'fast_additional_time' => 30,           
@@ -132,9 +132,11 @@ $gameinfos = array(
 // Each paragraph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
 // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
 'presentation' => array(
-//    totranslate("This wonderful game is about geometric shapes!"),
-//    totranslate("It was awarded best triangle game of the year in 2005 and nominated for the Spiel des Jahres."),
-//    ...
+totranslate("Duck Soup: (slang) Anything little effort, easy to do and often remonerative; a cinch."),
+totranslate("For many people, the idea of owning a restaurant conjures up thoughts of fun and easy money. In short, they think that it's all going to be 'duck soup.'"),
+totranslate("The reality, however, is that running your own restaurant also involves plenty of hard work, often with little monetary reward."),
+totranslate("But there is a way to get a taste of the resturant business without losing your money and your sanity."),
+totranslate("Introducing DUCK SOUP...The Restaurant Game, where you use your knowledge, skill and luck to be the best restauranteur in town!"),
 ),
 
 //////// BGA SANDBOX ONLY PARAMETERS (DO NOT MODIFY)
