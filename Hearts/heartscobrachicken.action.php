@@ -1,68 +1,100 @@
 <?php
+
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
- * heartsCOBRACHICKEN implementation : © <Your name here> <Your email address here>
+ * template implementation : © <Your name here> <Your email address here>
  *
- * This code has been produced on the BGA studio platform for use on https://boardgamearena.com.
- * See http://en.doc.boardgamearena.com/Studio for more information.
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
  * 
- * heartscobrachicken.action.php
+ * heartsla.action.php
  *
- * heartsCOBRACHICKEN main action entry point
+ * template main action entry point
  *
  *
  * In this file, you are describing all the methods that can be called from your
  * user interface logic (javascript).
  *       
  * If you define a method "myAction" here, then you can call it from your javascript code with:
- * this.ajaxcall( "/heartscobrachicken/heartscobrachicken/myAction.html", ...)
+ * this.ajaxcall( "/heartsla/heartsla/myAction.html", ...)
  *
  */
-  
-  
-  class action_heartscobrachicken extends APP_GameAction
-  { 
+class action_heartsla extends APP_GameAction {
+
     // Constructor: please do not modify
-   	public function __default()
-  	{
-  	    if( self::isArg( 'notifwindow') )
-  	    {
+    public function __default() {
+        if (self::isArg('notifwindow')) {
             $this->view = "common_notifwindow";
-  	        $this->viewArgs['table'] = self::getArg( "table", AT_posint, true );
-  	    }
-  	    else
-  	    {
-            $this->view = "heartscobrachicken_heartscobrachicken";
-            self::trace( "Complete reinitialization of board game" );
-      }
-  	} 
-  	
-  	// TODO: defines your action entry points there
-
-
-    /*
-    
-    Example:
-  	
-    public function myAction()
-    {
-        self::setAjaxMode();     
-
-        // Retrieve arguments
-        // Note: these arguments correspond to what has been sent through the javascript "ajaxcall" method
-        $arg1 = self::getArg( "myArgument1", AT_posint, true );
-        $arg2 = self::getArg( "myArgument2", AT_posint, true );
-
-        // Then, call the appropriate method in your game logic, like "playCard" or "myAction"
-        $this->game->myAction( $arg1, $arg2 );
-
-        self::ajaxResponse( );
+            $this->viewArgs ['table'] = self::getArg("table", AT_posint, true);
+        } else {
+            $this->view = "heartsla_heartsla";
+            self::trace("Complete reinitialization of board game");
+        }
     }
-    
-    */
 
+    public function playCard() {
+        self::setAjaxMode();
+        $card_id = self::getArg("id", AT_posint, true);
+        $this->game->playCard($card_id);
+        self::ajaxResponse();
+    }
+
+    public function pass() {
+      self::setAjaxMode();
+      $this->game->pass();
+      self::ajaxResponse();
+  }
+
+  public function take() {
+      self::setAjaxMode();
+      $this->game->take();
+      self::ajaxResponse();
+  }
+  public function discard() {
+      self::setAjaxMode();
+      $card_id = self::getArg("id", AT_posint, true);
+      $this->game->discard($card_id);
+      self::ajaxResponse();
   }
   
+  public function discardAll() {
+      self::setAjaxMode();
+      $this->game->discardAll();
+      self::ajaxResponse();
+  }
 
+  public function discardAllHearts() {
+      self::setAjaxMode();
+      $this->game->discardAllHearts();
+      self::ajaxResponse();
+  }
+
+  public function discardAllQueenSpades() {
+      self::setAjaxMode();
+      $this->game->discardAllQueenSpades();
+      self::ajaxResponse();
+  }
+
+  public function discardAllPoints() {
+      self::setAjaxMode();
+      $this->game->discardAllPoints();
+      self::ajaxResponse();
+  }
+  
+  public function discardAllExceptPoints() {
+      self::setAjaxMode();
+      $this->game->discardAllExceptPoints();
+      self::ajaxResponse();
+  }
+
+  public function discardAllExceptHearts() {
+      self::setAjaxMode();
+      $this->game->discardAllExceptHearts();
+      self::ajaxResponse();
+  }
+
+  
+}
+  

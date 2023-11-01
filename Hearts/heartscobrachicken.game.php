@@ -33,13 +33,13 @@ class heartsCOBRACHICKEN extends Table
         parent::__construct();
         
         self::initGameStateLabels( array( 
-            //    "my_first_global_variable" => 10,
-            //    "my_second_global_variable" => 11,
-            //      ...
-            //    "my_first_game_variant" => 100,
-            //    "my_second_game_variant" => 101,
-            //      ...
-        ) );        
+            "currentHandType" => 10,
+            "trickColor" => 11,
+            "alreadyPlayedHearts" => 12,
+        ) );      
+        
+        $this->cards = self::getNew( "module.common.deck" );
+        $this->cards->init( "card" );
 	}
 	
     protected function getGameName( )
@@ -61,7 +61,7 @@ class heartsCOBRACHICKEN extends Table
         // The default below is red/green/blue/orange/brown
         // The number of colors defined here must correspond to the maximum number of players allowed for the gams
         $gameinfos = self::getGameinfos();
-        $default_colors = $gameinfos['player_colors'];
+        $default_colors = array( "ff0000", "008000", "0000ff", "ffa500", "773300" );
  
         // Create players
         // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
@@ -91,6 +91,10 @@ class heartsCOBRACHICKEN extends Table
        
 
         // Activate first player (which is in general a good idea :) )
+        self::setGameStateInitialValue( 'currentHandType', 0 );
+        self::setGaneStateInitialValue( 'trickColor', 0 );
+        self::setGameStateInitialValue( 'alreadyPlayedHearts', 0 );
+
         $this->activeNextPlayer();
 
         /************ End of the game initialization *****/
@@ -105,9 +109,10 @@ class heartsCOBRACHICKEN extends Table
         _ when the game starts
         _ when a player refreshes the game page (F5)
     */
+
     protected function getAllDatas()
     {
-        $result = array();
+        $result = array('players' => array() );
     
         $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
     
@@ -117,6 +122,12 @@ class heartsCOBRACHICKEN extends Table
         $result['players'] = self::getCollectionFromDb( $sql );
   
         // TODO: Gather all information about current game situation (visible by player $current_player_id).
+
+         // Cards in player hand
+         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
+
+          // Cards played on the table
+        $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
   
         return $result;
     }
@@ -158,31 +169,31 @@ class heartsCOBRACHICKEN extends Table
         (note: each method below must match an input method in heartscobrachicken.action.php)
     */
 
-    /*
-    
-    Example:
-
-    function playCard( $card_id )
-    {
-        // Check that this is the player's turn and that it is a "possible action" at this game state (see states.inc.php)
-        self::checkAction( 'playCard' ); 
-        
-        $player_id = self::getActivePlayerId();
-        
-        // Add your game logic to play a card there 
-        ...
-        
-        // Notify all players about the card played
-        self::notifyAllPlayers( "cardPlayed", clienttranslate( '${player_name} plays ${card_name}' ), array(
-            'player_id' => $player_id,
-            'player_name' => self::getActivePlayerName(),
-            'card_name' => $card_name,
-            'card_id' => $card_id
-        ) );
-          
+ function playCard($card_id) {
+    self::checkAction( 'playCard' );
+    $player_id = self::getActivePlayerId();
+    $this->cards->moveCard($card_id, 'cardsontable', $player_id);
+    $current_card = $this->cards->getCard($card_id);
+    // XXX check rules here
+    // Set the trick colour if it's the first card played in this trick
+    $currentTrickColor = self::getGameStateValue('trickColor');
+    if ($currentTrickColor == 0) {
+        self::setGameStateValue('trickColor', $current_card['type']);
     }
-    
-    */
+    //and notify
+    Self::notifyAllPlayers('playCard', clienttranslate('${player_name} plays ${value_displayed} ${color_displayed}'), array(
+        'i18n' => array('color_displayed', 'value_displayed'),
+        'card_id' => $card_id,
+        'player_id' => $player_id,
+        'player_name' => self::getActivePlayerName(),
+        'value' => $current_card['type_arg'],
+        'value_displayed' => $this->values_label[$current_card['type_arg']],
+        'color' => $current_card['type'],
+        'color_displayed' => $this->colors[$current_card['type']]['name'],
+    ));
+
+    $this->gamestate->nextState('playCard');
+ }
 
     
 //////////////////////////////////////////////////////////////////////////////
@@ -194,6 +205,10 @@ class heartsCOBRACHICKEN extends Table
         These methods function is to return some additional information that is specific to the current
         game state.
     */
+
+    function argGiveCards() {
+        return array ();
+    }
 
     /*
     
@@ -233,6 +248,178 @@ class heartsCOBRACHICKEN extends Table
         $this->gamestate->nextState( 'some_gamestate_transition' );
     }    
     */
+
+function stNewHand() {
+    //take back all cards from any locatoion => null to deck
+    $this->cards->moveAllCardsInLocation(null, 'deck');
+    $this->cards->shuffle('deck');
+    //deal 13 cards to each players
+    //Create deck, shuffle it and give 13 cards to each players
+    $players = self::loadPlayersBasicInfos();
+    foreach ($players as $player_id => $player) {
+        $cards = $this->cards->pickCards(13, 'deck', $player_id);
+        // Notify player about his cards
+        self::notifyPlayer($player_id, 'newHand', '', array('cards' => $cards));
+    }
+
+    self::setGameStateValue('alreadyPlayedHearts', 0);
+    $this->gamestate->nextState('');
+
+}    
+
+function stNewTrick() {
+    self::setGameStateInitialValue('trickColor', 0);
+    $this->gamestate->nextState('');
+}
+
+function stNextPlayer() {
+    //Active next player OR end the trick and go to the next trick OR end the hand
+    if ($this->cards->countCardInLocation('cardsontable')==4) {
+        //this is the end of the trick
+        $cards_on_table = $this->cards->getCardsInLocation('cardsontable');
+        $best_value = 0;
+        $best_value_player_id = null;
+        $currentTrickColor = self::getGameStateValue('trickColor');
+        foreach ($cards_on_table as $card) {
+            if ($card['type'] == $currentTrickColor && $card['type_arg'] > $best_value) {
+                $best_value_player_id = $card['location_arg'];
+                $best_value = $card['type_arg'];
+            }
+        }
+    }
+
+    //Active this player => he's the one who starts the trick
+    $this->gamestate->changeActivePlayer($best_value_player_id);
+
+    //move all cards to "cardswon" of the given player
+    $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
+
+    //notify
+    // Note: we use 2 notifications here in order we can pause the display during the first notification
+    //  before we move all cards to the winner (during the second)
+    $players = self::loadPlayersBasicInfos();
+    self::notifyAllPlayers('trickWin', clienttranslate('${player_name} wins the trick'), array(
+        'player_id' => $best_value_player_id,
+        'player_name' => $players[$best_value_player_id]['player_name']
+    ));
+    self::notifyAllPlayers('giveAllCardsToPlayer', '', array(
+        'player_id' => $best_value_player_id
+    ));
+
+    if ($this->cards->countCardInLocation('hand')==0) {
+        //end of the hand
+        $this->gamestate->nextState('endHand');
+    } else {
+        //end of the trick
+        $this->gamestate->nextState('nextTrick');
+    }   else { 
+            // Standard case (not the end of the trick)
+            // => just active the next player
+            $player_id = self::activeNextPlayer();
+            self::giveExtraTime($player_id);
+            $this->gamestate->nextState('nextPlayer');
+        }
+
+    }
+ 
+        function stEndHand() {
+            // Count and score points, then end the game or go to the next hand.
+        $players = self::loadPlayersBasicInfos();
+        // Gets all "hearts" + queen of spades
+
+        $player_to_points = array ();
+        foreach ( $players as $player_id => $player ) {
+            $player_to_points [$player_id] = 0;
+        }
+        $cards = $this->cards->getCardsInLocation("cardswon");
+        foreach ( $cards as $card ) {
+            $player_id = $card ['location_arg'];
+            // Note: 2 = heart
+            if ($card ['type'] == 2) {
+                $player_to_points [$player_id] ++;
+            }
+        }
+        // Apply scores to player
+        foreach ( $player_to_points as $player_id => $points ) {
+            if ($points != 0) {
+                $sql = "UPDATE player SET player_score=player_score-$points  WHERE player_id='$player_id'";
+                self::DbQuery($sql);
+                $heart_number = $player_to_points [$player_id];
+                self::notifyAllPlayers("points", clienttranslate('${player_name} gets ${nbr} hearts and looses ${nbr} points'), array (
+                        'player_id' => $player_id,'player_name' => $players [$player_id] ['player_name'],
+                        'nbr' => $heart_number ));
+            } else {
+                // No point lost (just notify)
+                self::notifyAllPlayers("points", clienttranslate('${player_name} did not get any hearts'), array (
+                        'player_id' => $player_id,'player_name' => $players [$player_id] ['player_name'] ));
+            }
+        }
+        $newScores = self::getCollectionFromDb("SELECT player_id, player_score FROM player", true );
+        self::notifyAllPlayers( "newScores", '', array( 'newScores' => $newScores ) );
+            
+        ///// Test if this is the end of the game
+        foreach ( $newScores as $player_id => $score ) {
+            if ($score <= -100) {
+                // Trigger the end of the game !
+                $this->gamestate->nextState("endGame");
+                return;
+            }
+        }
+        
+        
+        $this->gamestate->nextState("nextHand");
+    }
+
+    function stEndGame() {
+        // Count and score points, then end the game
+        $players = self::loadPlayersBasicInfos();
+        // Gets all "hearts" + queen of spades
+
+        $player_to_points = array ();
+        foreach ( $players as $player_id => $player ) {
+            $player_to_points [$player_id] = 0;
+        }
+        $cards = $this->cards->getCardsInLocation("cardswon");
+        foreach ( $cards as $card ) {
+            $player_id = $card ['location_arg'];
+            // Note: 2 = heart
+            if ($card ['type'] == 2) {
+                $player_to_points [$player_id] ++;
+            }
+        }
+        // Apply scores to player
+        foreach ( $player_to_points as $player_id => $points ) {
+            if ($points != 0) {
+                $sql = "UPDATE player SET player_score=player_score-$points  WHERE player_id='$player_id'";
+                self::DbQuery($sql);
+                $heart_number = $player_to_points [$player_id];
+                self::notifyAllPlayers("points", clienttranslate('${player_name} gets ${nbr} hearts and looses ${nbr} points'), array (
+                        'player_id' => $player_id,'player_name' => $players [$player_id] ['player_name'],
+                        'nbr' => $heart_number ));
+            } else {
+                // No point lost (just notify)
+                self::notifyAllPlayers("points", clienttranslate('${player_name} did not get any hearts'), array (
+                        'player_id' => $player_id,'player_name' => $players [$player_id] ['player_name'] ));
+            }
+        }
+        $newScores = self::getCollectionFromDb("SELECT player_id, player_score FROM player", true );
+        self::notifyAllPlayers( "newScores", '', array( 'newScores' => $newScores ) );
+            
+        self::notifyAllPlayers("endGame", clienttranslate("End of the game"), array());
+        $this->gamestate->nextState("endGame");
+    }
+
+    function stGiveCards() {
+        // Give 3 cards to each players
+        $players = self::loadPlayersBasicInfos();
+        foreach ( $players as $player_id => $player ) {
+            $cards = $this->cards->pickCards(3, 'deck', $player_id);
+            // Notify player about his cards
+            self::notifyPlayer($player_id, 'newHand', '', array('cards' => $cards));
+        }
+        $this->gamestate->nextState('');
+    }
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Zombie

@@ -1,37 +1,33 @@
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
- * heartsCOBRACHICKEN implementation : © <Your name here> <Your email address here>
+ * template implementation : © <Your name here> <Your email address here>
  *
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
  *
- * heartscobrachicken.js
+ * heartsla.js
  *
- * heartsCOBRACHICKEN user interface script
+ * template user interface script
  * 
  * In this file, you are describing the logic of your user interface, in Javascript language.
  *
  */
 
-define([
+ define([
     "dojo","dojo/_base/declare",
     "ebg/core/gamegui",
-    "ebg/counter"
+    "ebg/counter",
+    "ebg/stock"
 ],
 function (dojo, declare) {
-    return declare("bgagame.heartscobrachicken", ebg.core.gamegui, {
+    return declare("bgagame.heartsla", ebg.core.gamegui, {
         constructor: function(){
-            console.log('heartscobrachicken constructor');
-
+            console.log('hearts constructor');
+              
             this.cardwidth = 72;
             this.cardheight = 96;
-              
-            // Here, you can init the global variables of your user interface
-            // Example:
-            // this.myGlobalValue = 0;
-
         },
         
         /*
@@ -47,24 +43,18 @@ function (dojo, declare) {
             "gamedatas" argument contains all datas retrieved by your "getAllDatas" PHP method.
         */
         
-        setup: function( gamedatas )
-        {
-            console.log( "Starting game setup" );
-            
-            // Setting up player boards
-            for( var player_id in gamedatas.players )
-            {
-                var player = gamedatas.players[player_id];
-                         
-                // TODO: Setting up players boards if needed
-            }
-            
-             // Player hand
-             this.playerHand = new ebg.stock();
-             this.playerHand.create(this, $('myhand'), this.cardwidth, this.cardheight);
-             this.playerHand.image_items_per_row = 13;
-            
-                // Create cards types:
+
+        setup : function(gamedatas) {
+            console.log("Starting game setup");
+           
+            // Player hand
+            this.playerHand = new ebg.stock();
+            this.playerHand.create(this, $('myhand'), this.cardwidth, this.cardheight);
+            this.playerHand.image_items_per_row = 13;
+
+            dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
+
+            // Create cards types:
             for (var color = 1; color <= 4; color++) {
                 for (var value = 2; value <= 14; value++) {
                     // Build card type id
@@ -72,29 +62,25 @@ function (dojo, declare) {
                     this.playerHand.addItemType(card_type_id, card_type_id, g_gamethemeurl + 'img/cards.jpg', card_type_id);
                 }
             }
-
-                // Cards in player's hand
-                for ( var i in this.gamedatas.hand) {
-                    var card = this.gamedatas.hand[i];
-                    var color = card.type;
-                    var value = card.type_arg;
-                    this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
-                }
-    
-                // Cards played on table
-                for (i in this.gamedatas.cardsontable) {
-                    var card = this.gamedatas.cardsontable[i];
-                    var color = card.type;
-                    var value = card.type_arg;
-                    var player_id = card.location_arg;
-                    this.playCardOnTable(player_id, color, value, card.id);
-                }
-                
-                // Setup game notifications to handle (see "setupNotifications" method below)
-                this.setupNotifications();
-            // TODO: Set up your game interface here, according to "gamedatas"
             
- 
+
+            // Cards in player's hand
+            for ( var i in this.gamedatas.hand) {
+                var card = this.gamedatas.hand[i];
+                var color = card.type;
+                var value = card.type_arg;
+                this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
+            }
+
+            // Cards played on table
+            for (i in this.gamedatas.cardsontable) {
+                var card = this.gamedatas.cardsontable[i];
+                var color = card.type;
+                var value = card.type_arg;
+                var player_id = card.location_arg;
+                this.playCardOnTable(player_id, color, value, card.id);
+            }
+            
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -193,8 +179,7 @@ function (dojo, declare) {
             script.
         
         */
-
-            // Get card unique identifier based on its color and value
+        // Get card unique identifier based on its color and value
         getCardUniqueId : function(color, value) {
             return (color - 1) * 13 + (value - 2);
         },
@@ -224,54 +209,57 @@ function (dojo, declare) {
 
             // In any case: move it to its final destination
             this.slideToObject('cardontable_' + player_id, 'playertablecard_' + player_id).play();
-        },   
-        ///////////////////////////////////////////////////
-        //// Player's action
+        },
+
+        // /////////////////////////////////////////////////
+        // // Player's action
         
         /*
+         * 
+         * Here, you are defining methods to handle player's action (ex: results of mouse click on game objects).
+         * 
+         * Most of the time, these methods: _ check the action is possible at this game state. _ make a call to the game server
+         * 
+         */
         
-            Here, you are defining methods to handle player's action (ex: results of mouse click on 
-            game objects).
-            
-            Most of the time, these methods:
-            _ check the action is possible at this game state.
-            _ make a call to the game server
-        
-        */
-        
-        /* Example:
-        
-        onMyMethodToCall1: function( evt )
-        {
-            console.log( 'onMyMethodToCall1' );
-            
-            // Preventing default browser reaction
-            dojo.stopEvent( evt );
 
-            // Check that this action is possible (see "possibleactions" in states.inc.php)
-            if( ! this.checkAction( 'myAction' ) )
-            {   return; }
 
-            this.ajaxcall( "/heartscobrachicken/heartscobrachicken/myAction.html", { 
-                                                                    lock: true, 
-                                                                    myArgument1: arg1, 
-                                                                    myArgument2: arg2,
-                                                                    ...
-                                                                 }, 
-                         this, function( result ) {
-                            
-                            // What to do after the server call if it succeeded
-                            // (most of the time: nothing)
-                            
-                         }, function( is_error) {
+        onPlayerHandSelectionChanged : function() {
+            var items = this.playerHand.getSelectedItems();
 
-                            // What to do after the server call in anyway (success or failure)
-                            // (most of the time: nothing)
+            if (items.length > 0) {
+                var action = 'playCard';
+                if (this.checkAction(action, true)) {
+                    // Can play a card
+                    var card_id = items[0].id;                    
+                    this.ajaxcall("/" + this.game_name + "/" + this.game_name + "/" + action + ".html", {
+                        id : card_id,
+                        lock : true
+                    }, this, function(result) {
+                    }, function(is_error) {
+                    });
 
-                         } );        
-        },        
+                    this.playerHand.unselectAll();
+                } else if (this.checkAction('giveCards')) {
+                    // Can give cards => let the player select some cards
+                } else {
+                    this.playerHand.unselectAll();
+                }
+            }
+        },
         
-        */
+        /*
+         * Example:
+         * 
+         * onMyMethodToCall1: function( evt ) { console.log( 'onMyMethodToCall1' ); // Preventing default browser reaction dojo.stopEvent(
+         * evt ); // Check that this action is possible (see "possibleactions" in states.inc.php) if( ! this.checkAction( 'myAction' ) ) {
+         * return; }
+         * 
+         * this.ajaxcall( "/heartsla/heartsla/myAction.html", { lock: true, myArgument1: arg1, myArgument2: arg2, ... }, this, function(
+         * result ) { // What to do after the server call if it succeeded // (most of the time: nothing) }, function( is_error) { // What to
+         * do after the server call in anyway (success or failure) // (most of the time: nothing) } ); },
+         * 
+         */
 
         
         ///////////////////////////////////////////////////
@@ -283,14 +271,11 @@ function (dojo, declare) {
             In this method, you associate each of your game notifications with your local method to handle it.
             
             Note: game notification names correspond to "notifyAllPlayers" and "notifyPlayer" calls in
-                  your heartscobrachicken.game.php file.
+                  your template.game.php file.
         
         */
-        setupNotifications: function()
-        {
-            console.log( 'notifications subscriptions setup' );
-            
-            // TODO: here, associate your game notifications with local methods
+        setupNotifications : function() {
+            console.log('notifications subscriptions setup');
 
             dojo.subscribe('newHand', this, "notif_newHand");
             dojo.subscribe('playCard', this, "notif_playCard");
@@ -299,11 +284,8 @@ function (dojo, declare) {
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'giveAllCardsToPlayer', this, "notif_giveAllCardsToPlayer" );
             dojo.subscribe( 'newScores', this, "notif_newScores" );
-            
-        },  
-        
-        // TODO: from this point and below, you can write your game notifications handling methods
-        
+        },
+
         notif_newHand : function(notif) {
             // We received a new full hand of 13 cards.
             this.playerHand.removeAll();
