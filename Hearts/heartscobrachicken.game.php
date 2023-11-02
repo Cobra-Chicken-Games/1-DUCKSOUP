@@ -92,7 +92,7 @@ class heartsCOBRACHICKEN extends Table
 
         // Activate first player (which is in general a good idea :) )
         self::setGameStateInitialValue( 'currentHandType', 0 );
-        self::setGaneStateInitialValue( 'trickColor', 0 );
+        self::setGaeStateInitialValue( 'trickColor', 0 );
         self::setGameStateInitialValue( 'alreadyPlayedHearts', 0 );
 
         $this->activeNextPlayer();
@@ -309,16 +309,11 @@ function stNextPlayer() {
     if ($this->cards->countCardInLocation('hand')==0) {
         //end of the hand
         $this->gamestate->nextState('endHand');
-    } else {
+    } else 
+    {
         //end of the trick
         $this->gamestate->nextState('nextTrick');
-    }   else { 
-            // Standard case (not the end of the trick)
-            // => just active the next player
-            $player_id = self::activeNextPlayer();
-            self::giveExtraTime($player_id);
-            $this->gamestate->nextState('nextPlayer');
-        }
+    }  
 
     }
  

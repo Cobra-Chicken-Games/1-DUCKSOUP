@@ -22,23 +22,30 @@ require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
 class DuckSoupTheRestaurantGame extends Table
 {
+
+
+
 	function __construct( )
 	{
-        // Your global variables labels:
-        //  Here, you can assign labels to global variables you are using for this game.
-        //  You can use any number of global variables with IDs between 10 and 99.
-        //  If your game has options (variants), you also have to associate here a label to
-        //  the corresponding ID in gameoptions.inc.php.
-        // Note: afterwards, you can get/set the global variables with getGameStateValue/setGameStateInitialValue/setGameStateValue
+
+        // Constants for global variable IDs
+        const GV_CURRENT_PLAYER = 10;
+        const GV_BANK_BALANCE = 11;
+        const GV_SOUPER_DUCKATS_COUNT = 12;
+
+         // Constants for game variant IDs (start from 100 for game options)
+         const GO_GAME_VARIANT = 100;
+        // Add more game variant IDs as needed
+
         parent::__construct();
         
         self::initGameStateLabels( array( 
-            //    "my_first_global_variable" => 10,
-            //    "my_second_global_variable" => 11,
-            //      ...
-            //    "my_first_game_variant" => 100,
-            //    "my_second_game_variant" => 101,
-            //      ...
+            "currentPlayer" => self::GV_CURRENT_PLAYER,
+            "bankBalance" => self::GV_BANK_BALANCE,
+            "souperDuckatsCount" => self::GV_SOUPER_DUCKATS_COUNT,
+            // Add more labels for your global variables
+            "gameVariant" => self::GO_GAME_VARIANT, // This could be a game variant option
+            // Add more labels for your game variants
         ) );        
 	}
 	
@@ -57,43 +64,47 @@ class DuckSoupTheRestaurantGame extends Table
     */
     protected function setupNewGame( $players, $options = array() )
     {    
-        // Set the colors of the players with HTML color code
-        // The default below is red/green/blue/orange/brown
-        // The number of colors defined here must correspond to the maximum number of players allowed for the gams
-        $gameinfos = self::getGameinfos();
-        $default_colors = $gameinfos['player_colors'];
- 
-        // Create players
-        // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
-        $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
-        $values = array();
-        foreach( $players as $player_id => $player )
-        {
-            $color = array_shift( $default_colors );
-            $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
-        }
-        $sql .= implode( ',', $values );
-        self::DbQuery( $sql );
-        self::reattributeColorsBasedOnPreferences( $players, $gameinfos['player_colors'] );
-        self::reloadPlayersBasicInfos();
-        
-        /************ Start the game initialization *****/
+            // Set the colors of the players with HTML color code
+            // The default below is red/green/blue/orange/brown
+            // The number of colors defined here must correspond to the maximum number of players allowed for the game
+            $gameinfos = self::getGameinfos();
+            $default_colors = $gameinfos['player_colors'];
 
-        // Init global values with their initial values
-        //self::setGameStateInitialValue( 'my_first_global_variable', 0 );
-        
-        // Init game statistics
-        // (note: statistics used in this file must be defined in your stats.inc.php file)
-        //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
-        //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
+            // Create players
+            $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
+            $values = array();
+            foreach ($players as $player_id => $player) {
+                $color = array_shift($default_colors);
+                $values[] = "('" . $player_id . "','$color','" . addslashes($player['player_canal']) . "','" . addslashes($player['player_name']) . "','" . addslashes($player['player_avatar']) . "')";
+            }
+            $sql .= implode(',', $values);
+            self::DbQuery($sql);
+            self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
+            self::reloadPlayersBasicInfos();
 
-        // TODO: setup the initial game situation here
-       
+            /************ Start the game initialization *****/
 
-        // Activate first player (which is in general a good idea :) )
-        $this->activeNextPlayer();
+            // Init global values with their initial values
+            // Assume we have global variables like 'currentRound' and 'maxScore'
+            self::setGameStateInitialValue('currentRound', 1);
+            self::setGameStateInitialValue('maxScore', 0);
 
-        /************ End of the game initialization *****/
+            // Init game statistics
+            // Assuming 'totalRounds' and 'totalPoints' are defined in your stats.inc.php file
+            self::initStat('table', 'totalRounds', 0); // Init a table statistics
+            self::initStat('player', 'totalPoints', 0); // Init a player statistics (for all players)
+
+            // TODO: setup the initial game situation here
+            // This can include setting up the board, dealing cards, distributing resources, etc.
+            // Example: self::setupBoard();
+            
+            // You can use helper functions to initialize the game state
+            // Example: $this->initializePlayers();
+
+            // Activate first player (which is in general a good idea :) )
+            $this->activeNextPlayer();
+
+            /************ End of the game initialization *****/
     }
 
     /*
@@ -107,18 +118,48 @@ class DuckSoupTheRestaurantGame extends Table
     */
     protected function getAllDatas()
     {
-        $result = array();
-    
-        $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
-    
-        // Get information about players
-        // Note: you can retrieve some extra field you added for "player" table in "dbmodel.sql" if you need it.
-        $sql = "SELECT player_id id, player_score score FROM player ";
-        $result['players'] = self::getCollectionFromDb( $sql );
-  
-        // TODO: Gather all information about current game situation (visible by player $current_player_id).
-  
-        return $result;
+        protected function getAllDatas()
+        {
+            $result = array();
+        
+            $current_player_id = self::getCurrentPlayerId();    // Get the id of the current player
+        
+            // Get information about players
+            // If you have additional player fields in the database, like 'player_avatar', you can add them here
+            $sql = "SELECT player_id id, player_score score, player_color color, player_avatar avatar FROM player ";
+            $result['players'] = self::getCollectionFromDb($sql);
+        
+            // Get other public game state data that is not specific to any player
+            // This could include data like the state of the game board, any public counters, etc.
+            // Example:
+            // $result['gameBoard'] = self::getGameBoardData();
+        
+            // Get private data specific to the current player
+            // This is where you add code to get private data that only the current player should see.
+            // For example, if your game involves hidden cards in the player's hand, you would retrieve them here.
+            // Example:
+            // $result['hand'] = $this->getPlayerHand($current_player_id);
+        
+            // If there is data that all players should receive but it's formatted differently for the current player,
+            // that processing should be done here.
+            // Example:
+            // $result['playerData'] = $this->getPlayerSpecificData($current_player_id);
+        
+            // If your game has elements that change during the game and players need to keep track of them,
+            // like resources, you'd query those here.
+            // Example:
+            // $result['resources'] = $this->getPlayerResources($current_player_id);
+        
+            // It's important that any sensitive data not be sent to the player unless it's their own.
+            // Always filter out any secret information that the current player should not see.
+        
+            // If there are global objects or states that are affected by player actions and need to be synchronized with the client-side,
+            // you should also retrieve them here.
+            // Example:
+            // $result['globalEvent'] = self::getGlobalEventData();
+        
+            return $result;
+        }
     }
 
     /*
@@ -133,9 +174,23 @@ class DuckSoupTheRestaurantGame extends Table
     */
     function getGameProgression()
     {
-        // TODO: compute and return the game progression
-
-        return 0;
+        // Retrieve the maximum score from the game state or settings.
+        // Assuming the end score to win the game is stored in a global variable or can be determined from the game settings.
+        $endScore = self::getGameStateValue('endScore');
+    
+        // Find out the current highest score among all players.
+        $sql = "SELECT MAX(player_score) as highestScore FROM player";
+        $highestScore = self::getUniqueValueFromDB($sql);
+    
+        // Calculate the progression.
+        // The highest score achieved by a player is divided by the score needed to win, then multiplied by 100 to get a percentage.
+        $progression = ($highestScore / $endScore) * 100;
+    
+        // Ensure that the progression does not exceed 100%
+        $progression = min(100, $progression);
+    
+        // Cast the progression to an integer to conform with the expected return type.
+        return (int)$progression;
     }
 
 
@@ -158,82 +213,224 @@ class DuckSoupTheRestaurantGame extends Table
         (note: each method below must match an input method in ducksouptherestaurantgame.action.php)
     */
 
-    /*
-    
-    Example:
-
-    function playCard( $card_id )
+    function playCard($card_id)
     {
-        // Check that this is the player's turn and that it is a "possible action" at this game state (see states.inc.php)
-        self::checkAction( 'playCard' ); 
+        self::checkAction('playCard'); // Ensure it's the correct state and player's turn.
         
         $player_id = self::getActivePlayerId();
         
-        // Add your game logic to play a card there 
-        ...
-        
-        // Notify all players about the card played
-        self::notifyAllPlayers( "cardPlayed", clienttranslate( '${player_name} plays ${card_name}' ), array(
+        // Validate the card is playable (it's in the player's hand, not already played, etc.)
+        // ...
+    
+        // Execute the logic for playing the card.
+        // This could involve modifying the database to move the card from the player's hand to the table,
+        // updating the game state, applying card effects, etc.
+        // ...
+    
+        // Get the card name for the notification message (you would retrieve this from your data model)
+        $card_name = $this->getCardName($card_id);
+    
+        // Notify all players that the card has been played.
+        self::notifyAllPlayers('cardPlayed', clienttranslate('${player_name} plays ${card_name}'), array(
             'player_id' => $player_id,
             'player_name' => self::getActivePlayerName(),
             'card_name' => $card_name,
             'card_id' => $card_id
-        ) );
-          
+        ));
+    
+        // Determine and set the next game state.
+        $this->gamestate->nextState('nextAction');
     }
     
-    */
+    function chooseAnswer($answer_id)
+    {
+        self::checkAction('chooseAnswer');
+        
+        $player_id = self::getActivePlayerId();
+        
+        // Implement the logic for choosing an answer.
+        // For example, record the answer chosen in the database, 
+        // check if it's correct, update scores, etc.
+        // ...
+    
+        // Notify players about the answer chosen.
+        self::notifyAllPlayers('answerChosen', clienttranslate('${player_name} has chosen an answer'), array(
+            'player_id' => $player_id,
+            'player_name' => self::getActivePlayerName(),
+            'answer_id' => $answer_id
+        ));
+    
+        // Check if all players have chosen an answer and move to the next game state if so.
+        // ...
+    
+        $this->gamestate->nextState('evaluateAnswers');
+    }
+    
+    function makeBid($amount)
+    {
+        self::checkAction('makeBid');
+        
+        $player_id = self::getActivePlayerId();
+        
+        // Implement the logic for making a bid.
+        // This could involve checking if the bid is valid (e.g., not exceeding player's resources),
+        // updating the current bid amount, etc.
+        // ...
+    
+        // Notify players about the bid.
+        self::notifyAllPlayers('bidMade', clienttranslate('${player_name} bids ${amount}'), array(
+            'player_id' => $player_id,
+            'player_name' => self::getActivePlayerName(),
+            'amount' => $amount
+        ));
+    
+        // Move to the next player or resolve the bidding if this is the last bid.
+        // ...
+    
+        $this->gamestate->nextState('nextPlayerBid');
+    }
+    
+    // You can add more functions for different actions following the same pattern.
+    
 
     
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state arguments
 ////////////
 
-    /*
-        Here, you can create methods defined as "game state arguments" (see "args" property in states.inc.php).
-        These methods function is to return some additional information that is specific to the current
-        game state.
-    */
-
-    /*
-    
-    Example for game state "MyGameState":
-    
-    function argMyGameState()
+    function playCard($card_id)
     {
-        // Get some values from the current game situation in database...
+        // Check that the player can play a card now (based on the game state defined in states.inc.php)
+        self::checkAction('playCard');
     
-        // return values:
-        return array(
-            'variable1' => $value1,
-            'variable2' => $value2,
-            ...
-        );
-    }    
-    */
+        $player_id = self::getActivePlayerId();
+        
+        // Assuming there's a table 'cards' where cards are stored with a 'card_id' and 'card_location'
+        // Verify that the card belongs to the player and is in a location from which it can be played
+        $sql = "SELECT card_id FROM cards WHERE card_id = '$card_id' AND card_location = 'hand' AND player_id = '$player_id' ";
+        $card = self::getObjectFromDb($sql);
+        
+        if(!$card) {
+            throw new BgaUserException(self::_("You can't play this card."));
+        }
+        
+        // Add your game logic to play a card
+        // For example, move the card to the 'table' and update any game state as needed
+        $sql = "UPDATE cards SET card_location = 'table' WHERE card_id = '$card_id'";
+        self::DbQuery($sql);
+        
+        // Assuming the card has a name, we get it for the notification
+        $card_name = self::getCardNameById($card_id);
+        
+        // Notify all players about the card played using the translation client system
+        self::notifyAllPlayers("cardPlayed", clienttranslate('${player_name} plays ${card_name}'), array(
+            'player_id' => $player_id,
+            'player_name' => self::getActivePlayerName(),
+            'card_name' => $card_name,
+            'card_id' => $card_id
+        ));
+        
+        // Depending on your game, you may want to trigger some other effects, change the game state, etc.
+        // You can do it here if needed.
+
+        //TO DO: Create special effects and game state changes here
+        
+        // Finally, after playing a card, you may want to move to the next player or next state
+        $this->gamestate->nextState('cardPlayed');
+    }
+    
+    function getCardNameById($card_id) {
+        // This function would retrieve the card's name based on its ID.
+        // This is a placeholder; you would replace this with the actual logic to get a card's name.
+        $sql = "SELECT card_name FROM cards WHERE card_id = '$card_id'";
+        return self::getUniqueValueFromDb($sql);
+    }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state actions
 ////////////
 
-    /*
-        Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
-        The action method of state X is called everytime the current game state is set to X.
-    */
+function stStartTurn()
+{
+    // Perform any necessary setup for the start of a turn.
     
-    /*
+    // Example: Reset any per-turn state variables or counters.
+    self::setGameStateValue('someVariable', 0);
     
-    Example for game state "MyGameState":
+    // Check if any special conditions are met at the start of a turn.
+    // ...
+    
+    // Notify players that a new turn has started.
+    self::notifyAllPlayers('newTurn', clienttranslate('A new turn starts'), array(
+        // 'data' => $data // any data you want to send to the client
+    ));
+    
+    // Transition to the next state, which could be 'playerAction' or something similar.
+    $this->gamestate->nextState('playerTurnStart');
+}
 
-    function stMyGameState()
-    {
-        // Do some stuff ...
+function stPlayerAction()
+{
+    // If the player can make a decision or play a card, this state allows for that.
+    // No specific code is needed here because the action will be handled by the player's input functions.
+}
+
+function stEndTurn()
+{
+    // Clean up after a turn.
+    // Example: Check if any end-of-turn effects need to be resolved.
+    // ...
+    
+    // Move to the next player or end the game if conditions are met.
+    if ($this->checkEndGameCondition()) {
+        $this->gamestate->nextState('endGame');
+    } else {
+        $this->activeNextPlayer();
+        $this->gamestate->nextState('nextPlayer');
+    }
+}
+
+function stCheckEndGame()
+{
+    // Determine if the game has reached a condition where it should end.
+    // Example: All cards have been played or a score limit has been reached.
+    if ($this->isGameOver()) {
+        // Perform any end of game scoring or cleanup.
+        // ...
         
-        // (very often) go to another gamestate
-        $this->gamestate->nextState( 'some_gamestate_transition' );
-    }    
-    */
+        // Notify players that the game has ended and show results.
+        self::notifyAllPlayers('gameEnd', clienttranslate('The game is over!'), array(
+            'results' => $this->getGameResults() // Method to calculate and return game results.
+        ));
+        
+        // Transition to the game end state.
+        $this->gamestate->nextState('endGame');
+    } else {
+        // If the game is not over, continue to the next turn.
+        $this->gamestate->nextState('nextTurn');
+    }
+}
 
+function isGameOver()
+{
+    // Check if the game should end. Return true if it should, false otherwise.
+    // ...
+    return false; // Placeholder - replace with actual game end condition.
+}
+
+function getGameResults()
+{
+    // Calculate the final scores and return the results.
+    // ...
+    return $results; // Placeholder - replace with actual results calculation.
+}
+
+function checkEndGameCondition()
+{
+    // Check if an end game condition has been reached.
+    // ...
+    return false; // Placeholder - replace with actual end game condition check.
+}
 //////////////////////////////////////////////////////////////////////////////
 //////////// Zombie
 ////////////

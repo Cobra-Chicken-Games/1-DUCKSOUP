@@ -95,6 +95,13 @@ class action_heartsla extends APP_GameAction {
       self::ajaxResponse();
   }
 
+  public function discardAllExceptQueenSpades() {
+      self::setAjaxMode();
+      $this->game->discardAllExceptQueenSpades();
+      self::ajaxResponse();
+  }  
+
   
+
 }
   

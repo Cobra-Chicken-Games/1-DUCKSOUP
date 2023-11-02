@@ -39,30 +39,73 @@
       }
   	} 
   	
-  	// TODO: defines your action entry points there
+      public function playCard($card_id)
+      {
+          self::checkAction('playCard'); // Ensure it's the correct state and player's turn.
+  
+          $player_id = self::getActivePlayerId();
+          
+          // TODO: Validate the card is playable.
+          
+          // TODO: Execute the logic for playing the card.
+  
+          $card_name = $this->getCardName($card_id); // TODO: Define this method to get the card name.
+  
+          // Notify all players that the card has been played.
+          self::notifyAllPlayers('cardPlayed', clienttranslate('${player_name} plays ${card_name}'), [
+              'player_id' => $player_id,
+              'player_name' => self::getActivePlayerName(),
+              'card_name' => $card_name,
+              'card_id' => $card_id
+          ]);
+  
+          // Determine and set the next game state.
+          $this->gamestate->nextState('nextAction');
+      }
+  
+      public function chooseAnswer($answer_id)
+      {
+          self::checkAction('chooseAnswer');
+          
+          $player_id = self::getActivePlayerId();
+          
+          // TODO: Implement the logic for choosing an answer.
+  
+          // Notify players about the answer chosen.
+          self::notifyAllPlayers('answerChosen', clienttranslate('${player_name} has chosen an answer'), [
+              'player_id' => $player_id,
+              'player_name' => self::getActivePlayerName(),
+              'answer_id' => $answer_id
+          ]);
+  
+          // TODO: Check if all players have chosen an answer and move to the next game state if so.
+  
+          $this->gamestate->nextState('evaluateAnswers');
+      }
+  
+      public function makeBid($amount)
+      {
+          self::checkAction('makeBid');
+          
+          $player_id = self::getActivePlayerId();
+          
+          // TODO: Implement the logic for making a bid.
+  
+          // Notify players about the bid.
+          self::notifyAllPlayers('bidMade', clienttranslate('${player_name} bids ${amount}'), [
+              'player_id' => $player_id,
+              'player_name' => self::getActivePlayerName(),
+              'amount' => $amount
+          ]);
+  
+          // TODO: Move to the next player or resolve the bidding.
+  
+          $this->gamestate->nextState('nextPlayerBid');
+      }
+  
+      // ... Additional action functions ...
+  
+}
 
-
-    /*
-    
-    Example:
-  	
-    public function myAction()
-    {
-        self::setAjaxMode();     
-
-        // Retrieve arguments
-        // Note: these arguments correspond to what has been sent through the javascript "ajaxcall" method
-        $arg1 = self::getArg( "myArgument1", AT_posint, true );
-        $arg2 = self::getArg( "myArgument2", AT_posint, true );
-
-        // Then, call the appropriate method in your game logic, like "playCard" or "myAction"
-        $this->game->myAction( $arg1, $arg2 );
-
-        self::ajaxResponse( );
-    }
-    
-    */
-
-  }
   
 

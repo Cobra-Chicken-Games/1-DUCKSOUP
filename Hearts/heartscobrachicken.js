@@ -324,5 +324,17 @@ function (dojo, declare) {
                 this.scoreCtrl[player_id].toValue(notif.args.newScores[player_id]);
             }
         },
+
+        notif_newHand : function(notif) {
+            // We received a new full hand of 13 cards.
+            this.playerHand.removeAll();
+
+            for ( var i in notif.args.cards) {
+                var card = notif.args.cards[i];
+                var color = card.type;
+                var value = card.type_arg;
+                this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
+            }
+        }
    });             
 });

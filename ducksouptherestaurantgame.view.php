@@ -79,7 +79,25 @@ class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
         
         */
 
+        $players = $this->game->loadPlayersBasicInfos();
+        $players_nbr = count($players);
 
+        /*********** Place your code below:  ************/
+        // Assuming you have elements such as 'PLAYER_BOARD' and 'GAME_MESSAGE' defined in your .tpl file
+        
+        // Example: setting a game message
+        $this->tpl['GAME_MESSAGE'] = self::_("Welcome to Duck Soup The Restaurant Game!");
+
+        // Example: creating a player board for each player
+        $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "player_board");
+        foreach ($players as $player_id => $player) {
+            $this->page->insert_block("player_board", array(
+                "PLAYER_ID" => $player_id,
+                "PLAYER_NAME" => $player['player_name'],
+                "PLAYER_COLOR" => $player['player_color'], // assuming 'player_color' is defined
+                // ... other player-specific variables
+            ));
+        }
 
         /*********** Do not change anything below this line  ************/
   	}
