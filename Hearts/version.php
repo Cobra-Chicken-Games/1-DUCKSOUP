@@ -1,3 +1,1 @@
-<?php 
-// Please do not modify this file.
-$game_version_heartscobrachicken ="999999-9999";
+<?php $game_version_hearts='999999-9999'; ?>
