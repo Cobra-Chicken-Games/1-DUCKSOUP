@@ -64,17 +64,31 @@ CREATE TABLE staff_board (
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 );
 
+CREATE TABLE answers (
+    answer_id INT AUTO_INCREMENT PRIMARY KEY,
+    answer_text TEXT
+);
+
 -- Table for questions
 CREATE TABLE questions (
     question_id INT AUTO_INCREMENT PRIMARY KEY,
     question_text TEXT,
-    answer_a TEXT,
-    answer_b TEXT,
-    answer_c TEXT,
-    answer_d TEXT,
-    correct_answer CHAR(1),
-    duckat_value INT
+    answer_a_id INT,
+    answer_b_id INT,
+    answer_c_id INT,
+    answer_d_id INT,
+    correct_answer_id INT,
+    duckat_value INT,
+    FOREIGN KEY (correct_answer_id) REFERENCES answers(answer_id)
 );
+
+-- Import the CSV file for the questions Table
+LOAD DATA INFILE '/Trivia_2010.csv'
+INTO TABLE questions
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
 -- Table for restaurant cards
 CREATE TABLE restaurant_cards (
