@@ -32,7 +32,7 @@ class action_heartscobrachicken extends APP_GameAction {
             $this->view = "common_notifwindow";
             $this->viewArgs['table'] = self::getArg("table", AT_posint, true);
         } else {
-            $this->view = "hearts_hearts";
+            $this->view = "heartscobrachicken_heartscobrachicken";
             self::trace("Complete reinitialization of board game");
         }
     }

@@ -76,11 +76,11 @@ function (dojo, declare) {
             if (this.isSpectator) document.getElementById("myhand_wrap").style.display = 'none';
 
             // Skip loading audio files when the option is disabled
-          //  if (this.prefs[103] && this.prefs[103].value != 1)
-          //  gamedatas.audio_list.forEach(s => {
-           //     this.dontPreloadImage(this.game_name + '_' + s + '.mp3');
-           //     this.dontPreloadImage(this.game_name + '_' + s + '.ogg');
-           // });
+            if (this.prefs[103] && this.prefs[103].value !== undefined && this.prefs[103].value == 1) {
+            gamedatas.audio_list.forEach(s => {
+                this.dontPreloadImage(this.game_name + '_' + s + '.mp3');
+                this.dontPreloadImage(this.game_name + '_' + s + '.ogg');
+            });
 
             // Skip loading card images when the option is disabled
             for (let i = 1; i <= 4; i++) if (this.prefs[100].value != i) this.dontPreloadImage('cards_' + i + '.png');
