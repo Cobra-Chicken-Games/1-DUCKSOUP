@@ -34,8 +34,8 @@
 -- ALTER TABLE `player` ADD `player_my_custom_field` INT UNSIGNED NOT NULL DEFAULT '0';
 
 -- Create a database named ducksoupdb
-CREATE DATABASE IF NOT EXISTS ducksoupdb;
-USE ducksoupdb;
+-- CREATE DATABASE IF NOT EXISTS ducksoupdb;
+-- USE ducksoupdb;
 
 -- Table for players
 CREATE TABLE players (
@@ -83,12 +83,12 @@ CREATE TABLE questions (
 );
 
 -- Import the CSV file for the questions Table
-LOAD DATA INFILE '/Trivia_2010.csv'
-INTO TABLE questions
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"' 
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+--LOAD DATA INFILE '/Trivia_2010.csv'
+--INTO TABLE questions
+--FIELDS TERMINATED BY ',' 
+--ENCLOSED BY '"' 
+--LINES TERMINATED BY '\n'
+--IGNORE 1 ROWS;
 
 -- Table for restaurant cards
 CREATE TABLE restaurant_cards (

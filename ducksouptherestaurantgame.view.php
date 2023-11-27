@@ -89,9 +89,9 @@ class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
         $this->tpl['GAME_MESSAGE'] = self::_("Welcome to Duck Soup The Restaurant Game!");
 
         // Example: creating a player board for each player
-        $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "player_board");
+        $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
         foreach ($players as $player_id => $player) {
-            $this->page->insert_block("player_board", array(
+            $this->page->insert_block("gameboard", array(
                 "PLAYER_ID" => $player_id,
                 "PLAYER_NAME" => $player['player_name'],
                 "PLAYER_COLOR" => $player['player_color'], // assuming 'player_color' is defined

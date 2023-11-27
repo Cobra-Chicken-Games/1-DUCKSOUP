@@ -20,35 +20,17 @@
 require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
 
-class DuckSoupTheRestaurantGame extends Table
-{
-
-
-
-	function __construct( )
-	{
-
-        // Constants for global variable IDs
-        const GV_CURRENT_PLAYER = 10;
-        const GV_BANK_BALANCE = 11;
-        const GV_SOUPER_DUCKATS_COUNT = 12;
-
-         // Constants for game variant IDs (start from 100 for game options)
-         const GO_GAME_VARIANT = 100;
-        // Add more game variant IDs as needed
-
+class DuckSoupTheRestaurantGame extends Table {   
+    function __construct() {
         parent::__construct();
-        
-        self::initGameStateLabels( array( 
-            "currentPlayer" => self::GV_CURRENT_PLAYER,
-            "bankBalance" => self::GV_BANK_BALANCE,
-            "souperDuckatsCount" => self::GV_SOUPER_DUCKATS_COUNT,
-            // Add more labels for your global variables
-            "gameVariant" => self::GO_GAME_VARIANT, // This could be a game variant option
-            // Add more labels for your game variants
-        ) );        
-	}
-	
+        self::initGameStateLabels(array(
+            "currentPlayer" => 10,
+            "bankBalance" => 11,
+            "souperDuckatsCount" => 12,
+            "gameVariant" => 100,
+        ));
+    }
+    
     protected function getGameName( )
     {
 		// Used for translations and stuff. Please do not modify.
@@ -86,8 +68,8 @@ class DuckSoupTheRestaurantGame extends Table
 
             // Init global values with their initial values
             // Assume we have global variables like 'currentRound' and 'maxScore'
-            self::setGameStateInitialValue('currentRound', 1);
-            self::setGameStateInitialValue('maxScore', 0);
+            //self::setGameStateInitialValue('currentRound', 1);
+           // self::setGameStateInitialValue('maxScore', 0);
 
             // Init game statistics
             // Assuming 'totalRounds' and 'totalPoints' are defined in your stats.inc.php file
@@ -116,51 +98,50 @@ class DuckSoupTheRestaurantGame extends Table
         _ when the game starts
         _ when a player refreshes the game page (F5)
     */
-    protected function getAllDatas()
+  
+    protected function getAllDatas() 
     {
-        protected function getAllDatas()
-        {
-            $result = array();
-        
-            $current_player_id = self::getCurrentPlayerId();    // Get the id of the current player
-        
-            // Get information about players
-            // If you have additional player fields in the database, like 'player_avatar', you can add them here
-            $sql = "SELECT player_id id, player_score score, player_color color, player_avatar avatar FROM player ";
-            $result['players'] = self::getCollectionFromDb($sql);
-        
-            // Get other public game state data that is not specific to any player
-            // This could include data like the state of the game board, any public counters, etc.
-            // Example:
-            // $result['gameBoard'] = self::getGameBoardData();
-        
-            // Get private data specific to the current player
-            // This is where you add code to get private data that only the current player should see.
-            // For example, if your game involves hidden cards in the player's hand, you would retrieve them here.
-            // Example:
-            // $result['hand'] = $this->getPlayerHand($current_player_id);
-        
-            // If there is data that all players should receive but it's formatted differently for the current player,
-            // that processing should be done here.
-            // Example:
-            // $result['playerData'] = $this->getPlayerSpecificData($current_player_id);
-        
-            // If your game has elements that change during the game and players need to keep track of them,
-            // like resources, you'd query those here.
-            // Example:
-            // $result['resources'] = $this->getPlayerResources($current_player_id);
-        
-            // It's important that any sensitive data not be sent to the player unless it's their own.
-            // Always filter out any secret information that the current player should not see.
-        
-            // If there are global objects or states that are affected by player actions and need to be synchronized with the client-side,
-            // you should also retrieve them here.
-            // Example:
-            // $result['globalEvent'] = self::getGlobalEventData();
-        
-            return $result;
-        }
+        $result = array();
+
+        $current_player_id = self::getCurrentPlayerId();    // Get the id of the current player
+
+        // Get information about players
+        // If you have additional player fields in the database, like 'player_avatar', you can add them here
+        $sql = "SELECT player_id id, player_score score, player_color color, player_avatar avatar FROM player ";
+        $result['players'] = self::getCollectionFromDb($sql);
+
+        // Get other public game state data that is not specific to any player
+        // This could include data like the state of the game board, any public counters, etc.
+        // Example:
+        // $result['gameBoard'] = self::getGameBoardData();
+
+        // Get private data specific to the current player
+        // This is where you add code to get private data that only the current player should see.
+        // For example, if your game involves hidden cards in the player's hand, you would retrieve them here.
+        // Example:
+        // $result['hand'] = $this->getPlayerHand($current_player_id);
+
+        // If there is data that all players should receive but it's formatted differently for the current player,
+        // that processing should be done here.
+        // Example:
+        // $result['playerData'] = $this->getPlayerSpecificData($current_player_id);
+
+        // If your game has elements that change during the game and players need to keep track of them,
+        // like resources, you'd query those here.
+        // Example:
+        // $result['resources'] = $this->getPlayerResources($current_player_id);
+
+        // It's important that any sensitive data not be sent to the player unless it's their own.
+        // Always filter out any secret information that the current player should not see.
+
+        // If there are global objects or states that are affected by player actions and need to be synchronized with the client-side,
+        // you should also retrieve them here.
+        // Example:
+        // $result['globalEvent'] = self::getGlobalEventData();
+
+        return $result;
     }
+
 
     /*
         getGameProgression:
@@ -213,7 +194,7 @@ class DuckSoupTheRestaurantGame extends Table
         (note: each method below must match an input method in ducksouptherestaurantgame.action.php)
     */
 
-    function playCard($card_id)
+    function playCard1($card_id)
     {
         self::checkAction('playCard'); // Ensure it's the correct state and player's turn.
         
@@ -298,8 +279,7 @@ class DuckSoupTheRestaurantGame extends Table
 //////////// Game state arguments
 ////////////
 
-    function playCard($card_id)
-    {
+    function playCard2($card_id) {
         // Check that the player can play a card now (based on the game state defined in states.inc.php)
         self::checkAction('playCard');
     
@@ -307,8 +287,8 @@ class DuckSoupTheRestaurantGame extends Table
         
         // Assuming there's a table 'cards' where cards are stored with a 'card_id' and 'card_location'
         // Verify that the card belongs to the player and is in a location from which it can be played
-        $sql = "SELECT card_id FROM cards WHERE card_id = '$card_id' AND card_location = 'hand' AND player_id = '$player_id' ";
-        $card = self::getObjectFromDb($sql);
+        $sql = "SELECT card_id FROM cards WHERE card_id = ? AND card_location = 'hand' AND player_id = ?";
+        $card = self::getObjectFromDb($sql, array($card_id, $player_id));
         
         if(!$card) {
             throw new BgaUserException(self::_("You can't play this card."));
@@ -316,8 +296,8 @@ class DuckSoupTheRestaurantGame extends Table
         
         // Add your game logic to play a card
         // For example, move the card to the 'table' and update any game state as needed
-        $sql = "UPDATE cards SET card_location = 'table' WHERE card_id = '$card_id'";
-        self::DbQuery($sql);
+        $sql = "UPDATE cards SET card_location = 'table' WHERE card_id = ?";
+        self::DbQuery($sql, array($card_id));
         
         // Assuming the card has a name, we get it for the notification
         $card_name = self::getCardNameById($card_id);
@@ -342,8 +322,8 @@ class DuckSoupTheRestaurantGame extends Table
     function getCardNameById($card_id) {
         // This function would retrieve the card's name based on its ID.
         // This is a placeholder; you would replace this with the actual logic to get a card's name.
-        $sql = "SELECT card_name FROM cards WHERE card_id = '$card_id'";
-        return self::getUniqueValueFromDb($sql);
+        $sql = "SELECT card_name FROM cards WHERE card_id = ?";
+        return self::getUniqueValueFromDb($sql, array($card_id));
     }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -418,11 +398,17 @@ function isGameOver()
     return false; // Placeholder - replace with actual game end condition.
 }
 
-function getGameResults()
+function getGameResults(): array
 {
-    // Calculate the final scores and return the results.
-    // ...
-    return $results; // Placeholder - replace with actual results calculation.
+    $scores = [];
+    foreach ($this->players as $player_id => $player) {
+        // Calculate score for the current player.
+        // Replace this with your actual score calculation.
+        $score = 0; 
+
+        $scores[$player_id] = $score;
+    }
+    return $scores; // Replace with actual results calculation.
 }
 
 function checkEndGameCondition()
@@ -488,13 +474,13 @@ function checkEndGameCondition()
     */
     
     function upgradeTableDb( $from_version )
-    {
+    {}
         // $from_version is the current version of this game database, in numerical form.
         // For example, if the game was running with a release of your game named "140430-1345",
         // $from_version is equal to 1404301345
         
-        // Example:
-//        if( $from_version <= 1404301345 )
+}       // Example:
+//       if( $from_version <= 1404301345 )
 //        {
 //            // ! important ! Use DBPREFIX_<table_name> for all tables
 //
@@ -509,9 +495,7 @@ function checkEndGameCondition()
 //            self::applyDbUpgradeToAllDB( $sql );
 //        }
 //        // Please add your future database scheme changes here
-//
-//
+    
 
 
-    }    
-}
+?>
