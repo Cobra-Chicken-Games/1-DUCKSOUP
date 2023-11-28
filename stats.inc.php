@@ -55,7 +55,11 @@ $stats_type = array(
         "turns_number" => array("id"=> 10,
                     "name" => totranslate("Number of turns"),
                     "type" => "int" ),
-
+        
+    
+        "totalRounds" => array("id"=> 11,
+                    "name" => totranslate("Total Rounds"),
+                    "type" => "int" ),
 /*
         Examples:
 
@@ -76,11 +80,7 @@ $stats_type = array(
         "turns_number" => array("id"=> 10,
                     "name" => totranslate("Number of turns"),
                     "type" => "int" ),
-
-        "totalRounds" => array("id"=> 11,
-                    "name" => totranslate("Total Rounds"),
-                    "type" => "int" ),
-                    
+      
         "totalPoints" => array("id"=> 12,
                     "name" => totranslate("Total Points"),
                     "type" => "int" ),
