@@ -22,11 +22,6 @@ require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
 class DuckSoupTheRestaurantGame extends Table {
 
-    //fetches gameID and returns interger for gameID required functions.
-    function getGameID() {
-        $gameId = $this->getGameID();
-        return $gameId;
-    {
     function __construct() {
         parent::__construct();
         self::initGameStateLabels(array(
@@ -37,12 +32,12 @@ class DuckSoupTheRestaurantGame extends Table {
         ));
     }
     
-    protected function getGameName( )
-    {
-		// Used for translations and stuff. Please do not modify.
-        return "ducksouptherestaurantgame";
-    }	
 
+    protected function getGameName() {
+        // Used for translations and stuff. Please do not modify.
+        return "ducksouptherestaurantgame";
+    }
+    	
     /*
         setupNewGame:
         
@@ -50,16 +45,17 @@ class DuckSoupTheRestaurantGame extends Table {
         In this method, you must setup the game according to the game rules, so that
         the game is ready to be played.
     */
-    protected function setupNewGame($players, $options = array()) {
+    
+    function setupNewGame($players, $options = array()) {
+           // Call the method to import questions from CSV
+            $this->importQuestionsFromCSV();
 
-    // Call the method to import questions from CSV
-    $this->importQuestionsFromCSV();
+        // Check if the necessary data (e.g., questions) is present in the database
+        $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
+        if ($questionsCount == 0) {
+            throw new BgaUserException("Error: Questions data is not initialized in the database.");
+        }
 
-    // Check if the necessary data (e.g., questions) is present in the database
-    $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
-    if ($questionsCount == 0) {
-        throw new BgaUserException("Error: Questions data is not initialized in the database.");
-    {
         // Set the colors of the players with HTML color code
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
@@ -69,12 +65,17 @@ class DuckSoupTheRestaurantGame extends Table {
         $values = array();
         foreach ($players as $player_id => $player) {
             $color = array_shift($default_colors);
-            $values[] = "('" . $player_id . "','$color','" . addslashes($player['player_canal']) . "','" . addslashes($player['player_name']) . "','" . addslashes($player['player_avatar']) . "')";
-        }
-        $sql .= implode(',', $values);
-        self::DbQuery($sql);
-        self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
-        self::reloadPlayersBasicInfos();
+            $values[] = "('" . $player_id 
+                        ."','$color','" 
+                        . addslashes($player['player_canal']) 
+                        . "','" . addslashes($player['player_name']) 
+                        . "','" . addslashes($player['player_avatar']) 
+                        . "')";
+            }
+            $sql .= implode(',', $values);
+            self::DbQuery($sql);
+            self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
+            self::reloadPlayersBasicInfos();
     
         /************ Start the game initialization *****/
     
@@ -99,35 +100,38 @@ class DuckSoupTheRestaurantGame extends Table {
     
         /************ End of the game initialization *****/
     }
+   
+    function importQuestionsFromCSV() {
 
-    private fucntion importQuestionsFromCSV() {
-        //set database connection parameters and value for dbName and ID.
-        $dbHost = 'studio.boardgamearena.com/db/';
-        $dbUsername = 'CobraChicken';
-        $dbPassword = '3238fb8e02a6bd5a8c2a245d45e6c872';
-        $gID = getGameID();
-        $dbName = 'ebd_ducksouptherestaurantgame_'.$gID.'';
-        echo $dbName;
+    //fetches gameID and returns interger for gameID required functions.
+    
+         // Set database connection parameters and value for dbName and ID.
+    $dbHost = 'localhost:3306';
+    $dbUsername = 'CobraChicken';
+    $dbPassword = '3238fb8e02a6bd5a8c2a245d45e6c872';
+    $gID = current(array_slice( explode("_", self::getUniqueValueFromDB( "SELECT DATABASE();" )), -1, 1 ));
+    $dbName = 'ebd_ducksouptherestaurantgame_'.$gID.'';
+    echo $dbName;
 
-        // Connect to the database
-        $mysqli = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+    // Connect to the database
+    $mysqli = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 
-        // Check for database connection error
-        if ($mysqli->connect_error) {
-            die("Connection failed: " . $mysqli->connect_error);
-        }
+    // Check for database connection error
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
 
-        // Path to the CSV file
-        $csvFilePath = '\csv\questions.csv';
+    // Path to the CSV file
+    $csvFilePath = '\csv\questions.csv';
 
-        // Prepare the SQL statement
-        $stmt = $mysqli->prepare("INSERT INTO questions (question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, duckat_value) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    // Prepare the SQL statement
+    $stmt = $mysqli->prepare("INSERT INTO questions (question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, duckat_value) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-        // Check if the statement was prepared correctly
-        if ($stmt === false) {
-            die("Error preparing statement: " . $mysqli->error);
-        }
-
+    // Check if the statement was prepared correctly
+    if ($stmt === false) {
+        // Handle the error
+    }
+        
         // Open the CSV file for reading
         if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
             // Skip the header row
@@ -164,7 +168,7 @@ class DuckSoupTheRestaurantGame extends Table {
         _ when a player refreshes the game page (F5)
     */
   
-    protected function getAllDatas() 
+    function getAllDatas() 
     {
         $result = array();
 
@@ -548,7 +552,7 @@ function checkEndGameCondition()
         // For example, if the game was running with a release of your game named "140430-1345",
         // $from_version is equal to 1404301345
         
-}       // Example:
+      // Example:
 //       if( $from_version <= 1404301345 )
 //        {
 //            // ! important ! Use DBPREFIX_<table_name> for all tables
@@ -564,7 +568,7 @@ function checkEndGameCondition()
 //            self::applyDbUpgradeToAllDB( $sql );
 //        }
 //        // Please add your future database scheme changes here
-    
 
+    }
 
 ?>
