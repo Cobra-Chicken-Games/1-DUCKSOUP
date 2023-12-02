@@ -151,23 +151,27 @@ class DuckSoupTheRestaurantGame extends Table {
     */
     function getGameProgression()
     {
-        // Retrieve the maximum score from the game state or settings.
-        // Assuming the end score to win the game is stored in a global variable or can be determined from the game settings.
-        $endScore = self::getGameStateValue('endScore');
+        // Assuming the victory condition is to have a full set of Excellent staff
+        // Define the total number of Excellent staff needed to win the game
+        $totalExcellentStaffNeeded = 12; // This number should be adjusted based on the game's rules
     
-        // Find out the current highest score among all players.
-        $sql = "SELECT MAX(player_score) as highestScore FROM player";
-        $highestScore = self::getUniqueValueFromDB($sql);
+        // Calculate the current progression towards this goal for all players
+        $sql = "SELECT player_id, COUNT(staff_id) AS excellentStaffCount FROM staff WHERE staff_quality = 'Excellent' GROUP BY player_id";
+        $playersStaffCounts = self::getCollectionFromDb($sql);
     
-        // Calculate the progression.
-        // The highest score achieved by a player is divided by the score needed to win, then multiplied by 100 to get a percentage.
-        $progression = ($highestScore / $endScore) * 100;
+        $highestProgress = 0;
+        foreach ($playersStaffCounts as $playerId => $staffData) {
+            $currentProgress = ($staffData['excellentStaffCount'] / $totalExcellentStaffNeeded) * 100;
+            if ($currentProgress > $highestProgress) {
+                $highestProgress = $currentProgress;
+            }
+        }
     
         // Ensure that the progression does not exceed 100%
-        $progression = min(100, $progression);
+        $highestProgress = min(100, $highestProgress);
     
-        // Cast the progression to an integer to conform with the expected return type.
-        return (int)$progression;
+        // Cast the progression to an integer to conform with the expected return type
+        return (int)$highestProgress;
     }
 
 
