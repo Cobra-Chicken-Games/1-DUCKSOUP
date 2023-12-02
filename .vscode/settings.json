@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "193.70.55.232",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "ducksoup",
+            "username": "CobraChicken",
+            "database": "ebd_ducksouptherestaurantgame_530256"
+        }
+    ]
+}
