@@ -44,49 +44,45 @@ class DuckSoupTheRestaurantGame extends Table {
         In this method, you must setup the game according to the game rules, so that
         the game is ready to be played.
     */
-    protected function setupNewGame( $players, $options = array() )
-    {    
-            // Set the colors of the players with HTML color code
-            // The default below is red/green/blue/orange/brown
-            // The number of colors defined here must correspond to the maximum number of players allowed for the game
-            $gameinfos = self::getGameinfos();
-            $default_colors = $gameinfos['player_colors'];
-
-            // Create players
-            $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
-            $values = array();
-            foreach ($players as $player_id => $player) {
-                $color = array_shift($default_colors);
-                $values[] = "('" . $player_id . "','$color','" . addslashes($player['player_canal']) . "','" . addslashes($player['player_name']) . "','" . addslashes($player['player_avatar']) . "')";
-            }
-            $sql .= implode(',', $values);
-            self::DbQuery($sql);
-            self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
-            self::reloadPlayersBasicInfos();
-
-            /************ Start the game initialization *****/
-
-            // Init global values with their initial values
-            // Assume we have global variables like 'currentRound' and 'maxScore'
-            //self::setGameStateInitialValue('currentRound', 1);
-           // self::setGameStateInitialValue('maxScore', 0);
-
-            // Init game statistics
-            // Assuming 'totalRounds' and 'totalPoints' are defined in your stats.inc.php file
-            self::initStat('table', 'totalRounds', 0); // Init a table statistics
-            self::initStat('player', 'totalPoints', 0); // Init a player statistics (for all players)
-
-            // TODO: setup the initial game situation here
-            // This can include setting up the board, dealing cards, distributing resources, etc.
-            // Example: self::setupBoard();
-            
-            // You can use helper functions to initialize the game state
-            // Example: $this->initializePlayers();
-
-            // Activate first player (which is in general a good idea :) )
-            $this->activeNextPlayer();
-
-            /************ End of the game initialization *****/
+    protected function setupNewGame($players, $options = array()) {
+        // Set the colors of the players with HTML color code
+        $gameinfos = self::getGameinfos();
+        $default_colors = $gameinfos['player_colors'];
+    
+        // Create players
+        $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
+        $values = array();
+        foreach ($players as $player_id => $player) {
+            $color = array_shift($default_colors);
+            $values[] = "('" . $player_id . "','$color','" . addslashes($player['player_canal']) . "','" . addslashes($player['player_name']) . "','" . addslashes($player['player_avatar']) . "')";
+        }
+        $sql .= implode(',', $values);
+        self::DbQuery($sql);
+        self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
+        self::reloadPlayersBasicInfos();
+    
+        /************ Start the game initialization *****/
+    
+        // Initialize global values
+        self::setGameStateInitialValue('currentPlayer', 0); // Assuming 'currentPlayer' is a global variable
+        self::setGameStateInitialValue('bankBalance', 0); // Assuming 'bankBalance' is a global variable
+        self::setGameStateInitialValue('souperDuckatsCount', 3); // Assuming each player starts with 3 Souper Duckats
+    
+        // Initialize game statistics
+        self::initStat('table', 'totalRounds', 0); // Initialize a table statistic
+        self::initStat('player', 'totalPoints', 0); // Initialize a player statistic for all players
+    
+        // Setup the initial game situation
+        // This can include setting up the board, dealing cards, distributing resources, etc.
+        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
+        $this->setupInitialGameBoard();
+        $this->distributeInitialStaff();
+        $this->setupRestaurantCards();
+    
+        // Activate the first player
+        $this->activeNextPlayer();
+    
+        /************ End of the game initialization *****/
     }
 
     /*

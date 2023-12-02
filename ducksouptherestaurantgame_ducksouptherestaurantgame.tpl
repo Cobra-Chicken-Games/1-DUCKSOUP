@@ -1,28 +1,7 @@
 {OVERALL_GAME_HEADER}
 
-<div id="gameContainer">
-    <!-- Staff Board -->
-    <div id="staffBoard">
-        <!-- Dynamic content: Staff tiles -->
-    </div>
-
-    <!-- Dice and Staff Die Area -->
-    <div id="diceArea">
-        <!-- Dynamic content: Dice roll results -->
-    </div>
-
-    <!-- Restaurant Sign -->
-    <div id="restaurantSign">
-        <!-- Dynamic content: Player's restaurant name -->
-    </div>
-
-    <!-- Currency and Souper Duckats Display -->
-    <div id="currencyDisplay">
-        <!-- Dynamic content: Player's Duckats and Souper Duckats -->
-    </div>
-
-    <!-- Game Board -->
-    <div id="gameBoard">
+<!-- Game Board -->
+<div id="gameBoard">
     <div class="container">
         <div class="clearfix">
 
@@ -37,96 +16,80 @@
                     <button id="letter-d">D</button>
                 </div>
 
-                <!-- DICE BUTTONS-->
+                <!-- DICE BUTTONS -->
                 <div class="dice-buttons">
-
-                    <!-- STAFF DIE-->
+                    <!-- STAFF DIE -->
                     <button id="staff-die">
                         <img src="./img/staff-die.png">
                         <span>Roll the<br>Staff Die</span>
                     </button>
 
-                    <!-- MOVEMENT DICE-->
+                    <!-- MOVEMENT DICE -->
                     <button id="move-die">
                         <img src="./img/movement-dice.png">
                         <span>Roll for<br>Movement</span>
                     </button>
-
                 </div>
 
-
+                <!-- STAFF BOARD CONTAINER -->
+                <!-- BEGIN gameboard -->
                 <div class="staff-board-container">
-
                     <!-- STAFF BOARD ARROWS -->
                     <button id="left-arrow" class="arrow"><span></span></button>
                     <button id="right-arrow" class="arrow"><span></span></button>
 
                     <div class="player-header">
-
                         <div class="clearfix">
-
                             <!-- PLAYER NAME -->
-                            <div class="player-name left player1">
-                                12312547894564552123
+                            <div class="player-name left player_${PLAYER_COLOR}">
+                                ${PLAYER_NAME}
                             </div>
 
-                            <!-- PLAYER STATS-->
+                            <!-- PLAYER STATS -->
                             <div class="player-stats right">
                                 <div class="clearfix">
                                     <div class="left">
-
                                         <!-- SUPER DUCKATS -->
                                         <div class="clearfix super-duckat">
                                             <div class="value left">
-                                                3
+                                                ${PLAYER_SUPER_DUCKATS}
                                             </div>
                                             <img class="left" src="./img/super-duckats.png">
                                         </div>
-
                                     </div>
 
-
                                     <div class="left">
-
                                         <!-- DUCKATS -->
                                         <div class="clearfix duckat">
                                             <div class="value left">
-                                                100
+                                                ${PLAYER_DUCKATS}
                                             </div>
                                             <img class="left" src="./img/duckats.png">
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
-                        <div class="player-background player1"></div>
-
+                        <div class="player-background player_${PLAYER_COLOR}"></div>
                     </div>
-
 
                     <!-- STAFF BOARD -->
                     <img class="staff-board" src="./img/staff-board.jpg">
                 </div>
-
+                <!-- END gameboard -->
             </div>
 
-            <!-- LEFT CONTENT-->
+            <!-- LEFT CONTENT -->
             <div class="left-content">
-
                 <div class="board-container">
-
                     <!-- DUCK IMAGE TO DISPLAY BY DEFAULT, HIDDEN WHEN CONTENT SHOWN -->
                     <img class="inner-board inactive" src="./img/inner-board.png">
 
                     <!-- WRITTEN CONTENT SHOWN IN MIDDLE OF BOARD, INACTIVE BY DEFAULT -->
                     <div class="board-contents active">
-                        <h2>Lorem ipsum dolor sit</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar
-                            vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam erat
-                            volutpat. Nunc auctor.</p>
+                        <h2>${BOARD_TITLE}</h2>
+                        <p>${BOARD_TEXT}</p>
                     </div>
 
                     <!-- BOARD -->
@@ -134,25 +97,6 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-</body>
-    </div>
-
-    <!-- Cards and Boxes -->
-    <div id="cardsBox">
-        <!-- Dynamic content: Restaurant and Question cards -->
-    </div>
-
-    <!-- Player Pawns and Turn Order -->
-    <div id="playerPawns">
-        <!-- Dynamic content: Player pawns and current turn indicator -->
-    </div>
-
-    <!-- Game Actions and Events -->
-    <div id="gameActions">
-        <!-- Dynamic content: Actions like hiring staff, answering questions, etc. -->
     </div>
 </div>
 
