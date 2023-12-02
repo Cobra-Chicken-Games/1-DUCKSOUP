@@ -20,7 +20,13 @@
 require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
 
-class DuckSoupTheRestaurantGame extends Table {   
+class DuckSoupTheRestaurantGame extends Table {
+
+    //fetches gameID and returns interger for gameID required functions.
+    function getGameID() {
+        $gameId = $this->getGameID();
+        return $gameId;
+    {
     function __construct() {
         parent::__construct();
         self::initGameStateLabels(array(
@@ -45,6 +51,15 @@ class DuckSoupTheRestaurantGame extends Table {
         the game is ready to be played.
     */
     protected function setupNewGame($players, $options = array()) {
+
+    // Call the method to import questions from CSV
+    $this->importQuestionsFromCSV();
+
+    // Check if the necessary data (e.g., questions) is present in the database
+    $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
+    if ($questionsCount == 0) {
+        throw new BgaUserException("Error: Questions data is not initialized in the database.");
+    {
         // Set the colors of the players with HTML color code
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
@@ -83,6 +98,60 @@ class DuckSoupTheRestaurantGame extends Table {
         $this->activeNextPlayer();
     
         /************ End of the game initialization *****/
+    }
+
+    private fucntion importQuestionsFromCSV() {
+        //set database connection parameters and value for dbName and ID.
+        $dbHost = 'studio.boardgamearena.com/db/';
+        $dbUsername = 'CobraChicken';
+        $dbPassword = '3238fb8e02a6bd5a8c2a245d45e6c872';
+        $gID = getGameID();
+        $dbName = 'ebd_ducksouptherestaurantgame_'.$gID.'';
+        echo $dbName;
+
+        // Connect to the database
+        $mysqli = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+        // Check for database connection error
+        if ($mysqli->connect_error) {
+            die("Connection failed: " . $mysqli->connect_error);
+        }
+
+        // Path to the CSV file
+        $csvFilePath = '\csv\questions.csv';
+
+        // Prepare the SQL statement
+        $stmt = $mysqli->prepare("INSERT INTO questions (question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, duckat_value) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+        // Check if the statement was prepared correctly
+        if ($stmt === false) {
+            die("Error preparing statement: " . $mysqli->error);
+        }
+
+        // Open the CSV file for reading
+        if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
+            // Skip the header row
+            fgetcsv($handle);
+
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                // Bind parameters to the prepared statement
+                $stmt->bind_param("ssssssi", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
+
+                // Execute the prepared statement
+                if (!$stmt->execute()) {
+                    echo "Error executing statement: " . $stmt->error . "\n";
+                }
+            }
+
+            // Close the file
+            fclose($handle);
+        }
+
+        // Close the prepared statement
+        $stmt->close();
+
+        // Close the database connection
+        $mysqli->close();
     }
 
     /*
