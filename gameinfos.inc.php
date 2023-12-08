@@ -19,19 +19,19 @@ $gameinfos = array(
 'designer' => 'Greg and Martin Thompson',       
 
 // Game artist (or game artists, separated by commas)
-'artist' => ' Michael Spahitz',         
+'artist' => 'Larry Jones',         
 
 // Year of FIRST publication of this game. Can be negative.
 'year' => 2011,                 
 
 // Game publisher (use empty string if there is no publisher)
-'publisher' => 'BoardGameDesign.com',                     
+'publisher' => '',                     
 
 // Url of game publisher website
-'publisher_website' => 'http://www.boardgamedesign.com/',   
+'publisher_website' => '',   
 
 // Board Game Geek ID of the publisher
-'publisher_bgg_id' => 5716,
+'publisher_bgg_id' => ,
 
 // Board game geek ID of the game
 'bgg_id' => 122352,
