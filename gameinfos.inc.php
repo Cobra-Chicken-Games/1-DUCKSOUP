@@ -25,7 +25,7 @@ $gameinfos = array(
 'year' => 2011,                 
 
 // Game publisher (use empty string if there is no publisher)
-'publisher' => '',                     
+'publisher' => 'Self Published',                     
 
 // Url of game publisher website
 'publisher_website' => '',   
