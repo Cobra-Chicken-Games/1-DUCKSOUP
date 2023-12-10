@@ -2,7 +2,7 @@
  /**
   *------
   * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
-  * DuckSoupTheRestaurantGame implementation : © <Your name here> <Your email address here>
+  * DuckSoupTheRestaurantGame implementation : @ RJ Hidson <rhidson1@nait.ca>, @ Ashton Williams <ashtonw@nait.ca>, @ Rubelyn Ragasa <rragasa1@nait.ca>
   * 
   * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
   * See http://en.boardgamearena.com/#!doc/Studio for more information.
@@ -47,8 +47,9 @@ class DuckSoupTheRestaurantGame extends Table {
     */
     
     function setupNewGame($players, $options = array()) {
+
            // Call the method to import questions from CSV
-            $this->importQuestionsFromCSV();
+            //$this->importQuestionsFromCSV();
 
         // Check if the necessary data (e.g., questions) is present in the database
         $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
@@ -94,68 +95,119 @@ class DuckSoupTheRestaurantGame extends Table {
         $this->setupInitialGameBoard();
         $this->distributeInitialStaff();
         $this->setupRestaurantCards();
-    
+        
         // Activate the first player
-        $this->activeNextPlayer();
+        $this->gamestate->changeActivePlayer($player_id);
     
         /************ End of the game initialization *****/
     }
    
-    function importQuestionsFromCSV() {
+    // function importQuestionsFromCSV() {
 
-    //fetches gameID and returns interger for gameID required functions.
+    //     $questions = [
+    //         [
+    //             'duckats_value' => '40',
+    //             'category' => 'Additives',
+    //             'question_text' => 'Kwok disease results from overuse of',
+    //             'answer_a' => 'Artificial Coloring',
+    //             'answer_b' => 'Monosodium Glutamate',
+    //             'answer_c' => 'Sulfites',
+    //             'answer_d' => '',
+    //             'correct_answer' => 'B',
+    //             'answer_text' => "The symptoms of Kwok's disease are burning pains in the chest, dizziness and numbness. "
+    //         ],
+    //         [
+    //             'duckats_value' => '50',
+    //             'category' => 'Additives',
+    //             'question_text' => 'Xantham gum, a thickener, emulsifier and stabilizer in dairy products, dressings and other foods, is made from',
+    //             'answer_a' => 'Artificial Ingredients',
+    //             'answer_b' => 'Glucose',
+    //             'answer_c' => 'Palm Oil',
+    //             'answer_d' => 'Potato Starch',
+    //             'correct_answer' => 'B',
+    //             'answer_text' => ''
+    //         ],
+    //         [
+    //             'duckats_value' => '30',
+    //             'category' => 'Baking',
+    //             'question_text' => 'True or false? Baking at high altitudes requires more yeast or baking powder.',
+    //             'answer_a' => 'TRUE',
+    //             'answer_b' => 'FALSE',
+    //             'answer_c' => '',
+    //             'answer_d' => '',
+    //             'correct_answer' => 'B',
+    //             'answer_text' => 'It requires less yeast or baking powder. The higher the altitude, the lower the atmospheric pressure, which means that the carbon dioxide generated in baking encounters less resistance from the surrounding air.'
+    //         ],
+    //         // ... more questions
+    //     ];
+
+    // // // Path to the CSV file
+    // // $filename = '/ducksouptherestaurantgame/ducksouptherestaurantgame/modules/csv/questions.csv';
+    // // echo getcwd();
+
+    // // //error handling for the csv file import
+    // // if (!file_exists($filename)) {
+    // //     die("File not found: $filename");
+    // // } else if (!is_readable($filename)) {
+    // //     die("File not readable: $filename");
+    // // }
+
+    // // $questionsArray = []; // This will hold the main array of questions
+
+    // // // Open the CSV file for reading
+    // // if (($handle = fopen($filename, "r")) !== FALSE) {
+    // //     $headers = fgetcsv($handle); // Read the first row as headers
     
-         // Set database connection parameters and value for dbName and ID.
-    $dbHost = 'localhost:3306';
-    $dbUsername = 'CobraChicken';
-    $dbPassword = '3238fb8e02a6bd5a8c2a245d45e6c872';
-    $gID = current(array_slice( explode("_", self::getUniqueValueFromDB( "SELECT DATABASE();" )), -1, 1 ));
-    $dbName = 'ebd_ducksouptherestaurantgame_'.$gID.'';
-    echo $dbName;
+    // //     // Loop through each row of the CSV file
+    // //     while (($data = fgetcsv($handle)) !== FALSE) {
+    // //         // Build the question array using the headers for keys
+    // //         $question = array_combine($headers, $data);
+    
+    // //         // Extract the answers and correct answer into their own sub-array
+    // //         $answers = [
+    // //             'answer_a' => $question['answer_a'],
+    // //             'answer_b' => $question['answer_b'],
+    // //             'answer_c' => $question['answer_c'],
+    // //             'answer_d' => $question['answer_d'],
+    // //             'correct_answer' => $question['correct_answer'],
+    // //             'answer_text' => $question['answer_text']
+    // //         ];
+    
+    // //         // Remove the individual answers from the main question array
+    // //         unset($question['answer_a'], $question['answer_b'], $question['answer_c'], $question['answer_d'], $question['correct_answer'], $question['answer_text']);
+    
+    // //         // Add the answers sub-array to the question
+    // //         $question['answers'] = $answers;
+    
+    // //         // Add the question array to the main questions array
+    // //         $questionsArray[] = $question;
+    // //     }
+    // //     fclose($handle);
+    // }
 
-    // Connect to the database
-    $mysqli = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-
-    // Check for database connection error
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
+    function setupInitialGameBoard() {
+        // TO DO:
+        // Set up the initial game board.
+        // This could include setting up the restaurant cards, distributing initial staff, etc.
+        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
+        // ...
+    }
+    
+    function distributeInitialStaff() {
+        // TO DO:
+        // Distribute initial staff to players.
+        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
+        // ...
     }
 
-    // Path to the CSV file
-    $csvFilePath = '\csv\questions.csv';
-
-    // Prepare the SQL statement
-    $stmt = $mysqli->prepare("INSERT INTO questions (question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, duckat_value) VALUES (?, ?, ?, ?, ?, ?, ?)");
-
-    // Check if the statement was prepared correctly
-    if ($stmt === false) {
-        // Handle the error
-    }
-        
-        // Open the CSV file for reading
-        if (($handle = fopen($csvFilePath, "r")) !== FALSE) {
-            // Skip the header row
-            fgetcsv($handle);
-
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                // Bind parameters to the prepared statement
-                $stmt->bind_param("ssssssi", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
-
-                // Execute the prepared statement
-                if (!$stmt->execute()) {
-                    echo "Error executing statement: " . $stmt->error . "\n";
-                }
-            }
-
-            // Close the file
-            fclose($handle);
+    function changeActivePlayer($player_id) {
+            // Check if the provided player ID is valid
+        if (!isset($this->players[$player_id])) {
+            throw new BgaUserException("Invalid player ID: $player_id");
         }
 
-        // Close the prepared statement
-        $stmt->close();
-
-        // Close the database connection
-        $mysqli->close();
+        // Change the active player
+        $this->gamestate->changeActivePlayer($player_id);
     }
 
     /*
@@ -167,7 +219,15 @@ class DuckSoupTheRestaurantGame extends Table {
         _ when the game starts
         _ when a player refreshes the game page (F5)
     */
-  
+
+    function setupRestaurantCards() {
+        // TO DO:
+        // Set up the restaurant cards.
+        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
+        // ...
+    }   
+    
+
     function getAllDatas() 
     {
         $result = array();
@@ -222,6 +282,7 @@ class DuckSoupTheRestaurantGame extends Table {
         This method is called each time we are in a game state with the "updateGameProgression" property set to true 
         (see states.inc.php)
     */
+
     function getGameProgression()
     {
         // Assuming the victory condition is to have a full set of Excellent staff
@@ -490,6 +551,7 @@ function checkEndGameCondition()
     // ...
     return false; // Placeholder - replace with actual end game condition check.
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //////////// Zombie
 ////////////
@@ -569,6 +631,6 @@ function checkEndGameCondition()
 //        }
 //        // Please add your future database scheme changes here
 
-    }
+}
 
 ?>

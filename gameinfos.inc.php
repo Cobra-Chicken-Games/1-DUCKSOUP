@@ -31,7 +31,7 @@ $gameinfos = array(
 'publisher_website' => '',   
 
 // Board Game Geek ID of the publisher
-'publisher_bgg_id' => ,
+'publisher_bgg_id' => 5716,
 
 // Board game geek ID of the game
 'bgg_id' => 122352,
