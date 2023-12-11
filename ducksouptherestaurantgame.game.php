@@ -52,10 +52,10 @@ class DuckSoupTheRestaurantGame extends Table {
             //$this->importQuestionsFromCSV();
 
         // Check if the necessary data (e.g., questions) is present in the database
-        $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
-        if ($questionsCount == 0) {
-            throw new BgaUserException("Error: Questions data is not initialized in the database.");
-        }
+        // $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
+        // if ($questionsCount == 0) {
+        //     throw new BgaUserException("Error: Questions data is not initialized in the database.");
+        // }
 
         // Set the colors of the players with HTML color code
         $gameinfos = self::getGameinfos();

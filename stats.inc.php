@@ -52,12 +52,12 @@ $stats_type = array(
     // Statistics global to table
     "table" => array(
 
-        "turns_number" => array("id"=> 10,
+        "turns_number" => array("ident"=> 10,
                     "name" => totranslate("Number of turns"),
                     "type" => "int" ),
         
     
-        "totalRounds" => array("id"=> 11,
+        "totalRounds" => array("ident"=> 11,
                     "name" => totranslate("Total Rounds"),
                     "type" => "int" ),
 /*
@@ -77,11 +77,11 @@ $stats_type = array(
     // Statistics existing for each player
     "player" => array(
 
-        "turns_number" => array("id"=> 10,
+        "turns_number" => array("ident"=> 10,
                     "name" => totranslate("Number of turns"),
                     "type" => "int" ),
       
-        "totalPoints" => array("id"=> 12,
+        "totalPoints" => array("ident"=> 12,
                     "name" => totranslate("Total Points"),
                     "type" => "int" ),
     

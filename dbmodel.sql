@@ -45,23 +45,23 @@ ADD duckats_balance INT,
 ADD souper_duckats_balance INT, 
 ADD is_on_vacation BOOLEAN DEFAULT FALSE;
 
-CREATE TABLE staff (
+CREATE TABLE IF NOT EXISTS staff (
     staff_id INT AUTO_INCREMENT PRIMARY KEY,
     player_id INT,
     staff_type VARCHAR(255),
     staff_role VARCHAR(255),
     staff_value INT,
-    is_excellent BOOLEAN DEFAULT FALSE,
-);
+    is_excellent BOOLEAN DEFAULT FALSE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE staff_board (
+CREATE TABLE IF NOT EXISTS staff_board (
     board_id INT AUTO_INCREMENT PRIMARY KEY,
     player_id INT,
     staff_id INT
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- Table for questions
-CREATE TABLE questions (
+CREATE TABLE IF NOT EXISTS questions (
     question_id INT AUTO_INCREMENT PRIMARY KEY,
     duckats_value INT,
     category TEXT,
@@ -72,25 +72,25 @@ CREATE TABLE questions (
     answer_d TEXT,
     correct_answer CHAR(1),
     answer_text TEXT
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
--- Table for restaurant cards
-CREATE TABLE restaurant_cards (
+-- -- Table for restaurant cards
+CREATE TABLE IF NOT EXISTS restaurant_cards (
     card_id INT AUTO_INCREMENT PRIMARY KEY,
     description TEXT,
     effect TEXT
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
--- Table for transactions (Duckats and Souper Duckats movements)
-CREATE TABLE transactions (
+-- -- Table for transactions (Duckats and Souper Duckats movements)
+CREATE TABLE IF NOT EXISTS transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     player_id INT,
     transaction_type VARCHAR(255),
-    amount INT,
-);
+    amount INT
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- Trivia Questions DB insert
--- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('40', 'Additives', 'Kwok disease results from overuse of', 'Artificial Coloring', 'Monosodium Glutamate', 'Sulfites', '', 'B', 'The symptoms of Kwok''s disease are burning pains in the chest, dizziness and numbness. ');
+INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('40', 'Additives', 'Kwok disease results from overuse of', 'Artificial Coloring', 'Monosodium Glutamate', 'Sulfites', '', 'B', 'The symptoms of Kwok''s disease are burning pains in the chest, dizziness and numbness. ');
 -- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('50', 'Additives', 'Xantham gum, a thickener, emulsifier and stabilizer in dairy products, dressings and other foods, is made from', 'Artificial Ingredients', 'Glucose', 'Palm Oil', 'Potato Starch', 'B', '');
 -- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Baking at high altitudes requires more yeast or baking powder.  ', 'TRUE', 'FALSE', '', '', 'B', 'It requires less yeast or baking powder. The higher the altitude, the lower the atmospheric pressure, which means that the carbon dioxide generated in baking encounters less resistance from the surrounding air.');
 -- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Empanada is a type of stuffed-meat pastry.  ', 'TRUE', 'FALSE', '', '', 'A', 'In Spain, empanadas are round and larger than the semicircular South American versions. ');
