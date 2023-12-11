@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS staff (
     staff_type VARCHAR(255),
     staff_role VARCHAR(255),
     staff_value INT,
-    is_excellent BOOLEAN DEFAULT FALSE
+    staff_quality BOOLEAN DEFAULT FALSE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS staff_board (

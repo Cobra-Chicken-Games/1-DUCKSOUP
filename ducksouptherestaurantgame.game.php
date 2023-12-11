@@ -31,32 +31,14 @@ class DuckSoupTheRestaurantGame extends Table {
             "gameVariant" => 100,
         ));
     }
-    
 
+    
     protected function getGameName() {
-        // Used for translations and stuff. Please do not modify.
-        return "ducksouptherestaurantgame";
+        return "hearts";
     }
-    	
-    /*
-        setupNewGame:
-        
-        This method is called only once, when a new game is launched.
-        In this method, you must setup the game according to the game rules, so that
-        the game is ready to be played.
-    */
     
-    function setupNewGame($players, $options = array()) {
 
-           // Call the method to import questions from CSV
-            //$this->importQuestionsFromCSV();
-
-        // Check if the necessary data (e.g., questions) is present in the database
-        // $questionsCount = self::getUniqueValueFromDB("SELECT COUNT(*) FROM questions");
-        // if ($questionsCount == 0) {
-        //     throw new BgaUserException("Error: Questions data is not initialized in the database.");
-        // }
-
+    protected function setupNewGame($players, $options = array()) {
         // Set the colors of the players with HTML color code
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
@@ -67,148 +49,72 @@ class DuckSoupTheRestaurantGame extends Table {
         foreach ($players as $player_id => $player) {
             $color = array_shift($default_colors);
             $values[] = "('" . $player_id 
-                        ."','$color','" 
-                        . addslashes($player['player_canal']) 
+                        . "','" . $color 
+                        . "','" . addslashes($player['player_canal']) 
                         . "','" . addslashes($player['player_name']) 
                         . "','" . addslashes($player['player_avatar']) 
                         . "')";
-            }
-            $sql .= implode(',', $values);
-            self::DbQuery($sql);
-            self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
-            self::reloadPlayersBasicInfos();
+        }
+        $sql .= implode(',', $values);
+        self::DbQuery($sql);
+        self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
+        self::reloadPlayersBasicInfos();
     
         /************ Start the game initialization *****/
-    
+        
         // Initialize global values
         self::setGameStateInitialValue('currentPlayer', 0); // Assuming 'currentPlayer' is a global variable
         self::setGameStateInitialValue('bankBalance', 0); // Assuming 'bankBalance' is a global variable
         self::setGameStateInitialValue('souperDuckatsCount', 3); // Assuming each player starts with 3 Souper Duckats
-    
+
         // Initialize game statistics
-        self::initStat('table', 'totalRounds', 0); // Initialize a table statistic
-        self::initStat('player', 'totalPoints', 0); // Initialize a player statistic for all players
+        //self::initStat('table', 'totalRounds', 0); // Initialize a table statistic
+        //self::initStat('table', 'bankDuckats', 0); // Initialize bank Duckats statistic
+
+        // foreach ($players as $player_id => $player) {
+        //     self::initStat('player', 'duckats', 150, $player_id); // Initialize Duckats for each player
+        //     self::initStat('player', 'souperDuckats', 3, $player_id); // Initialize Souper Duckats for each player
+        //     self::initStat('player', 'excellentStaff', 0, $player_id); // Initialize Excellent Staff for each player
+        //     self::initStat('player', 'normalStaff', 12, $player_id); // Initialize Normal Staff for each player
+        //     self::initStat('player', 'staffBids', 0, $player_id); // Initialize Staff Bids for each player
+        //     self::initStat('player', 'staffBidsWon', 0, $player_id); // Initialize Staff Bids Won for each player
+        // }
     
         // Setup the initial game situation
-        // This can include setting up the board, dealing cards, distributing resources, etc.
-        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
         $this->setupInitialGameBoard();
         $this->distributeInitialStaff();
         $this->setupRestaurantCards();
-        
-        // Activate the first player
-        $this->gamestate->changeActivePlayer($player_id);
+    
+        // Determine the first player
+        $firstPlayerId = $this->chooseFirstPlayer($players);
+        $this->gamestate->changeActivePlayer($firstPlayerId);
     
         /************ End of the game initialization *****/
     }
-   
-    // function importQuestionsFromCSV() {
-
-    //     $questions = [
-    //         [
-    //             'duckats_value' => '40',
-    //             'category' => 'Additives',
-    //             'question_text' => 'Kwok disease results from overuse of',
-    //             'answer_a' => 'Artificial Coloring',
-    //             'answer_b' => 'Monosodium Glutamate',
-    //             'answer_c' => 'Sulfites',
-    //             'answer_d' => '',
-    //             'correct_answer' => 'B',
-    //             'answer_text' => "The symptoms of Kwok's disease are burning pains in the chest, dizziness and numbness. "
-    //         ],
-    //         [
-    //             'duckats_value' => '50',
-    //             'category' => 'Additives',
-    //             'question_text' => 'Xantham gum, a thickener, emulsifier and stabilizer in dairy products, dressings and other foods, is made from',
-    //             'answer_a' => 'Artificial Ingredients',
-    //             'answer_b' => 'Glucose',
-    //             'answer_c' => 'Palm Oil',
-    //             'answer_d' => 'Potato Starch',
-    //             'correct_answer' => 'B',
-    //             'answer_text' => ''
-    //         ],
-    //         [
-    //             'duckats_value' => '30',
-    //             'category' => 'Baking',
-    //             'question_text' => 'True or false? Baking at high altitudes requires more yeast or baking powder.',
-    //             'answer_a' => 'TRUE',
-    //             'answer_b' => 'FALSE',
-    //             'answer_c' => '',
-    //             'answer_d' => '',
-    //             'correct_answer' => 'B',
-    //             'answer_text' => 'It requires less yeast or baking powder. The higher the altitude, the lower the atmospheric pressure, which means that the carbon dioxide generated in baking encounters less resistance from the surrounding air.'
-    //         ],
-    //         // ... more questions
-    //     ];
-
-    // // // Path to the CSV file
-    // // $filename = '/ducksouptherestaurantgame/ducksouptherestaurantgame/modules/csv/questions.csv';
-    // // echo getcwd();
-
-    // // //error handling for the csv file import
-    // // if (!file_exists($filename)) {
-    // //     die("File not found: $filename");
-    // // } else if (!is_readable($filename)) {
-    // //     die("File not readable: $filename");
-    // // }
-
-    // // $questionsArray = []; // This will hold the main array of questions
-
-    // // // Open the CSV file for reading
-    // // if (($handle = fopen($filename, "r")) !== FALSE) {
-    // //     $headers = fgetcsv($handle); // Read the first row as headers
     
-    // //     // Loop through each row of the CSV file
-    // //     while (($data = fgetcsv($handle)) !== FALSE) {
-    // //         // Build the question array using the headers for keys
-    // //         $question = array_combine($headers, $data);
-    
-    // //         // Extract the answers and correct answer into their own sub-array
-    // //         $answers = [
-    // //             'answer_a' => $question['answer_a'],
-    // //             'answer_b' => $question['answer_b'],
-    // //             'answer_c' => $question['answer_c'],
-    // //             'answer_d' => $question['answer_d'],
-    // //             'correct_answer' => $question['correct_answer'],
-    // //             'answer_text' => $question['answer_text']
-    // //         ];
-    
-    // //         // Remove the individual answers from the main question array
-    // //         unset($question['answer_a'], $question['answer_b'], $question['answer_c'], $question['answer_d'], $question['correct_answer'], $question['answer_text']);
-    
-    // //         // Add the answers sub-array to the question
-    // //         $question['answers'] = $answers;
-    
-    // //         // Add the question array to the main questions array
-    // //         $questionsArray[] = $question;
-    // //     }
-    // //     fclose($handle);
-    // }
-
+    // Additional helper methods
     function setupInitialGameBoard() {
-        // TO DO:
-        // Set up the initial game board.
-        // This could include setting up the restaurant cards, distributing initial staff, etc.
-        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
-        // ...
+        // Implement the logic to set up the initial game board
     }
     
     function distributeInitialStaff() {
-        // TO DO:
-        // Distribute initial staff to players.
-        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
-        // ...
+        // Implement the logic to distribute initial staff to players
+    }
+    
+    function setupRestaurantCards() {
+        // Implement the logic to set up restaurant cards
+    }
+    
+    function chooseFirstPlayer($players) {
+        // Implement the logic to determine the first player
+        // For example, return the ID of the first player in the $players array
+        return array_keys($players)[0];
     }
 
-    function changeActivePlayer($player_id) {
-            // Check if the provided player ID is valid
-        if (!isset($this->players[$player_id])) {
-            throw new BgaUserException("Invalid player ID: $player_id");
-        }
-
-        // Change the active player
-        $this->gamestate->changeActivePlayer($player_id);
+    function activeNextPlayer() {
+    
     }
+
 
     /*
         getAllDatas: 
@@ -220,12 +126,7 @@ class DuckSoupTheRestaurantGame extends Table {
         _ when a player refreshes the game page (F5)
     */
 
-    function setupRestaurantCards() {
-        // TO DO:
-        // Set up the restaurant cards.
-        // For DuckSoup, you might need to distribute initial staff, set up the restaurant cards, etc.
-        // ...
-    }   
+   
     
 
     function getAllDatas() 

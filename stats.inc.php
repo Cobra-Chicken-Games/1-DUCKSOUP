@@ -47,57 +47,56 @@
     
 */
 
-$stats_type = array(
+$stats_type = [
 
     // Statistics global to table
-    "table" => array(
-
-        "turns_number" => array("ident"=> 10,
-                    "name" => totranslate("Number of turns"),
-                    "type" => "int" ),
-        
-    
-        "totalRounds" => array("ident"=> 11,
-                    "name" => totranslate("Total Rounds"),
-                    "type" => "int" ),
-/*
-        Examples:
-
-
-        "table_teststat1" => array(   "id"=> 10,
-                                "name" => totranslate("table test stat 1"), 
-                                "type" => "int" ),
-                                
-        "table_teststat2" => array(   "id"=> 11,
-                                "name" => totranslate("table test stat 2"), 
-                                "type" => "float" )
-*/  
-    ),
+    "table" => [
+        "totalRounds" => [
+            "id" => 10,
+            "name" => totranslate("Total Rounds"),
+            "type" => "int"
+        ],
+        "bankDuckats" => [
+            "id" => 11,
+            "name" => totranslate("Total Duckats in Bank"),
+            "type" => "int"
+        ],
+        // Add more global statistics as needed
+    ],
     
     // Statistics existing for each player
-    "player" => array(
+    "player" => [
+        "duckats" => [
+            "id" => 10,
+            "name" => totranslate("Number of Duckats"),
+            "type" => "int"
+        ],
+        "souperDuckats" => [
+            "id" => 11,
+            "name" => totranslate("Number of Souper Duckats"),
+            "type" => "int"
+        ],
+        "excellentStaff" => [
+            "id" => 12,
+            "name" => totranslate("Number of Excellent Staff"),
+            "type" => "int"
+        ],
+        "normalStaff" => [
+            "id" => 13,
+            "name" => totranslate("Number of Normal Staff"),
+            "type" => "int"
+        ],
+        "staffBids" => [
+            "id" => 14,
+            "name" => totranslate("Number of Staff Bids"),
+            "type" => "int"
+        ],
+        "staffBidsWon" => [
+            "id" => 15,
+            "name" => totranslate("Number of Staff Bids Won"),
+            "type" => "int"
+        ],
+        // Add more player-specific statistics as needed
+    ]
+];
 
-        "turns_number" => array("ident"=> 10,
-                    "name" => totranslate("Number of turns"),
-                    "type" => "int" ),
-      
-        "totalPoints" => array("ident"=> 12,
-                    "name" => totranslate("Total Points"),
-                    "type" => "int" ),
-    
-/*
-        Examples:    
-        
-        
-        "player_teststat1" => array(   "id"=> 10,
-                                "name" => totranslate("player test stat 1"), 
-                                "type" => "int" ),
-                                
-        "player_teststat2" => array(   "id"=> 11,
-                                "name" => totranslate("player test stat 2"), 
-                                "type" => "float" )
-
-*/    
-    )
-
-);
