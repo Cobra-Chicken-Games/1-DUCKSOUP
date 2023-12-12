@@ -34,7 +34,7 @@ class DuckSoupTheRestaurantGame extends Table {
 
     
     protected function getGameName() {
-        return "hearts";
+        return "ducksouptherestaurantgame";
     }
     
 
@@ -44,7 +44,7 @@ class DuckSoupTheRestaurantGame extends Table {
         $default_colors = $gameinfos['player_colors'];
     
         // Create players
-        $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
+        $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar, player_duckats, player_souper_duckats) VALUES ";
         $values = array();
         foreach ($players as $player_id => $player) {
             $color = array_shift($default_colors);
@@ -53,6 +53,8 @@ class DuckSoupTheRestaurantGame extends Table {
                         . "','" . addslashes($player['player_canal']) 
                         . "','" . addslashes($player['player_name']) 
                         . "','" . addslashes($player['player_avatar']) 
+                        . "','" . addslashes($player['player_duckats'])
+                        . "','" . addslashes($player['player_soper_duckats'])
                         . "')";
         }
         $sql .= implode(',', $values);
@@ -191,7 +193,7 @@ class DuckSoupTheRestaurantGame extends Table {
         $totalExcellentStaffNeeded = 12; // This number should be adjusted based on the game's rules
     
         // Calculate the current progression towards this goal for all players
-        $sql = "SELECT player_id, COUNT(staff_id) AS excellentStaffCount FROM staff WHERE staff_quality = 'Excellent' GROUP BY player_id";
+        $sql = "SELECT player_id, COUNT(staff_id) AS excellentStaffCount FROM staff WHERE staff_quality = 'True' GROUP BY player_id";
         $playersStaffCounts = self::getCollectionFromDb($sql);
     
         $highestProgress = 0;

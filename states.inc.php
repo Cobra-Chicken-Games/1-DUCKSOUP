@@ -64,36 +64,45 @@ $machinestates = array(
     // Note: ID=2 => your first state
 
     2 => array(
-    		"name" => "playerTurn",
-    		"description" => clienttranslate('${actplayer} must play a card or pass'),
-    		"descriptionmyturn" => clienttranslate('${you} must play a card or pass'),
-    		"type" => "activeplayer",
-    		"possibleactions" => array( "playCard", "pass" ),
-    		"transitions" => array( "playCard" => 2, "pass" => 2 )
+        "name" => "gameSetup",
+        "description" => clienttranslate("Setting up the game"),
+        "type" => "manager",
+        "action" => "stGameSetup",
+        "transitions" => array( "" => 10 )
     ),
     
-/*
-    Examples:
+    // State where a player chooses a letter for the trivia question
+    10 => array(
+        "name" => "playerChooseLetter",
+        "description" => clienttranslate('${actplayer} must select a letter for the trivia question'),
+        "descriptionmyturn" => clienttranslate('${you} must select a letter for the trivia question'),
+        "type" => "activeplayer",
+        "possibleactions" => array( "chooseLetter" ),
+        "transitions" => array( "letterChosen" => 20 )
+    ),
     
-    2 => array(
-        "name" => "nextPlayer",
+    // State to handle trivia question answering
+    20 => array(
+        "name" => "playerAnswerQuestion",
+        "description" => clienttranslate('${actplayer} must answer the trivia question'),
+        "descriptionmyturn" => clienttranslate('${you} must answer the trivia question'),
+        "type" => "activeplayer",
+        "possibleactions" => array( "answerQuestion" ),
+        "transitions" => array( "questionAnswered" => 30 )
+    ),
+    
+    // State to handle end-of-turn events such as checking if the game has ended
+    30 => array(
+        "name" => "endOfTurn",
         "description" => '',
         "type" => "game",
-        "action" => "stNextPlayer",
-        "updateGameProgression" => true,   
+        "action" => "stEndOfTurn",
+        "updateGameProgression" => true,
         "transitions" => array( "endGame" => 99, "nextPlayer" => 10 )
     ),
     
-    10 => array(
-        "name" => "playerTurn",
-        "description" => clienttranslate('${actplayer} must play a card or pass'),
-        "descriptionmyturn" => clienttranslate('${you} must play a card or pass'),
-        "type" => "activeplayer",
-        "possibleactions" => array( "playCard", "pass" ),
-        "transitions" => array( "playCard" => 2, "pass" => 2 )
-    ), 
-
-*/    
+    // Other states (like bidding, hiring staff, etc.) go here
+    // ...   
    
     // Final state.
     // Please do not modify (and do not overload action/args methods).

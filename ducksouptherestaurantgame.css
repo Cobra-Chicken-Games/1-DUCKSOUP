@@ -67,6 +67,11 @@
     }
 */
 
+.roundedbox .roundedboxinner {
+    /* height: 100%; */
+    position: relative;
+}
+
 .container {
     background: linear-gradient(#5c629b, #35346d);
     background-attachment: fixed;
