@@ -1,6 +1,5 @@
 {OVERALL_GAME_HEADER}
-
-<!-- Game Board -->
+<!-- BEGIN gameboard -->
 <div id="gameBoard">
     <div class="container">
         <div class="clearfix">
@@ -32,7 +31,6 @@
                 </div>
 
                 <!-- STAFF BOARD CONTAINER -->
-                <!-- BEGIN gameboard -->
                 <div class="staff-board-container">
                     <!-- STAFF BOARD ARROWS -->
                     <button id="left-arrow" class="arrow"><span></span></button>
@@ -75,9 +73,8 @@
                     </div>
 
                     <!-- STAFF BOARD -->
-                    <img class="staff-board" src="./img/staff-board.jpg">
+                    <img class="staff-board" src="/img/staff-board.jpg">
                 </div>
-                <!-- END gameboard -->
             </div>
 
             <!-- LEFT CONTENT -->
@@ -91,15 +88,13 @@
                         <h2>${BOARD_TITLE}</h2>
                         <p>${BOARD_TEXT}</p>
                     </div>
-
-                    <!-- BOARD -->
-                    <img class="board" src="./img/board.jpg">
+                    <img id="board" src="board.jpg">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<!-- END gameboard -->
 <script type="text/javascript">
     // Javascript HTML templates
     // Define templates for dynamic elements here, using variables from your JavaScript file

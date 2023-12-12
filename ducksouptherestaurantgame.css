@@ -110,6 +110,16 @@
     box-sizing: border-box;
 }
 
+.board {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    padding: 0;
+    position: relative;
+    display: block;
+    background-image: url(img/board.jpg);
+}
+
 .right-content {
     width: 50%;
     float: right;
