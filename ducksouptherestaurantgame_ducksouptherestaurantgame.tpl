@@ -1,6 +1,7 @@
 {OVERALL_GAME_HEADER}
 <!-- BEGIN gameboard -->
-<div id="gameBoard">
+<div class="game-board">
+<!-- END gameboard -->
     <div class="container">
         <div class="clearfix">
 
@@ -19,13 +20,11 @@
                 <div class="dice-buttons">
                     <!-- STAFF DIE -->
                     <button id="staff-die">
-                        <img src="./img/staff-die.png">
                         <span>Roll the<br>Staff Die</span>
                     </button>
 
                     <!-- MOVEMENT DICE -->
                     <button id="move-die">
-                        <img src="./img/movement-dice.png">
                         <span>Roll for<br>Movement</span>
                     </button>
                 </div>
@@ -52,7 +51,6 @@
                                             <div class="value left">
                                                 ${PLAYER_SUPER_DUCKATS}
                                             </div>
-                                            <img class="left" src="./img/super-duckats.png">
                                         </div>
                                     </div>
 
@@ -62,7 +60,7 @@
                                             <div class="value left">
                                                 ${PLAYER_DUCKATS}
                                             </div>
-                                            <img class="left" src="./img/duckats.png">
+                                            <img class="left" src="/img/duckats.png">
                                         </div>
                                     </div>
                                 </div>
@@ -73,28 +71,23 @@
                     </div>
 
                     <!-- STAFF BOARD -->
-                    <img class="staff-board" src="/img/staff-board.jpg">
                 </div>
             </div>
 
             <!-- LEFT CONTENT -->
             <div class="left-content">
-                <div class="board-container">
                     <!-- DUCK IMAGE TO DISPLAY BY DEFAULT, HIDDEN WHEN CONTENT SHOWN -->
-                    <img class="inner-board inactive" src="./img/inner-board.png">
 
                     <!-- WRITTEN CONTENT SHOWN IN MIDDLE OF BOARD, INACTIVE BY DEFAULT -->
                     <div class="board-contents active">
                         <h2>${BOARD_TITLE}</h2>
                         <p>${BOARD_TEXT}</p>
                     </div>
-                    <img id="board" src="board.jpg">
-                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- END gameboard -->
+
 <script type="text/javascript">
     // Javascript HTML templates
     // Define templates for dynamic elements here, using variables from your JavaScript file
