@@ -1,9 +1,12 @@
 {OVERALL_GAME_HEADER}
+<<<<<<< HEAD
+=======
 
 <!-- Game Board -->
 <div id="gameBoard">
     <div class="container">
         <div class="clearfix">
+>>>>>>> parent of 2dffaa0 (Tried using sprites in css)
 
 <!-- 
 --------
@@ -72,7 +75,9 @@
                             <button id="left-arrow" class="arrow"><span></span></button>
                             <button id="right-arrow" class="arrow"><span></span></button>
 
+<<<<<<< HEAD
                             <div class="player-header">
+=======
                 <!-- STAFF BOARD CONTAINER -->
                 <!-- BEGIN gameboard -->
                 <div class="staff-board-container">
@@ -89,6 +94,7 @@
 
                             <!-- PLAYER STATS -->
                             <div class="player-stats right">
+>>>>>>> parent of 2dffaa0 (Tried using sprites in css)
                                 <div class="clearfix">
                                     <!-- PLAYER NAME -->
                                     <div class="player-name left player_${PLAYER_COLOR}">
@@ -120,9 +126,11 @@
                                 </div>
                                 <div class="player-background player_${PLAYER_COLOR}"></div>
                             </div>
+<<<<<<< HEAD
                 </div>
                 </div>
                 <!-- END staff-board -->
+=======
                         </div>
 
                         <div class="player-background player_${PLAYER_COLOR}"></div>
@@ -130,6 +138,7 @@
 
                     <!-- STAFF BOARD -->
                     <img class="staff-board" src="./img/staff-board.jpg">
+>>>>>>> parent of 2dffaa0 (Tried using sprites in css)
                 </div>
                 <!-- END gameboard -->
             </div>
@@ -143,10 +152,13 @@
                         <h2>${BOARD_TITLE}</h2>
                         <p>${BOARD_TEXT}</p>
                     </div>
+<<<<<<< HEAD
+=======
 
                     <!-- BOARD -->
                     <img class="board" src="./img/board.jpg">
                 </div>
+>>>>>>> parent of 2dffaa0 (Tried using sprites in css)
             </div>
         </div>
     </div>

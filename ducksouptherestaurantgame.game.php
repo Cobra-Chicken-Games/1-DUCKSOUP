@@ -53,7 +53,6 @@ class DuckSoupTheRestaurantGame extends Table {
                         . "','" . addslashes($player['player_canal']) 
                         . "','" . addslashes($player['player_name']) 
                         . "','" . addslashes($player['player_avatar']) 
-=======
                         . "','" . addslashes($player['player_duckats'])
                         . "','" . addslashes($player['player_soper_duckats'])
                         . "')";
