@@ -34,7 +34,7 @@ class DuckSoupTheRestaurantGame extends Table {
 
     
     protected function getGameName() {
-        return "ducksouptherestaurantgame";
+        return "hearts";
     }
     
 
@@ -193,7 +193,7 @@ class DuckSoupTheRestaurantGame extends Table {
         $totalExcellentStaffNeeded = 12; // This number should be adjusted based on the game's rules
     
         // Calculate the current progression towards this goal for all players
-        $sql = "SELECT player_id, COUNT(staff_id) AS excellentStaffCount FROM staff WHERE staff_quality = 'True' GROUP BY player_id";
+        $sql = "SELECT player_id, COUNT(staff_id) AS excellentStaffCount FROM staff WHERE staff_quality = 'Excellent' GROUP BY player_id";
         $playersStaffCounts = self::getCollectionFromDb($sql);
     
         $highestProgress = 0;
