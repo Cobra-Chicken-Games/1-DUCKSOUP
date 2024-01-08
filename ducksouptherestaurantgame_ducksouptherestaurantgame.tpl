@@ -2,12 +2,15 @@
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 <!-- Game Board -->
 <div id="gameBoard">
     <div class="container">
         <div class="clearfix">
 >>>>>>> parent of 2dffaa0 (Tried using sprites in css)
 
+=======
+>>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
 <!-- 
 --------
 -- BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -77,6 +80,7 @@
 
 <<<<<<< HEAD
                             <div class="player-header">
+<<<<<<< HEAD
 =======
                 <!-- STAFF BOARD CONTAINER -->
                 <!-- BEGIN gameboard -->
@@ -95,6 +99,8 @@
                             <!-- PLAYER STATS -->
                             <div class="player-stats right">
 >>>>>>> parent of 2dffaa0 (Tried using sprites in css)
+=======
+>>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
                                 <div class="clearfix">
                                     <!-- PLAYER NAME -->
                                     <div class="player-name left player_${PLAYER_COLOR}">
@@ -130,6 +136,7 @@
                 </div>
                 </div>
                 <!-- END staff-board -->
+<<<<<<< HEAD
 =======
                         </div>
 
@@ -139,6 +146,8 @@
                     <!-- STAFF BOARD -->
                     <img class="staff-board" src="./img/staff-board.jpg">
 >>>>>>> parent of 2dffaa0 (Tried using sprites in css)
+=======
+>>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
                 </div>
             </div>
 
@@ -152,12 +161,14 @@
                         <p>${BOARD_TEXT}</p>
                     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
                     <!-- BOARD -->
                     <img class="board" src="./img/board.jpg">
                 </div>
 >>>>>>> parent of 2dffaa0 (Tried using sprites in css)
+=======
 >>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
             </div>
         </div>
