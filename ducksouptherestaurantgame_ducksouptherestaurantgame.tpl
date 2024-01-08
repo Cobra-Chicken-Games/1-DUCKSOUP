@@ -1,5 +1,10 @@
 {OVERALL_GAME_HEADER}
 
+<!-- Game Board -->
+<div id="gameBoard">
+    <div class="container">
+        <div class="clearfix">
+
 <!-- 
 --------
 -- BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -68,6 +73,22 @@
                             <button id="right-arrow" class="arrow"><span></span></button>
 
                             <div class="player-header">
+                <!-- STAFF BOARD CONTAINER -->
+                <!-- BEGIN gameboard -->
+                <div class="staff-board-container">
+                    <!-- STAFF BOARD ARROWS -->
+                    <button id="left-arrow" class="arrow"><span></span></button>
+                    <button id="right-arrow" class="arrow"><span></span></button>
+
+                    <div class="player-header">
+                        <div class="clearfix">
+                            <!-- PLAYER NAME -->
+                            <div class="player-name left player_${PLAYER_COLOR}">
+                                ${PLAYER_NAME}
+                            </div>
+
+                            <!-- PLAYER STATS -->
+                            <div class="player-stats right">
                                 <div class="clearfix">
                                     <!-- PLAYER NAME -->
                                     <div class="player-name left player_${PLAYER_COLOR}">
@@ -102,7 +123,15 @@
                 </div>
                 </div>
                 <!-- END staff-board -->
+                        </div>
+
+                        <div class="player-background player_${PLAYER_COLOR}"></div>
+                    </div>
+
+                    <!-- STAFF BOARD -->
+                    <img class="staff-board" src="./img/staff-board.jpg">
                 </div>
+                <!-- END gameboard -->
             </div>
 
             <!-- LEFT CONTENT -->
@@ -114,6 +143,10 @@
                         <h2>${BOARD_TITLE}</h2>
                         <p>${BOARD_TEXT}</p>
                     </div>
+
+                    <!-- BOARD -->
+                    <img class="board" src="./img/board.jpg">
+                </div>
             </div>
         </div>
     </div>
