@@ -1,12 +1,4 @@
 {OVERALL_GAME_HEADER}
-<<<<<<< HEAD
-=======
-
-<!-- Game Board -->
-<div id="gameBoard">
-    <div class="container">
-        <div class="clearfix">
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
 
 <!-- 
 --------
@@ -39,7 +31,7 @@
         <div class="clearfix">
                 <!-- BEGIN gameBoard-->
                     <div id="gameboard" class="gameboard">
-                    {PLAYER_NAME}
+                    ${PLAYER_NAME}
                     </div>
                 <!-- END gameBoard-->
             <!-- RIGHT CONTENT -->
@@ -75,26 +67,7 @@
                             <button id="left-arrow" class="arrow"><span></span></button>
                             <button id="right-arrow" class="arrow"><span></span></button>
 
-<<<<<<< HEAD
                             <div class="player-header">
-=======
-                <!-- STAFF BOARD CONTAINER -->
-                <!-- BEGIN gameboard -->
-                <div class="staff-board-container">
-                    <!-- STAFF BOARD ARROWS -->
-                    <button id="left-arrow" class="arrow"><span></span></button>
-                    <button id="right-arrow" class="arrow"><span></span></button>
-
-                    <div class="player-header">
-                        <div class="clearfix">
-                            <!-- PLAYER NAME -->
-                            <div class="player-name left player_${PLAYER_COLOR}">
-                                ${PLAYER_NAME}
-                            </div>
-
-                            <!-- PLAYER STATS -->
-                            <div class="player-stats right">
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
                                 <div class="clearfix">
                                     <!-- PLAYER NAME -->
                                     <div class="player-name left player_${PLAYER_COLOR}">
@@ -126,21 +99,10 @@
                                 </div>
                                 <div class="player-background player_${PLAYER_COLOR}"></div>
                             </div>
-<<<<<<< HEAD
                 </div>
                 </div>
                 <!-- END staff-board -->
-=======
-                        </div>
-
-                        <div class="player-background player_${PLAYER_COLOR}"></div>
-                    </div>
-
-                    <!-- STAFF BOARD -->
-                    <img class="staff-board" src="./img/staff-board.jpg">
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
                 </div>
-                <!-- END gameboard -->
             </div>
 
             <!-- LEFT CONTENT -->
@@ -152,13 +114,6 @@
                         <h2>${BOARD_TITLE}</h2>
                         <p>${BOARD_TEXT}</p>
                     </div>
-<<<<<<< HEAD
-=======
-
-                    <!-- BOARD -->
-                    <img class="board" src="./img/board.jpg">
-                </div>
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
             </div>
         </div>
     </div>
