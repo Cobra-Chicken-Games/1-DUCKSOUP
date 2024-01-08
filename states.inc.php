@@ -100,9 +100,52 @@ $machinestates = array(
         "updateGameProgression" => true,
         "transitions" => array( "endGame" => 99, "nextPlayer" => 10 )
     ),
+
+    // State where the bidding round begins
+    40 => array(
+        "name" => "startBidding",
+        "description" => clienttranslate('A staff member is up for bid'),
+        "type" => "game",
+        "action" => "stStartBidding",
+        "transitions" => array( "nextPlayerBid" => 41 )
+    ),
     
-    // Other states (like bidding, hiring staff, etc.) go here
-    // ...   
+    // State for each player's bid
+    41 => array(
+        "name" => "playerBid",
+        "description" => clienttranslate('${actplayer} can place a bid or pass'),
+        "descriptionmyturn" => clienttranslate('${you} can place a bid or pass'),
+        "type" => "activeplayer",
+        "possibleactions" => array( "makeBid", "pass" ),
+        "transitions" => array( "makeBid" => 42, "pass" => 43 )
+    ),
+    
+    // State to check if all players have finished bidding
+    42 => array(
+        "name" => "checkBids",
+        "description" => '',
+        "type" => "game",
+        "action" => "stCheckBids",
+        "transitions" => array( "nextPlayerBid" => 41, "endBidding" => 44 )
+    ),
+
+    // State for a player passing on the bid
+    43 => array(
+        "name" => "playerPass",
+        "description" => clienttranslate('${actplayer} has passed on the bid'),
+        "type" => "game",
+        "action" => "stPlayerPass",
+        "transitions" => array( "checkEndBidding" => 42 )
+    ),
+
+    // State to conclude the bidding
+    44 => array(
+        "name" => "endBidding",
+        "description" => clienttranslate('Bidding round has ended'),
+        "type" => "game",
+        "action" => "stEndBidding",
+        "transitions" => array( "" => 30 ) // Assuming state 30 is the next logical state
+    ),   
    
     // Final state.
     // Please do not modify (and do not overload action/args methods).

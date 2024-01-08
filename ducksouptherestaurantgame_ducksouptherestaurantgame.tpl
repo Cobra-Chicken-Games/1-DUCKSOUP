@@ -140,7 +140,6 @@
                     <img class="staff-board" src="./img/staff-board.jpg">
 >>>>>>> parent of 2dffaa0 (Tried using sprites in css)
                 </div>
-                <!-- END gameboard -->
             </div>
 
             <!-- LEFT CONTENT -->
@@ -159,6 +158,7 @@
                     <img class="board" src="./img/board.jpg">
                 </div>
 >>>>>>> parent of 2dffaa0 (Tried using sprites in css)
+>>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
             </div>
         </div>
     </div>

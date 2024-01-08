@@ -53,8 +53,11 @@ class DuckSoupTheRestaurantGame extends Table {
                         . "','" . addslashes($player['player_canal']) 
                         . "','" . addslashes($player['player_name']) 
                         . "','" . addslashes($player['player_avatar']) 
+<<<<<<< HEAD
                         . "','" . addslashes($player['player_duckats'])
                         . "','" . addslashes($player['player_soper_duckats'])
+=======
+>>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
                         . "')";
         }
         $sql .= implode(',', $values);
@@ -116,6 +119,8 @@ class DuckSoupTheRestaurantGame extends Table {
     function activeNextPlayer() {
     
     }
+
+
 
 
     /*
@@ -308,7 +313,8 @@ class DuckSoupTheRestaurantGame extends Table {
         $this->gamestate->nextState('nextPlayerBid');
     }
     
-    // You can add more functions for different actions following the same pattern.
+   
+    
     
 
     
@@ -366,6 +372,51 @@ class DuckSoupTheRestaurantGame extends Table {
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state actions
 ////////////
+
+function stStartBidding() {   
+     // Assuming we have a helper function to determine the staff member up for bidding
+     $staffMember = $this->getStaffMemberForBid();
+
+     // Notify all players about the staff member being bid on
+     self::notifyAllPlayers('startBidding', clienttranslate('Bidding starts for ${staff_member_name}'), array(
+         'staff_member_name' => $staffMember['name'],
+         'staff_member_id' => $staffMember['id'],
+     ));
+ 
+     // If there are specific things to be done before players start bidding, do them here
+     // For example, setting up game variables, dealing with game state values, etc.
+ 
+     // Set the active player to the player who will start the bidding
+     // This could be the next player in turn order, or determined by another rule
+     $this->activeNextPlayer();
+ 
+     // Transition to the player bid state where the active player can place a bid
+     $this->gamestate->nextState('playerBid');
+}
+
+function stCheckBids() {
+
+}
+
+function stPlayerPass() {
+
+}
+
+function stEndBidding() {
+
+}
+
+function stGameSetup() {
+
+}
+
+function stEndOfTurn() {
+
+}
+
+function stGameEnd() {
+
+} 
 
 function stStartTurn()
 {
