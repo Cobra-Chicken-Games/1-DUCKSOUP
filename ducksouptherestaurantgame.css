@@ -110,20 +110,6 @@
     box-sizing: border-box;
 }
 
-/*Class for sprites*/
-
-.game-board {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-    padding: 0;
-    position: relative;
-    display: block;
-    background-image: url('/img/board.jpg');
-}
-
-/*END Class for sprites*/
-
 .right-content {
     width: 50%;
     float: right;
@@ -139,17 +125,18 @@
     height: auto;
 }
 
-.board {
+.gameboard {
+    background-image: URL('img/board.jpg');
     width: 100%;
     height: auto;
     max-height: 100%;
     padding: 0;
     position: relative;
     display: block;
-    background-image: url('/img/board.jpg');
 }
 
 .inner-board {
+    background-image: url('img/inner-board.png');
     width: 55%;
     height: auto;
     max-height: 55%;
@@ -159,7 +146,6 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     z-index: 1;
-    background-image: url('/img/inner-board.png');
 }
 
 .board-contents.inactive, .inner-board.inactive { 
@@ -258,6 +244,7 @@
 }
 
 .staff-board {
+    background-image: url('img/staff-board.jpg');
     width: 90%;
     height: auto;
     max-height: 100%;
@@ -408,6 +395,10 @@
 @media screen and (max-width: 600px) {
     html {
         font-size: 10px;
+    }
+
+    .dice {
+        background-image: URL('img/dice-1.png');
     }
 
     .dice-buttons img { 

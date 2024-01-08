@@ -93,14 +93,21 @@ class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
         $this->tpl['BOARD_TEXT'] = $players_nbr;
 
         // Example: creating a player board for each player
-        $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
+        $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameBoard");
         foreach ($players as $player_id => $player) {
-            $this->page->insert_block("gameboard", array(
+            $this->page->insert_block("gameBoard", array(
                 "PLAYER_ID" => $player_id,
                 "PLAYER_NAME" => $player['player_name'],
                 "PLAYER_COLOR" => $player['player_color'],
             ));
         }
+
+       // $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "innerboard");
+        //foreach ($players as $player_id => $player) {
+        //    $this->page->insert_block("innerboard", array(
+              
+       //     ));
+       // }
 
         /*********** Do not change anything below this line  ************/
   	}
