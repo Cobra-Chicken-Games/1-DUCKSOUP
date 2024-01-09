@@ -1,16 +1,4 @@
 {OVERALL_GAME_HEADER}
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-<!-- Game Board -->
-<div id="gameBoard">
-    <div class="container">
-        <div class="clearfix">
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
-
-=======
->>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
 <!-- 
 --------
 -- BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -40,9 +28,8 @@
 -->
    <div class="container">
         <div class="clearfix">
-                <!-- BEGIN gameBoard-->
-                    <div id="gameboard" class="gameboard">
-                    ${PLAYER_NAME}
+        <!-- BEGIN gameBoard-->
+        <div id="gameboard" class="gameBoard">         
                     </div>
                 <!-- END gameBoard-->
             <!-- RIGHT CONTENT -->
@@ -77,11 +64,7 @@
                         <!-- STAFF BOARD ARROWS -->
                             <button id="left-arrow" class="arrow"><span></span></button>
                             <button id="right-arrow" class="arrow"><span></span></button>
-
-<<<<<<< HEAD
                             <div class="player-header">
-<<<<<<< HEAD
-=======
                 <!-- STAFF BOARD CONTAINER -->
                 <!-- BEGIN gameboard -->
                 <div class="staff-board-container">
@@ -98,9 +81,6 @@
 
                             <!-- PLAYER STATS -->
                             <div class="player-stats right">
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
-=======
->>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
                                 <div class="clearfix">
                                     <!-- PLAYER NAME -->
                                     <div class="player-name left player_${PLAYER_COLOR}">
@@ -132,12 +112,9 @@
                                 </div>
                                 <div class="player-background player_${PLAYER_COLOR}"></div>
                             </div>
-<<<<<<< HEAD
                 </div>
                 </div>
                 <!-- END staff-board -->
-<<<<<<< HEAD
-=======
                         </div>
 
                         <div class="player-background player_${PLAYER_COLOR}"></div>
@@ -145,9 +122,6 @@
 
                     <!-- STAFF BOARD -->
                     <img class="staff-board" src="./img/staff-board.jpg">
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
-=======
->>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
                 </div>
             </div>
 
@@ -160,16 +134,10 @@
                         <h2>${BOARD_TITLE}</h2>
                         <p>${BOARD_TEXT}</p>
                     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
                     <!-- BOARD -->
                     <img class="board" src="./img/board.jpg">
                 </div>
->>>>>>> parent of 2dffaa0 (Tried using sprites in css)
-=======
->>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
             </div>
         </div>
     </div>

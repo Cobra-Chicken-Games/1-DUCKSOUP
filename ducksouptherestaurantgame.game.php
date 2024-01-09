@@ -52,12 +52,7 @@ class DuckSoupTheRestaurantGame extends Table {
                         . "','" . $color 
                         . "','" . addslashes($player['player_canal']) 
                         . "','" . addslashes($player['player_name']) 
-                        . "','" . addslashes($player['player_avatar']) 
-<<<<<<< HEAD
-                        . "','" . addslashes($player['player_duckats'])
-                        . "','" . addslashes($player['player_soper_duckats'])
-=======
->>>>>>> parent of 0693dc5 (Commit changes to view.php, html and css)
+                        . "','" . addslashes($player['player_avatar'])
                         . "')";
         }
         $sql .= implode(',', $values);

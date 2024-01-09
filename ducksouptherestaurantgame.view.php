@@ -87,7 +87,7 @@ class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
         
         // Example: setting a game message
         $this->tpl['GAME_MESSAGE'] = self::_("Welcome to Duck Soup The Restaurant Game!");
-
+/*
         // Example: creating a player board for each player
         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameBoard");
         foreach ($players as $player_id => $player) {
@@ -98,7 +98,7 @@ class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
                 // ... other player-specific variables
             ));
         }
-
+*/
        // $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "innerboard");
         //foreach ($players as $player_id => $player) {
         //    $this->page->insert_block("innerboard", array(
