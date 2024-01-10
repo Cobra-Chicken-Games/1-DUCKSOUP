@@ -27,10 +27,55 @@
 -- Note: this code is modified to add suggestions from BGA players and popular variants.
 -- Please visit here to read the basic code used in the BGA Studio tutorial: https://github.com/elaskavaia/
 -->
-   <div class="container">
-        <div class="clearfix">
-        <!-- BEGIN gameBoard-->
-            <div id="gameboard"></div>
-        <!-- END gameBoard-->
+{include file="game_elements.html" type="css" rel="stylesheet" media="screen,projection"}
+{include file="game_elements.js" type="javascript"}
 
-{OVERALL_GAME_FOOTER}
+<div id="game_interface">
+    <div id="game_board">
+        <!-- Staff Area for Each Player -->
+        {foreach from=$players item=player}
+            <!-- BEGIN staff_block -->
+            <div class="player_staff" id="player_staff_{$player.PLAYER_ID}" style="background-color:{$player.PLAYER_COLOR};">
+                <div class="player_name">{$player.PLAYER_NAME}</div>
+                <div class="staff_content">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+            <!-- END staff_block -->
+        {/foreach}
+        
+        <!-- Trivia Questions Block -->
+        <!-- BEGIN trivia_block -->
+        <div id="trivia_questions">
+            {$QUESTIONS_HTML}
+        </div>
+        <!-- END trivia_block -->
+        
+        <!-- Duckats Block -->
+        {foreach from=$players item=player}
+            <!-- BEGIN duckats_block -->
+            <div class="player_duckats" id="player_duckats_{$player.PLAYER_ID}">
+                <span class="duckats_label">{$DUCKATS}</span>
+                <span class="duckats_count">{$player.DUCKATS_COUNT}</span>
+            </div>
+            <!-- END duckats_block -->
+            
+            <!-- BEGIN souperduckats_block -->
+            <div class="player_souperduckats" id="player_souperduckats_{$player.PLAYER_ID}">
+                <span class="souperduckats_label">{$SOUPERDUCKATS}</span>
+                <span class="souperduckats_count">{$player.SOUPERDUCKATS_COUNT}</span>
+            </div>
+            <!-- END souperduckats_block -->
+        {/foreach}
+        
+        <!-- Dice Roll Button (shown/hidden via JavaScript) -->
+        <div id="dice_roll_area">
+            {$ROLL_DICE_HTML}
+        </div>
+
+        <!-- Game Message -->
+        <div id="game_message">
+            {$GAME_MESSAGE}
+        </div>
+    </div>
+</div>
