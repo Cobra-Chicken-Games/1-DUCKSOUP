@@ -24,88 +24,66 @@
  *
  */
   
-require_once( APP_BASE_PATH."view/common/game.view.php" );
-  
-class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
-{
-    protected function getGameName()
-    {
-        // Used for translations and stuff. Please do not modify.
-        return "ducksouptherestaurantgame";
-    }
-    
-  	function build_page( $viewArgs )
-  	{		
-  	    // Get players & players number
-        $players = $this->game->loadPlayersBasicInfos();
-        $players_nbr = count( $players );
+ require_once(APP_BASE_PATH . "view/common/game.view.php");
 
-        /*********** Place your code below:  ************/
-
-
-        /*
-        
-        // Examples: set the value of some element defined in your tpl file like this: {MY_VARIABLE_ELEMENT}
-
-        // Display a specific number / string
-        $this->tpl['MY_VARIABLE_ELEMENT'] = $number_to_display;
-
-        // Display a string to be translated in all languages: 
-        $this->tpl['MY_VARIABLE_ELEMENT'] = self::_("A string to be translated");
-
-        // Display some HTML content of your own:
-        $this->tpl['MY_VARIABLE_ELEMENT'] = self::raw( $some_html_code );
-        
-        */
-        
-        /*
-        
-        // Example: display a specific HTML block for each player in this game.
-        // (note: the block is defined in your .tpl file like this:
-        //      <!-- BEGIN myblock --> 
-        //          ... my HTML code ...
-        //      <!-- END myblock --> 
-        
-
-        $this->page->begin_block( "ducksouptherestaurantgame_ducksouptherestaurantgame", "myblock" );
-        foreach( $players as $player )
-        {
-            $this->page->insert_block( "myblock", array( 
-                                                    "PLAYER_NAME" => $player['player_name'],
-                                                    "SOME_VARIABLE" => $some_value
-                                                    ...
-                                                     ) );
-        }
-        
-        */
-
-        $players = $this->game->loadPlayersBasicInfos();
-        $players_nbr = count($players);
-
-        /*********** Place your code below:  ************/
-        // Assuming you have elements such as 'PLAYER_BOARD' and 'GAME_MESSAGE' defined in your .tpl file
-        
-        // Example: setting a game message
-        $this->tpl['GAME_MESSAGE'] = self::_("Welcome to Duck Soup The Restaurant Game!");
-/*
-        // Example: creating a player board for each player
-        $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameBoard");
-        foreach ($players as $player_id => $player) {
-            $this->page->insert_block("gameBoard", array(
-                "PLAYER_ID" => $player_id,
-                "PLAYER_NAME" => $player['player_name'],
-                "PLAYER_COLOR" => $player['player_color'], // assuming 'player_color' is defined
-                // ... other player-specific variables
-            ));
-        }
-*/
-       // $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "innerboard");
-        //foreach ($players as $player_id => $player) {
-        //    $this->page->insert_block("innerboard", array(
-              
-       //     ));
-       // }
-
-        /*********** Do not change anything below this line  ************/
-  	}
-}
+ class view_ducksouptherestaurantgame_ducksouptherestaurantgame extends game_view
+ {
+     function getGameName()
+     {
+         return "ducksouptherestaurantgame";
+     }
+ 
+     function build_page($viewArgs)
+     {
+         $players = $this->game->loadPlayersBasicInfos();
+         $players_nbr = count($players);
+ 
+         /*********** Place your code below:  ************/
+         $this->tpl['MY_HAND'] = self::_("Your staff:");
+         $this->tpl['QUESTIONS'] = self::_("Trivia Questions:");
+         $this->tpl['DUCKATS'] = self::_("Duckats:");
+         $this->tpl['SOUPERDUCKATS'] = self::_("Souper Duckats:");
+ 
+         // Assuming you have blocks defined for staff, trivia, duckats, and souper duckats
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "duckats_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "souperduckats_block");
+ 
+         // Example: setting up the staff area for each player
+         foreach ($players as $player_id => $player) {
+             $this->page->insert_block("staff_block", array(
+                 "PLAYER_ID" => $player_id,
+                 "PLAYER_COLOR" => $player['player_color'],
+                 // ... other player-specific variables for staff
+             ));
+         }
+ 
+         // Example: setting up the trivia questions block
+         $trivia_questions = $this->game->getTriviaQuestions(); // method to get trivia questions from your game logic
+         $this->page->insert_block("trivia_block", array(
+             "QUESTIONS_HTML" => $trivia_questions, // HTML content for trivia questions
+         ));
+ 
+         // Example: setting up the duckats and souper duckats display
+         foreach ($players as $player_id => $player) {
+             $this->page->insert_block("duckats_block", array(
+                 "PLAYER_ID" => $player_id,
+                 "DUCKATS_COUNT" => $player['duckats'],
+                 // ... other player-specific variables for duckats
+             ));
+             $this->page->insert_block("souperduckats_block", array(
+                 "PLAYER_ID" => $player_id,
+                 "SOUPERDUCKATS_COUNT" => $player['souperduckats'],
+                 // ... other player-specific variables for souper duckats
+             ));
+         }
+ 
+         // Dice roll button visibility will be controlled by the game logic
+         // Add buttons for rolling dice but these will be shown/hidden via JavaScript based on game state
+         $this->tpl['ROLL_DICE_HTML'] = self::raw($this->game->getRollDiceButtonHtml());
+ 
+         /*********** Do not change anything below this line  ************/
+     }
+ }
+?>

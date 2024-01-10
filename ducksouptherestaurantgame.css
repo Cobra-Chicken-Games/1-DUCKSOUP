@@ -67,7 +67,7 @@
     }
 */
 
-.gameboard {
+#gameboard {
     background-image: URL('img/board.jpg');
     background-position: 0px 0px;
 }
