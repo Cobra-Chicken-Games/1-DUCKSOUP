@@ -29,9 +29,10 @@
    <div class="container">
         <div class="clearfix">
         <!-- BEGIN gameBoard-->
-        <div id="gameboard" class="gameBoard">         
+        <div class="gameboard">         
                     </div>
                 <!-- END gameBoard-->
+<!--
             <!-- RIGHT CONTENT -->
             <div class="right-content">
 
@@ -121,7 +122,7 @@
                     </div>
 
                     <!-- STAFF BOARD -->
-                    <img class="staff-board" src="./img/staff-board.jpg">
+                    <img class="staff-board">
                 </div>
             </div>
 
@@ -136,13 +137,12 @@
                     </div>
 
                     <!-- BOARD -->
-                    <img class="board" src="./img/board.jpg">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+-->
 <script type="text/javascript">
     // Javascript HTML templates
     // Define templates for dynamic elements here, using variables from your JavaScript file
