@@ -45,19 +45,17 @@ class DuckSoupTheRestaurantGame extends Table {
     
         // Create players
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
-        $values = array();
+        $values = [];
         foreach ($players as $player_id => $player) {
             $color = array_shift($default_colors);
-            $values[] = "('" . $player_id 
-                        . "','" . $color 
-                        . "','" . addslashes($player['player_canal']) 
-                        . "','" . addslashes($player['player_name']) 
-                        . "','" . addslashes($player['player_avatar'])
-                        . "')";
+            $values[] = "('".$player_id
+                        ."','$color','"
+                        .$player['player_canal']
+                        ."','".addslashes($player['player_name'])
+                        ."','".addslashes($player['player_avatar'])."')";
         }
         $sql .= implode(',', $values);
         self::DbQuery($sql);
-        self::reattributeColorsBasedOnPreferences($players, $gameinfos['player_colors']);
         self::reloadPlayersBasicInfos();
     
         /************ Start the game initialization *****/
@@ -66,19 +64,17 @@ class DuckSoupTheRestaurantGame extends Table {
         self::setGameStateInitialValue('currentPlayer', 0); // Assuming 'currentPlayer' is a global variable
         self::setGameStateInitialValue('bankBalance', 0); // Assuming 'bankBalance' is a global variable
         self::setGameStateInitialValue('souperDuckatsCount', 3); // Assuming each player starts with 3 Souper Duckats
-
+    
         // Initialize game statistics
-        //self::initStat('table', 'totalRounds', 0); // Initialize a table statistic
-        //self::initStat('table', 'bankDuckats', 0); // Initialize bank Duckats statistic
-
-        // foreach ($players as $player_id => $player) {
-        //     self::initStat('player', 'duckats', 150, $player_id); // Initialize Duckats for each player
-        //     self::initStat('player', 'souperDuckats', 3, $player_id); // Initialize Souper Duckats for each player
-        //     self::initStat('player', 'excellentStaff', 0, $player_id); // Initialize Excellent Staff for each player
-        //     self::initStat('player', 'normalStaff', 12, $player_id); // Initialize Normal Staff for each player
-        //     self::initStat('player', 'staffBids', 0, $player_id); // Initialize Staff Bids for each player
-        //     self::initStat('player', 'staffBidsWon', 0, $player_id); // Initialize Staff Bids Won for each player
-        // }
+    
+        foreach ($players as $player_id => $player) {
+            self::initStat('player', 'duckats', 150, $player_id); // Initialize Duckats for each player
+            self::initStat('player', 'souperDuckats', 3, $player_id); // Initialize Souper Duckats for each player
+            self::initStat('player', 'excellentStaff', 0, $player_id); // Initialize Excellent Staff for each player
+            self::initStat('player', 'normalStaff', 12, $player_id); // Initialize Normal Staff for each player
+            self::initStat('player', 'staffBids', 0, $player_id); // Initialize Staff Bids for each player
+            self::initStat('player', 'staffBidsWon', 0, $player_id); // Initialize Staff Bids Won for each player
+        }
     
         // Setup the initial game situation
         $this->setupInitialGameBoard();
@@ -111,11 +107,48 @@ class DuckSoupTheRestaurantGame extends Table {
         return array_keys($players)[0];
     }
 
+    function getTriviaQuestions() {
+             // Initialize an array to hold the questions
+             $questions = array();
+        
+             // SQL to get the trivia questions
+             $sql = "SELECT question_id, question_text FROM questions";
+             
+             // Fetch the questions from the database
+             $result = self::DbQuery($sql);
+             
+             // Loop over the result and add each question to the $questions array
+             while ($row = mysql_fetch_assoc($result)) {
+                 $questions[] = array(
+                     'id' => $row['question_id'],
+                     'text' => $row['question_text']
+                 );
+             }
+             
+             // Now you have an array of questions. You can return this array,
+             // or if your front-end expects HTML, you could construct an HTML string.
+             // Here's how you could construct a simple HTML representation:
+             $html = '<ul id="trivia-questions-list">';
+             foreach ($questions as $question) {
+                 $html .= '<li id="question-' . $question['id'] . '">';
+                 $html .= htmlspecialchars($question['text']);
+                 $html .= '</li>';
+             }
+             $html .= '</ul>';
+     
+             // Return the HTML string
+             return $html;
+    }
+
     function activeNextPlayer() {
     
     }
 
-
+    public function getRollDiceButtonHtml() {
+         // Your logic to generate the HTML for the dice roll button goes here
+        // For example:
+        return '<button id="roll_dice">Roll Dice</button>';
+    }
 
 
     /*

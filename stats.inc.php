@@ -48,7 +48,6 @@
 */
 
 $stats_type = [
-
     // Statistics global to table
     "table" => [
         "totalRounds" => [
@@ -57,46 +56,53 @@ $stats_type = [
             "type" => "int"
         ],
         "bankDuckats" => [
-            "id" => 11,
+            "id" => 20,
             "name" => totranslate("Total Duckats in Bank"),
             "type" => "int"
         ],
-        // Add more global statistics as needed
+        // ... other global statistics
     ],
     
     // Statistics existing for each player
     "player" => [
         "duckats" => [
-            "id" => 10,
+            "id" => 10, // Ensure this ID is unique among player statistics
             "name" => totranslate("Number of Duckats"),
             "type" => "int"
         ],
         "souperDuckats" => [
             "id" => 11,
             "name" => totranslate("Number of Souper Duckats"),
-            "type" => "int"
+            "type" => "int",
+            "defaultValue" => 3, // default value when a game starts
         ],
         "excellentStaff" => [
             "id" => 12,
             "name" => totranslate("Number of Excellent Staff"),
-            "type" => "int"
+            "type" => "int",
+            "defaultValue" => 0, // default value when a game starts
         ],
         "normalStaff" => [
             "id" => 13,
             "name" => totranslate("Number of Normal Staff"),
-            "type" => "int"
+            "type" => "int",
+            "defaultValue" => 12, // default value when a game starts
         ],
         "staffBids" => [
             "id" => 14,
             "name" => totranslate("Number of Staff Bids"),
-            "type" => "int"
+            "type" => "int",
+            "defaultValue" => 0, // default value when a game starts
         ],
         "staffBidsWon" => [
             "id" => 15,
             "name" => totranslate("Number of Staff Bids Won"),
-            "type" => "int"
+            "type" => "int",
+            "defaultValue" => 0, // default value when a game starts
         ],
-        // Add more player-specific statistics as needed
-    ]
+        // ... other player-specific statistics
+    ],
 ];
+?>
+
 
