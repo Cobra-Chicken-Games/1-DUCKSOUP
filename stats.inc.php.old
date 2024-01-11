@@ -51,12 +51,12 @@ $stats_type = [
     // Statistics global to table
     "table" => [
         "totalRounds" => [
-            "id" => 10,
+            "id" => 20,
             "name" => totranslate("Total Rounds"),
             "type" => "int"
         ],
         "bankDuckats" => [
-            "id" => 20,
+            "id" => 30,
             "name" => totranslate("Total Duckats in Bank"),
             "type" => "int"
         ],

@@ -40,10 +40,10 @@
 
 -- Alter the 'player' table to add new columns
 ALTER TABLE player 
-ADD restaurant_name VARCHAR(255),
-ADD duckats_balance INT,
-ADD souper_duckats_balance INT, 
-ADD is_on_vacation BOOLEAN DEFAULT FALSE;
+ADD COLUMN restaurant_name VARCHAR(255),
+ADD COLUMN duckats INT NOT NULL DEFAULT 0,
+ADD COLUMN souperduckats INT NOT NULL DEFAULT 0; 
+ADD COLUMN is_on_vacation BOOLEAN DEFAULT FALSE;
 
 CREATE TABLE IF NOT EXISTS staff (
     staff_id INT AUTO_INCREMENT PRIMARY KEY,
