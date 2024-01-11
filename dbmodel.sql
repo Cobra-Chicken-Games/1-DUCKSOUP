@@ -39,11 +39,12 @@
 
 
 -- Alter the 'player' table to add new columns
-ALTER TABLE player 
-ADD COLUMN restaurant_name VARCHAR(255),
-ADD COLUMN duckats INT NOT NULL DEFAULT 0,
-ADD COLUMN souperduckats INT NOT NULL DEFAULT 0; 
-ADD COLUMN is_on_vacation BOOLEAN DEFAULT FALSE;
+ALTER TABLE `player` 
+    ADD `duckats` INT NOT NULL DEFAULT 150,
+    ADD `souperduckats` INT NOT NULL DEFAULT 3,
+    ADD `excellent_staff` INT NOT NULL DEFAULT 0,
+    ADD `normal_staff` INT NOT NULL DEFAULT 12;
+    ADD `is_on_vacation` BOOL DEFAULT FALSE;
 
 CREATE TABLE IF NOT EXISTS staff (
     staff_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,9 +91,9 @@ CREATE TABLE IF NOT EXISTS transactions (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- Trivia Questions DB insert
-INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('40', 'Additives', 'Kwok disease results from overuse of', 'Artificial Coloring', 'Monosodium Glutamate', 'Sulfites', '', 'B', 'The symptoms of Kwok''s disease are burning pains in the chest, dizziness and numbness. ');
-INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('50', 'Additives', 'Xantham gum, a thickener, emulsifier and stabilizer in dairy products, dressings and other foods, is made from', 'Artificial Ingredients', 'Glucose', 'Palm Oil', 'Potato Starch', 'B', '');
-INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Baking at high altitudes requires more yeast or baking powder.  ', 'TRUE', 'FALSE', '', '', 'B', 'It requires less yeast or baking powder. The higher the altitude, the lower the atmospheric pressure, which means that the carbon dioxide generated in baking encounters less resistance from the surrounding air.');
+-- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('40', 'Additives', 'Kwok disease results from overuse of', 'Artificial Coloring', 'Monosodium Glutamate', 'Sulfites', '', 'B', 'The symptoms of Kwok''s disease are burning pains in the chest, dizziness and numbness. ');
+-- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('50', 'Additives', 'Xantham gum, a thickener, emulsifier and stabilizer in dairy products, dressings and other foods, is made from', 'Artificial Ingredients', 'Glucose', 'Palm Oil', 'Potato Starch', 'B', '');
+-- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Baking at high altitudes requires more yeast or baking powder.  ', 'TRUE', 'FALSE', '', '', 'B', 'It requires less yeast or baking powder. The higher the altitude, the lower the atmospheric pressure, which means that the carbon dioxide generated in baking encounters less resistance from the surrounding air.');
 -- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Empanada is a type of stuffed-meat pastry.  ', 'TRUE', 'FALSE', '', '', 'A', 'In Spain, empanadas are round and larger than the semicircular South American versions. ');
 -- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Grissini are thin smoked sausages.   ', 'TRUE', 'FALSE', '', '', 'B', 'Grissini are Italian bread sticks. ');
 -- INSERT INTO questions (duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text) VALUES ('30', 'Baking', 'True or false? Pumpernickel bread is made with rye flour.   ', 'TRUE', 'FALSE', '', '', 'A', 'Pumpernickel was originally made in Westphalia but is now made all over Germany. There are number of explanations for its unusual name, one of which translates into "a coarse bread fit for a half-wit.');
