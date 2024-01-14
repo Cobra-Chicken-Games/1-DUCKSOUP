@@ -66,14 +66,14 @@ class DuckSoupTheRestaurantGame extends Table {
         self::setGameStateInitialValue('souperDuckatsCount', 3); // Assuming each player starts with 3 Souper Duckats
     
         // Initialize game statistics
-    
+        
         foreach ($players as $player_id => $player) {
-            self::initStat('player', 'duckats', 150, $player_id); // Initialize Duckats for each player
-            self::initStat('player', 'souperDuckats', 3, $player_id); // Initialize Souper Duckats for each player
-            self::initStat('player', 'excellentStaff', 0, $player_id); // Initialize Excellent Staff for each player
-            self::initStat('player', 'normalStaff', 12, $player_id); // Initialize Normal Staff for each player
-            self::initStat('player', 'staffBids', 0, $player_id); // Initialize Staff Bids for each player
-            self::initStat('player', 'staffBidsWon', 0, $player_id); // Initialize Staff Bids Won for each player
+            self::incStat('player', 'duckats', 150, $player_id); // Initialize Duckats for each player
+            self::incStat('player', 'souperDuckats', 3, $player_id); // Initialize Souper Duckats for each player
+            self::incStat('player', 'excellentStaff', 0, $player_id); // Initialize Excellent Staff for each player
+            self::incStat('player', 'normalStaff', 12, $player_id); // Initialize Normal Staff for each player
+            self::incStat('player', 'staffBids', 0, $player_id); // Initialize Staff Bids for each player
+            self::incStat('player', 'staffBidsWon', 0, $player_id); // Initialize Staff Bids Won for each player
         }
     
         // Setup the initial game situation
