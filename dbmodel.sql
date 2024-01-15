@@ -40,10 +40,6 @@
 
 -- Alter the 'player' table to add new columns
 ALTER TABLE `player` 
-    ADD `duckats` INT NOT NULL DEFAULT 150,
-    ADD `souperduckats` INT NOT NULL DEFAULT 3,
-    ADD `excellent_staff` INT NOT NULL DEFAULT 0,
-    ADD `normal_staff` INT NOT NULL DEFAULT 12;
     ADD `is_on_vacation` BOOL DEFAULT FALSE;
 
 CREATE TABLE IF NOT EXISTS staff (

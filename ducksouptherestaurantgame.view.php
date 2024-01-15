@@ -35,7 +35,7 @@
  
      function build_page($viewArgs)
      {
-         $players = $this->game->loadPlayersBasicInfos();
+         $players = $this->game->loadPlayersBasicInfos(); //loadPlayersBasicInfos() is part of BGA's base code.
          $players_nbr = count($players);
  
          /*********** Place your code below:  ************/
@@ -70,11 +70,11 @@
              $this->page->insert_block("duckats_block", array(
                  "PLAYER_ID" => $player_id,
                  "DUCKATS_COUNT" => $player['duckats'],
-                 // ... other player-specific variables for duckats
+                 "SOUPERDUCKATS" => $player['souperDuckats']
              ));
              $this->page->insert_block("souperduckats_block", array(
                  "PLAYER_ID" => $player_id,
-                 "SOUPERDUCKATS_COUNT" => $player['souperduckats'],
+                 "SOUPERDUCKATS_COUNT" => $player['souperDuckats'],
                  // ... other player-specific variables for souper duckats
              ));
          }
