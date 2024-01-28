@@ -34,7 +34,7 @@ class DuckSoupTheRestaurantGame extends Table {
 
     
     protected function getGameName() {
-        return "hearts";
+        return "ducksouptherestaurantgame";
     }
     
 
@@ -65,15 +65,23 @@ class DuckSoupTheRestaurantGame extends Table {
         self::setGameStateInitialValue('bankBalance', 0); // Assuming 'bankBalance' is a global variable
         self::setGameStateInitialValue('souperDuckatsCount', 3); // Assuming each player starts with 3 Souper Duckats
     
-        // Initialize game statistics
+  
+
+         // Initialize table statistics
+         self::initStat('table', 'totalRounds', 0);
+         self::initStat('table', 'bankDuckats', 1000); 
         
-        foreach ($players as $player_id => $player) {
+         // Initialize game statistics
+       foreach ($players as $player_id => $player) {
+            self::initStat('player', 'duckats', 150, $player_id);
+            self::initStat('player', 'souperDuckats', 3, $player_id);
             self::initStat('player', 'excellentStaff', 0, $player_id); // Initialize Excellent Staff for each player
             self::initStat('player', 'normalStaff', 12, $player_id); // Initialize Normal Staff for each player
             self::initStat('player', 'staffBids', 0, $player_id); // Initialize Staff Bids for each player
             self::initStat('player', 'staffBidsWon', 0, $player_id); // Initialize Staff Bids Won for each player
         }
-    
+
+       
         // Setup the initial game situation
         $this->setupInitialGameBoard();
         $this->distributeInitialStaff();
@@ -84,6 +92,10 @@ class DuckSoupTheRestaurantGame extends Table {
         $this->gamestate->changeActivePlayer($firstPlayerId);
     
         /************ End of the game initialization *****/
+    }
+
+    function getPlayerStaff() {
+
     }
     
     // Additional helper methods
@@ -125,15 +137,15 @@ class DuckSoupTheRestaurantGame extends Table {
              
              // Now you have an array of questions. You can return this array,
              // or if your front-end expects HTML, you could construct an HTML string.
-             // Here's how you could construct a simple HTML representation:
-             $html = '<ul id="trivia-questions-list">';
+             //Here's how you could construct a simple HTML representation:
+             $html = '<ul id="trivia-questions-list" >';
              foreach ($questions as $question) {
                  $html .= '<li id="question-' . $question['id'] . '">';
                  $html .= htmlspecialchars($question['text']);
                  $html .= '</li>';
              }
              $html .= '</ul>';
-     
+
              // Return the HTML string
              return $html;
     }

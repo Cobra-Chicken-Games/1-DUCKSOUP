@@ -27,55 +27,105 @@
 -- Note: this code is modified to add suggestions from BGA players and popular variants.
 -- Please visit here to read the basic code used in the BGA Studio tutorial: https://github.com/elaskavaia/
 -->
-{include file="game_elements.html" type="css" rel="stylesheet" media="screen,projection"}
-{include file="game_elements.js" type="javascript"}
 
-<div id="game_interface">
-    <div id="game_board">
-        <!-- Staff Area for Each Player -->
-        {foreach from=$players item=player}
-            <!-- BEGIN staff_block -->
-            <div class="player_staff" id="player_staff_{$player.PLAYER_ID}" style="background-color:{$player.PLAYER_COLOR};">
-                <div class="player_name">{$player.PLAYER_NAME}</div>
-                <div class="staff_content">
-                    <!-- Dynamic content will be inserted here -->
+<!-- BEGIN gameboard -->
+<div class="gameboard">
+    <div class="container">
+        <div class="clearfix">
+            <!-- RIGHT CONTENT -->
+            <div class="right-content">
+                <!-- TRIVIA BUTTONS -->
+                    <div class="letter-buttons">
+                        <button id="letter-a">A</button>
+                        <button id="letter-b">B</button>
+                        <button id="letter-c">C</button>
+                        <button id="letter-d">D</button>
+                    </div>        
+                
+                <!-- DICE BUTTONS -->
+                <div class="dice-buttons">
+                    <!-- STAFF DIE -->
+                    <button id="staff-die">
+                        <span>Roll the<br>Staff Die</span>
+                    </button>
+
+                    <!-- MOVEMENT DICE -->
+                    <button id="move-die">
+                        <span>Roll for<br>Movement</span>
+                    </button>
                 </div>
-            </div>
-            <!-- END staff_block -->
-        {/foreach}
-        
-        <!-- Trivia Questions Block -->
-        <!-- BEGIN trivia_block -->
-        <div id="trivia_questions">
-            {$QUESTIONS_HTML}
-        </div>
-        <!-- END trivia_block -->
-        
-        <!-- Duckats Block -->
-        {foreach from=$players item=player}
-            <!-- BEGIN duckats_block -->
-            <div class="player_duckats" id="player_duckats_{$player.PLAYER_ID}">
-                <span class="duckats_label">{$DUCKATS}</span>
-                <span class="duckats_count">{$player.DUCKATS_COUNT}</span>
-            </div>
-            <!-- END duckats_block -->
-            
-            <!-- BEGIN souperduckats_block -->
-            <div class="player_souperduckats" id="player_souperduckats_{$player.PLAYER_ID}">
-                <span class="souperduckats_label">{$SOUPERDUCKATS}</span>
-                <span class="souperduckats_count">{$player.SOUPERDUCKATS_COUNT}</span>
-            </div>
-            <!-- END souperduckats_block -->
-        {/foreach}
-        
-        <!-- Dice Roll Button (shown/hidden via JavaScript) -->
-        <div id="dice_roll_area">
-            {$ROLL_DICE_HTML}
-        </div>
 
-        <!-- Game Message -->
-        <div id="game_message">
-            {$GAME_MESSAGE}
+                <!-- STAFF BOARD CONTAINER -->
+				<!-- BEGIN staff_block -->
+                <div class="staff-board-container">
+                    <!-- STAFF BOARD ARROWS -->
+                    <button id="left-arrow" class="arrow"><span></span></button>
+                    <button id="right-arrow" class="arrow"><span></span></button>
+                    <!-- staff board header -->
+                    <div class="player-header">
+                        <div class="clearfix">
+                        <!-- PLAYER NAME -->
+                        <!-- BEGIN playerstats_block -->
+                            <div class="player-name left player_${PLAYER_COLOR}">
+                                ${PLAYER_NAME}
+                            </div>
+                            <!-- PLAYER STATS -->
+                            <div class="player-stats right">
+                                <div class="clearfix">
+                                    <div class="left">
+                                        <!-- SUPER DUCKATS -->
+										<!-- BEGIN souperduckats_block -->
+                                        <div class="clearfix super-duckat">
+                                            <div class="value left">
+                                                ${PLAYER_SUPER_DUCKATS}
+                                            </div>
+                                        </div>
+										<!-- END souperduckats_block -->
+                                    </div>
+									<!-- BEGIN duckats_block -->
+                                    <div class="left">
+                                        <!-- DUCKATS -->
+                                        <div class="clearfix duckat">
+                                            <div class="value left">
+                                                ${PLAYER_DUCKATS}
+                                            </div>
+                                        </div>
+                                    </div>
+									<!-- END duckats_block -->
+                                </div>
+                            </div>
+                        <!-- END playerstats_block -->
+                        </div>
+                        <div class="player-background player_${PLAYER_COLOR}"></div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="staff-board">
+                        ${PLAYER_STAFF}
+                        </div>
+                    </div>
+                </div>
+				<!-- END staff_block -->
+            </div>
+            <!-- LEFT CONTENT -->
+            <div class="left-content">
+                <!-- WRITTEN CONTENT SHOWN IN MIDDLE OF BOARD, INACTIVE BY DEFAULT -->
+                
+                <div class="board-contents inactive">
+                <!-- BEGIN trivia_block -->
+                    <h2>${BOARD_TITLE}</h2>
+                    <p>${BOARD_TEXT}</p>
+                <!-- END trivia_block -->
+                </div>
+                
+            </div>
         </div>
     </div>
 </div>
+<!-- END gameboard -->
+
+<script type="text/javascript">
+    // Javascript HTML templates
+    // Define templates for dynamic elements here, using variables from your JavaScript file
+</script>
+
+{OVERALL_GAME_FOOTER}

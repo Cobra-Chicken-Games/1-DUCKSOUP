@@ -67,12 +67,12 @@
     }
 */
 
-#gameboard {
+.gameboard {
     background-image: URL('img/board.jpg');
     background-position: 0px 0px;
 }
 
-/*
+
 .container {
     background: linear-gradient(#5c629b, #35346d);
     background-attachment: fixed;
@@ -444,5 +444,3 @@
 
 
 }
-
-*/

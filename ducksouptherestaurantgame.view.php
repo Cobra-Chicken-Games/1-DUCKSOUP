@@ -33,7 +33,7 @@
          return "ducksouptherestaurantgame";
      }
  
-     function build_page($viewArgs)
+    function build_page($viewArgs)
      {
          $players = $this->game->loadPlayersBasicInfos(); //loadPlayersBasicInfos() is part of BGA's base code.
          $players_nbr = count($players);
@@ -45,45 +45,73 @@
          $this->tpl['SOUPERDUCKATS'] = self::_("Souper Duckats:");
  
          // Assuming you have blocks defined for staff, trivia, duckats, and souper duckats
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block");
+        
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "duckats_block");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "souperduckats_block");
- 
-         // Example: setting up the staff area for each player
-         foreach ($players as $player_id => $player) {
-             $this->page->insert_block("staff_block", array(
-                 "PLAYER_ID" => $player_id,
-                 "PLAYER_COLOR" => $player['player_color'],
-                 // ... other player-specific variables for staff
-             ));
-         }
- 
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
+
+
+        // Example: setting up the staff area for each player
+        foreach ($players as $player_id => $player) {
+            $this->page->insert_block("staff_block", array(
+                "PLAYER_ID" => $player_id,
+                "PLAYER_COLOR" => $player['player_color'],
+                "PLAYER_NAME"  => $player['player_name']
+                // ... other player-specific variables for staff
+            ));
+        }
+
+        //Insert gameboard arry
+        $this->page->insert_block("gameboard", array(
+        ));
+
+           // Example: setting up the duckats and souper duckats display
+        foreach ($players as $player_id => $player) {
+            $duckatsCount = $this->game->getStat('duckats', $player_id);
+            $souperDuckatsCount = $this->game->getStat('souperDuckats', $player_id);
+        
+            $this->page->insert_block("duckats_block", array(
+                "PLAYER_ID" => $player_id,
+                "DUCKATS_COUNT" => $duckatsCount
+            ));
+            $this->page->insert_block("souperduckats_block", array(
+                "PLAYER_ID" => $player_id,
+                "SOUPERDUCKATS_COUNT" => $souperDuckatsCount
+                // ... other player-specific variables for souper duckats
+            ));
+            $this->page->insert_block("playerstats_block", array(
+                "PLAYER_ID" => $player['player_name']
+                // ... other player-specific variables for souper duckats
+            ));
+            $this->page->reset_subblocks( 'duckats_block' );
+            $this->page->reset_subblocks( 'souperduckats_block' );
+        }
+        
+        
+
+
          // Example: setting up the trivia questions block
-         $trivia_questions = $this->game->getTriviaQuestions(); // method to get trivia questions from your game logic
+         $trivia_questions = $this->game->getTriviaQuestions(); // method to get trivia questions from game logic
          $this->page->insert_block("trivia_block", array(
              "QUESTIONS_HTML" => $trivia_questions, // HTML content for trivia questions
          ));
- 
-         // Example: setting up the duckats and souper duckats display
-         foreach ($players as $player_id => $player) {
-             $this->page->insert_block("duckats_block", array(
-                 "PLAYER_ID" => $player_id,
-                 "DUCKATS_COUNT" => $player['duckats'],
-                 "SOUPERDUCKATS" => $player['souperDuckats']
-             ));
-             $this->page->insert_block("souperduckats_block", array(
-                 "PLAYER_ID" => $player_id,
-                 "SOUPERDUCKATS_COUNT" => $player['souperDuckats'],
-                 // ... other player-specific variables for souper duckats
-             ));
-         }
- 
+         $this->page->reset_subblocks( 'trivia_block' );
+         
+
+         $staff_content = $this->game->getPlayerStaff();
+         $this->page->insert_block("staff_block", array(
+            "PLAYER_STAFF" => $trivia_questions, 
+        ));
+        
+        $this->page->reset_subblocks( 'staff_block' );
          // Dice roll button visibility will be controlled by the game logic
          // Add buttons for rolling dice but these will be shown/hidden via JavaScript based on game state
-         $this->tpl['ROLL_DICE_HTML'] = self::raw($this->game->getRollDiceButtonHtml());
+        $this->tpl['ROLL_DICE_HTML'] = self::raw($this->game->getRollDiceButtonHtml());
  
          /*********** Do not change anything below this line  ************/
      }
- }
+    }
 ?>
