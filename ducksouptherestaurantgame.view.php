@@ -43,16 +43,16 @@
          $this->tpl['QUESTIONS'] = self::_("Trivia Questions:");
          $this->tpl['DUCKATS'] = self::_("Duckats:");
          $this->tpl['SOUPERDUCKATS'] = self::_("Souper Duckats:");
- 
-         // Assuming you have blocks defined for staff, trivia, duckats, and souper duckats
-        
+
+
+         //Assign the blocks to the tpl
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "duckats_block");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "souperduckats_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block"); //not showing up
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block"); //not showing up
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "left_content"); //nothing in here
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
-
 
         // Example: setting up the staff area for each player
         foreach ($players as $player_id => $player) {
@@ -60,12 +60,12 @@
                 "PLAYER_ID" => $player_id,
                 "PLAYER_COLOR" => $player['player_color'],
                 "PLAYER_NAME"  => $player['player_name']
-                // ... other player-specific variables for staff
             ));
         }
 
         //Insert gameboard arry
         $this->page->insert_block("gameboard", array(
+
         ));
 
            // Example: setting up the duckats and souper duckats display
@@ -90,23 +90,27 @@
             $this->page->reset_subblocks( 'souperduckats_block' );
         }
         
-        
-
-
          // Example: setting up the trivia questions block
+         $boardInfo = $this ->game->getBoardInfo();
          $trivia_questions = $this->game->getTriviaQuestions(); // method to get trivia questions from game logic
          $this->page->insert_block("trivia_block", array(
-             "QUESTIONS_HTML" => $trivia_questions, // HTML content for trivia questions
+            "BOARD_TITLE" => $boardInfo['boardTitle'],
+            "BOARD_TEXT" => $boardInfo['boardText'],
+            "QUESTIONS_HTML" => $trivia_questions, // HTML content for trivia questions
          ));
-         $this->page->reset_subblocks( 'trivia_block' );
          
-
+         //setup the staff block
          $staff_content = $this->game->getPlayerStaff();
          $this->page->insert_block("staff_block", array(
             "PLAYER_STAFF" => $trivia_questions, 
         ));
+
+        //setup the left playboard
+       
+        $this->page->insert_block("left_content", array(
+                //TODO: Insert left content for player board here.
+        ));
         
-        $this->page->reset_subblocks( 'staff_block' );
          // Dice roll button visibility will be controlled by the game logic
          // Add buttons for rolling dice but these will be shown/hidden via JavaScript based on game state
         $this->tpl['ROLL_DICE_HTML'] = self::raw($this->game->getRollDiceButtonHtml());

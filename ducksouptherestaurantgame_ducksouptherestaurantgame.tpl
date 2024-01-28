@@ -9,7 +9,7 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -------
 
-    hearts_hearts.tpl
+    ducksouptherestaurantgame_ducksouptherestaurantgame.tpl
     
     This is the HTML template of your game.
     
@@ -29,6 +29,7 @@
 -->
 
 <!-- BEGIN gameboard -->
+<!-- GAMEBOARD -->
 <div class="gameboard">
     <div class="container">
         <div class="clearfix">
@@ -41,7 +42,6 @@
                         <button id="letter-c">C</button>
                         <button id="letter-d">D</button>
                     </div>        
-                
                 <!-- DICE BUTTONS -->
                 <div class="dice-buttons">
                     <!-- STAFF DIE -->
@@ -55,8 +55,8 @@
                     </button>
                 </div>
 
-                <!-- STAFF BOARD CONTAINER -->
 				<!-- BEGIN staff_block -->
+                <!-- STAFF BLOCK -->
                 <div class="staff-board-container">
                     <!-- STAFF BOARD ARROWS -->
                     <button id="left-arrow" class="arrow"><span></span></button>
@@ -66,6 +66,7 @@
                         <div class="clearfix">
                         <!-- PLAYER NAME -->
                         <!-- BEGIN playerstats_block -->
+                        <!-- PLAYER STATS BLOCK -->
                             <div class="player-name left player_${PLAYER_COLOR}">
                                 ${PLAYER_NAME}
                             </div>
@@ -73,8 +74,8 @@
                             <div class="player-stats right">
                                 <div class="clearfix">
                                     <div class="left">
-                                        <!-- SUPER DUCKATS -->
 										<!-- BEGIN souperduckats_block -->
+                                        <!-- SUPER DUCKATS -->
                                         <div class="clearfix super-duckat">
                                             <div class="value left">
                                                 ${PLAYER_SUPER_DUCKATS}
@@ -83,8 +84,8 @@
 										<!-- END souperduckats_block -->
                                     </div>
 									<!-- BEGIN duckats_block -->
+                                    <!-- DUCKATS -->
                                     <div class="left">
-                                        <!-- DUCKATS -->
                                         <div class="clearfix duckat">
                                             <div class="value left">
                                                 ${PLAYER_DUCKATS}
@@ -107,17 +108,20 @@
 				<!-- END staff_block -->
             </div>
             <!-- LEFT CONTENT -->
+            <!-- BEGIN left_content -->
             <div class="left-content">
-                <!-- WRITTEN CONTENT SHOWN IN MIDDLE OF BOARD, INACTIVE BY DEFAULT -->
-                
-                <div class="board-contents inactive">
-                <!-- BEGIN trivia_block -->
-                    <h2>${BOARD_TITLE}</h2>
-                    <p>${BOARD_TEXT}</p>
-                <!-- END trivia_block -->
+                <div class="board" src="img/board.jpg">
+                    <!-- WRITTEN CONTENT SHOWN IN MIDDLE OF BOARD, INACTIVE BY DEFAULT -->
+                    <div class="board-contents active">
+                    <!-- BEGIN trivia_block -->
+                    <!-- TRIVIA -->
+                        <h2>${BOARD_TITLE}</h2>
+                        <p>${BOARD_TEXT}</p>
+                    <!-- END trivia_block -->
+                    </div>
                 </div>
-                
             </div>
+            <!-- END left_content -->
         </div>
     </div>
 </div>

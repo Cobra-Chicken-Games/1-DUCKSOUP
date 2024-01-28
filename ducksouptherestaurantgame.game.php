@@ -97,6 +97,18 @@ class DuckSoupTheRestaurantGame extends Table {
     function getPlayerStaff() {
 
     }
+
+    function getBoardInfo() {
+        // Here, you'll fetch or calculate the information needed for the current player's turn.
+        // This is just a placeholder example. You'll replace it with your actual game logic.
+        
+        $info = array(
+            'boardTitle' => "Current Player's Turn",
+            'boardText' => "It's your turn to make a move. Choose wisely to take the lead!"
+        );
+
+        return $info;
+    }
     
     // Additional helper methods
     function setupInitialGameBoard() {
