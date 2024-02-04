@@ -28,104 +28,129 @@
 -- Please visit here to read the basic code used in the BGA Studio tutorial: https://github.com/elaskavaia/
 -->
 
-<!-- BEGIN gameboard -->
-<!-- GAMEBOARD -->
-<div class="gameboard">
+                    <!-- BOARD -->
+                     <div id="board">
+                    <!-- BEGIN square -->
+                    <div id="square_{X}_{Y}" class="square" style="left: {LEFT}px; top: {TOP}px;"></div>
+                    <!-- END square -->
+                    </div>
+
+                    
+                    <!-- BEGIN gameboard -->
+                    <div class="{CSS_CLASSES}">{TEXT}</div>
+                    <!-- END gameboard -->
+
     <div class="container">
         <div class="clearfix">
+
             <!-- RIGHT CONTENT -->
             <div class="right-content">
+
                 <!-- TRIVIA BUTTONS -->
-                    <div class="letter-buttons">
-                        <button id="letter-a">A</button>
-                        <button id="letter-b">B</button>
-                        <button id="letter-c">C</button>
-                        <button id="letter-d">D</button>
-                    </div>        
-                <!-- DICE BUTTONS -->
+                <div class="letter-buttons">
+                    <button id="letter-a">A</button>
+                    <button id="letter-b">B</button>
+                    <button id="letter-c">C</button>
+                    <button id="letter-d">D</button>
+                </div>
+
+                <!-- DICE BUTTONS-->
                 <div class="dice-buttons">
-                    <!-- STAFF DIE -->
+
+                    <!-- STAFF DIE-->
                     <button id="staff-die">
+                        <img src="img/staff-die.png">
                         <span>Roll the<br>Staff Die</span>
                     </button>
 
-                    <!-- MOVEMENT DICE -->
+                    <!-- MOVEMENT DICE-->
                     <button id="move-die">
+                        <img src="img/movement-dice.png">
                         <span>Roll for<br>Movement</span>
                     </button>
+
                 </div>
 
-				<!-- BEGIN staff_block -->
-                <!-- STAFF BLOCK -->
+
                 <div class="staff-board-container">
+
                     <!-- STAFF BOARD ARROWS -->
                     <button id="left-arrow" class="arrow"><span></span></button>
                     <button id="right-arrow" class="arrow"><span></span></button>
-                    <!-- staff board header -->
+
                     <div class="player-header">
+
                         <div class="clearfix">
-                        <!-- PLAYER NAME -->
-                        <!-- BEGIN playerstats_block -->
-                        <!-- PLAYER STATS BLOCK -->
-                            <div class="player-name left player_${PLAYER_COLOR}">
-                                ${PLAYER_NAME}
+
+                            <!-- PLAYER NAME -->
+                            <div class="player-name left player1">
+                                12312547894564552123
                             </div>
-                            <!-- PLAYER STATS -->
+
+                            <!-- PLAYER STATS-->
                             <div class="player-stats right">
                                 <div class="clearfix">
                                     <div class="left">
-										<!-- BEGIN souperduckats_block -->
+
                                         <!-- SUPER DUCKATS -->
                                         <div class="clearfix super-duckat">
                                             <div class="value left">
-                                                ${PLAYER_SUPER_DUCKATS}
+                                                3
                                             </div>
+                                            <img class="left" src="img/super-duckats.png">
                                         </div>
-										<!-- END souperduckats_block -->
+
                                     </div>
-									<!-- BEGIN duckats_block -->
-                                    <!-- DUCKATS -->
+
+
                                     <div class="left">
+
+                                        <!-- DUCKATS -->
                                         <div class="clearfix duckat">
                                             <div class="value left">
-                                                ${PLAYER_DUCKATS}
+                                                100
                                             </div>
+                                            <img class="left" src="img/duckats.png">
                                         </div>
+
                                     </div>
-									<!-- END duckats_block -->
                                 </div>
+
                             </div>
-                        <!-- END playerstats_block -->
                         </div>
-                        <div class="player-background player_${PLAYER_COLOR}"></div>
+
+                        <div class="player-background player1"></div>
+
                     </div>
-                    <div class="clearfix">
-                        <div class="staff-board">
-                        ${PLAYER_STAFF}
-                        </div>
-                    </div>
+
+
+                    <!-- STAFF BOARD -->
+                    <img class="staff-board" src="img/staff-board.jpg">
                 </div>
-				<!-- END staff_block -->
+
             </div>
-            <!-- LEFT CONTENT -->
-            <!-- BEGIN left_content -->
+
+            <!-- LEFT CONTENT-->
             <div class="left-content">
-                <div class="board" src="img/board.jpg">
+
+                <div class="board-container">
+
+                    <!-- DUCK IMAGE TO DISPLAY BY DEFAULT, HIDDEN WHEN CONTENT SHOWN -->
+                    <img class="inner-board inactive" src="img/inner-board.png">
+
                     <!-- WRITTEN CONTENT SHOWN IN MIDDLE OF BOARD, INACTIVE BY DEFAULT -->
                     <div class="board-contents active">
-                    <!-- BEGIN trivia_block -->
-                    <!-- TRIVIA -->
-                        <h2>${BOARD_TITLE}</h2>
-                        <p>${BOARD_TEXT}</p>
-                    <!-- END trivia_block -->
+                        <h2>Lorem ipsum dolor sit</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar
+                            vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam erat
+                            volutpat. Nunc auctor.</p>
                     </div>
+
+
                 </div>
             </div>
-            <!-- END left_content -->
         </div>
     </div>
-</div>
-<!-- END gameboard -->
 
 <script type="text/javascript">
     // Javascript HTML templates

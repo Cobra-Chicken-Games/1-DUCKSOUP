@@ -67,6 +67,37 @@
     }
 */
 
+#board {
+    width: 536px;
+    height: 528px;
+    background-image: url('img/dice-1.png');
+    position: relative;
+}
+
+.square {
+    width: 62px;
+    height: 62px;
+    position: absolute;
+    background-color: red;
+}
+
+.gameboard-spaces {
+    background-image: url('img/board.jpg');
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.gameboard {
+    background-position: 0px 0px;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    padding: 0;
+    position: relative;
+    display: block;
+}
+
+
 .container {
     background: linear-gradient(#5c629b, #35346d);
     background-attachment: fixed;
@@ -120,15 +151,7 @@
     height: auto;
 }
 
-.gameboard {
-    background-position: 0px 0px;
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-    padding: 0;
-    position: relative;
-    display: block;
-}
+/*Game board sprite*/
 
 .inner-board {
     background-image: url('img/inner-board.png');
@@ -310,6 +333,108 @@
     height: 2.188rem;
     border-radius: 0px 10px 0px 0px;
     margin-top: -2.188rem;
+}
+
+/* Movement Die Position*/
+.move-die {
+    width: 64px; 
+    height: 64px; 
+    background-position: -100px -10px; 
+}
+
+/* Movemenet Dice Faces */
+.dice1 {
+    background-image: url('img/dice-1.png'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.dice2 {
+    background-image: url('/img/dice-2.png'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.dice3 {
+    background-image: url('/img/dice-3.png'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.dice4 {
+    background-image: url('/img/dice-4.png'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.dice5 {
+    background-image: url('/img/dice-5.png'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.dice6 {
+    background-image: url('/img/dice-6.png'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+
+
+/* Staff Die faces */
+.ex-capitan {
+    background-image: url('./img/ex-captain.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-chef {
+    background-image: url('./img/ex-chef.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-cook {
+    background-image: url('./img/ex-cook.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-first-cook {
+    background-image: url('./img/ex-first-cook.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-maitre-d {
+    background-image: url('./img/ex-maitre-d.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-server {
+    background-image: url('./img/ex-server.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-sommelier {
+    background-image: url('./img/ex-sommelier.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.ex-sous-chef {
+    background-image: url('./img/ex-sous-chef.jpg'); 
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+/* Staff Die Positon */
+.staff-die {
+    width: 64px; /* Replace with actual width */
+    height: 64px; /* Replace with actual height */
+    background-position: -10px -10px; /
 }
 
 .arrow {

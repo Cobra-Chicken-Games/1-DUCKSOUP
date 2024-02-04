@@ -35,6 +35,7 @@
  
     function build_page($viewArgs)
      {
+         global $g_user;
          $players = $this->game->loadPlayersBasicInfos(); //loadPlayersBasicInfos() is part of BGA's base code.
          $players_nbr = count($players);
  
@@ -46,15 +47,37 @@
 
 
          //Assign the blocks to the tpl
+         /*
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "duckats_block");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "souperduckats_block");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block"); //not showing up
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block"); //not showing up
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "left_content"); //nothing in here
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); */
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); 
+        
 
-        // Example: setting up the staff area for each player
+        $this->page->begin_block( "ducksouptherestaurantgame_ducksouptherestaurantgame", "square" );
+        
+        $hor_scale = 64.8;
+        $ver_scale = 64.4;
+        for( $x=1; $x<=8; $x++ )
+        {
+            for( $y=1; $y<=8; $y++ )
+            {
+                $this->page->insert_block( "square", array(
+                    'X' => $x,
+                    'Y' => $y,
+                    'LEFT' => round( ($x-1)*$hor_scale+10 ),
+                    'TOP' => round( ($y-1)*$ver_scale+7 )
+                ) );
+            }        
+        }
+
+
+
+     /*   // Example: setting up the staff area for each player
         foreach ($players as $player_id => $player) {
             $this->page->insert_block("staff_block", array(
                 "PLAYER_ID" => $player_id,
@@ -62,12 +85,14 @@
                 "PLAYER_NAME"  => $player['player_name']
             ));
         }
-
+        */
         //Insert gameboard arry
         $this->page->insert_block("gameboard", array(
-
+                'CSS_CLASSES' => $this->cssClass(),
+                'TEXT' => $this->boardText()
         ));
-
+        
+        /*
            // Example: setting up the duckats and souper duckats display
         foreach ($players as $player_id => $player) {
             $duckatsCount = $this->game->getStat('duckats', $player_id);
@@ -76,6 +101,7 @@
             $this->page->insert_block("duckats_block", array(
                 "PLAYER_ID" => $player_id,
                 "DUCKATS_COUNT" => $duckatsCount
+                
             ));
             $this->page->insert_block("souperduckats_block", array(
                 "PLAYER_ID" => $player_id,
@@ -114,8 +140,21 @@
          // Dice roll button visibility will be controlled by the game logic
          // Add buttons for rolling dice but these will be shown/hidden via JavaScript based on game state
         $this->tpl['ROLL_DICE_HTML'] = self::raw($this->game->getRollDiceButtonHtml());
- 
+        */
+
+
          /*********** Do not change anything below this line  ************/
-     }
     }
+
+        public function cssClass() {
+            return "gameboard-spaces gameboard";
+        }
+        
+        public function boardText() {
+            return "TESTING THE SPRITES FROM CSS AND VIEW";
+        }
+
+}
+
+
 ?>
