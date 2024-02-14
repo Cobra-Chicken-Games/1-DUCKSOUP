@@ -13,91 +13,6 @@
  *
  */
 
-/*
-    This is the CSS stylesheet of your game User Interface.
-    
-    Styles defined on this file will be applied to the HTML elements you define in your
-    HTML template (ducksouptherestaurantgame_ducksouptherestaurantgame.tpl), and to HTML elements you create dynamically
-    (in ducksouptherestaurantgame.js).
-    
-    Usually, you are using CSS to:
-    
-    1°) define the overall layout of your game
-        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
-
-    2°) create your CSS-sprites:
-        All images of your games should be gathered into a small number of image files. Then, using
-        background-image and background-position CSS properties, you create HTML blocks that can 
-        display these images correctly (see example below).
-    
-    3°) ... anything else:
-        It is really easy to add and remove CSS classes dynamically from your Javascript with
-        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
-        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
-        very often, using CSS classes for the logic of your user interface allow you to do complex
-        thing easily.
-        
-        
-     Note: on the production platform, this file will be compressed and comments will be removed.
-           Consequently, don't hesitate to put as many comments as necessary.
-*/
-
-
-/* Note: you must not use any @import directive */
-
-
-/********* You can start writing your CSS below this line: **********/
-
-
-/*
-    Example of CSS sprites (a black token and a white token, 20x20px each, embedded in the same "tokens.png" 40x20px image):
-
-    .white_token {
-        background-image: url('img/tokens.png');
-        background-position: 0px 0px;
-    }
-    .black_token {
-        background-image: url('img/tokens.png');
-        background-position: -20px 0px;
-    }
-    .token {
-        width: 20px;
-        height: 20px;
-        background-repeat: none;
-    }
-*/
-
-#board {
-    width: 536px;
-    height: 528px;
-    background-image: url('img/dice-1.png');
-    position: relative;
-}
-
-.square {
-    width: 62px;
-    height: 62px;
-    position: absolute;
-    background-color: red;
-}
-
-.gameboard-spaces {
-    background-image: url('img/board.jpg');
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.gameboard {
-    background-position: 0px 0px;
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-    padding: 0;
-    position: relative;
-    display: block;
-}
-
-
 .container {
     background: linear-gradient(#5c629b, #35346d);
     background-attachment: fixed;
@@ -106,6 +21,30 @@
     padding:0;
     box-sizing: border-box!important;
     height: 100%;
+}
+
+.* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box!important;
+}
+
+html {
+    height: 100%;
+    background: linear-gradient(#5c629b, #35346d);
+    background-attachment: fixed;
+    font-size: 16px; /* used for scaling using rem units */
+}
+
+body {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    clear: both;
 }
 
 .clearfix::after { 
@@ -122,17 +61,11 @@
     float: right;
 }
 
-.container { 
-    width: 100%;
-    height: 100%;
-    clear: both;
-}
-
 .left-content {
     width: 50%;
     float: left;
     position: relative;
-    padding: 1.25rem;
+    padding: 2rem;
     box-sizing: border-box;
 }
 
@@ -140,38 +73,43 @@
     width: 50%;
     float: right;
     position: relative;
-    padding: 2.5rem 2.5rem 1.25rem 1.25rem;
+    padding: 2rem;
     box-sizing: border-box;
-
 }
 
-.board-container {
+#board-container {
     position: relative;
     width: 100%;
     height: auto;
 }
 
-/*Game board sprite*/
+#board {
+    display: flex;
+    width: 53.125rem;
+    height: 53.125rem;
+    background-image: url('img/board.jpg');
+    position: relative;
+ }
 
-.inner-board {
-    background-image: url('img/inner-board.png');
-    width: 55%;
-    height: auto;
-    max-height: 55%;
-    padding: 0;
+ #inner-board {
+    display: flex;
     position: absolute;
+    background-size: 28.125rem 28.125rem;
+    height: 28.125rem;
+    width: 28.125rem;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    z-index: 1;
-}
+    transform: translate(-50%, -50%);
+    background-image: url('img/inner-board.png');
+ }
 
 .board-contents.inactive, .inner-board.inactive { 
     display: none; 
 }
 
 .board-contents {
-    width: 48%;
+    display: flex;
+    width: 50%;
     height: auto;
     max-height: 45%;
     padding: 0;
@@ -199,16 +137,20 @@
 .letter-buttons {
     margin-bottom: 1.875rem;
     text-align: center;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
 
 .letter-buttons button {
     background: #3e3f83;
     color: #fff;
     border-radius: 30px;
+    height: 6rem;
+    width: 7rem;
     padding: 0.938rem 1.875rem 0.75rem 1.875rem;
     border: 0px;
-    display: inline-block;
-    margin-right: 0.5rem;
+    margin: 10px 10px 10px 10px;
     font-family: 'Limelight', sans-serif;
     line-height: 1;
     font-size: 3.75rem;
@@ -223,12 +165,17 @@
 
 .dice-buttons {
     margin-bottom: 2.5rem;
+    display: flex; 
+    margin: 1.625rem 3.625rem 2.625rem 4.625rem;
+    justify-content: center; 
+    align-items: center;
     text-align: center;
 }
 
 .dice-buttons button {
     background: #3e3f83;
     border-radius: 30px;
+    height: 9rem;
     border: 0px;
     display: inline-block;
     margin-right: 0.625rem;
@@ -238,39 +185,73 @@
     clear: left;
 }
 
-.dice-buttons button img {
-    float: left;
-    padding-left: 1.25rem;
-    height: 6.25rem;
-}
-
 .dice-buttons button span {
     font-family: 'Arial Black', 'Arial Bold', sans-serif;
     font-weight: bolder;
     text-transform: uppercase;
-    line-height: 1.25;
+    line-height: 2.25;
     font-size: 1.25rem;
     color: #fff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    text-align: left;
     padding: 1.563rem 1.875rem 0.75rem 0.625rem;
+    text-align: left; 
     float: left;
 }
 
-.staff-board-container { 
-    position: relative;
+#staff-die {
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center; 
 }
 
-.staff-board {
-    background-image: url('img/staff-board.jpg');
-    width: 90%;
-    height: auto;
-    max-height: 100%;
-    padding: 0;
-    position: relative;
-    display: block;
-    margin: 0 auto;
+#staff-die span {
+    order: 2; /* The text appears second */
+    margin: 0rem 3rem 0rem 0rem;
+    text-align: left; /* Align the text to the left */
 }
+
+#staff-die-image {
+    height: 6rem;
+    width: 6rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-image: URL('img/staff-die.png');
+    background-size: cover; 
+    background-position: center;
+    margin-right: auto;
+    order: 1;
+}
+
+#move-die {
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center; 
+}
+
+#move-die span {
+    order: 2; /* The text appears second */
+    text-align: left; /* Align the text to the left */
+}
+
+#move-die-image {
+    height: 4rem;
+    width: 9rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-image: URL('img/movement-dice.png');
+    background-size: cover; 
+    background-position: center;
+    margin-right: auto;
+    order: 1;
+}
+
+#staff-board {
+    height: 33rem;
+    width: 53rem;
+    background-image: URL('img/staff-board.jpg');
+    margin: 0rem 1rem 0rem 4rem;
+}
+
 
 .player-stats {
     position: absolute;
@@ -314,9 +295,21 @@
     padding-bottom: 10px;
 }
 
+#super-duckat-image {
+    height: 3.87rem;
+    width: 3.87rem;
+    background-image: URL('img/super-duckats.png');
+}
+
 .duckat {
     padding-bottom: 10px;
     margin-left: 1rem;
+}
+
+#duckats-image {
+    height: 3.87rem;
+    width: 3.87rem;
+    background-image: URL('img/duckats.png');
 }
 
 .value {
@@ -333,108 +326,6 @@
     height: 2.188rem;
     border-radius: 0px 10px 0px 0px;
     margin-top: -2.188rem;
-}
-
-/* Movement Die Position*/
-.move-die {
-    width: 64px; 
-    height: 64px; 
-    background-position: -100px -10px; 
-}
-
-/* Movemenet Dice Faces */
-.dice1 {
-    background-image: url('img/dice-1.png'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.dice2 {
-    background-image: url('/img/dice-2.png'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.dice3 {
-    background-image: url('/img/dice-3.png'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.dice4 {
-    background-image: url('/img/dice-4.png'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.dice5 {
-    background-image: url('/img/dice-5.png'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.dice6 {
-    background-image: url('/img/dice-6.png'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-
-
-/* Staff Die faces */
-.ex-capitan {
-    background-image: url('./img/ex-captain.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-chef {
-    background-image: url('./img/ex-chef.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-cook {
-    background-image: url('./img/ex-cook.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-first-cook {
-    background-image: url('./img/ex-first-cook.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-maitre-d {
-    background-image: url('./img/ex-maitre-d.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-server {
-    background-image: url('./img/ex-server.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-sommelier {
-    background-image: url('./img/ex-sommelier.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-.ex-sous-chef {
-    background-image: url('./img/ex-sous-chef.jpg'); 
-    background-repeat: no-repeat;
-    display: inline-block;
-}
-
-/* Staff Die Positon */
-.staff-die {
-    width: 64px; /* Replace with actual width */
-    height: 64px; /* Replace with actual height */
-    background-position: -10px -10px; /
 }
 
 .arrow {
@@ -501,13 +392,21 @@
 }
 
 @media screen and (max-width: 1023px) {
-    /* stack vertically for screens smaller than tablet */
-    .left-content, .right-content { 
+    .left-content {
         width: 100%;
         float: left;
         position: relative;
         padding: 1.25rem;
         box-sizing: border-box;
+    }
+    
+    .right-content {
+        width: 100%;
+        float: left;
+        position: relative;
+        padding: 1.25rem;
+        box-sizing: border-box;
+    
     }
 
 }
@@ -515,10 +414,6 @@
 @media screen and (max-width: 600px) {
     html {
         font-size: 10px;
-    }
-
-    .dice {
-        background-image: URL('img/dice-1.png');
     }
 
     .dice-buttons img { 
@@ -533,7 +428,6 @@
     .dice-buttons button span {
         text-align: center;
         padding: 1.563rem 1.875rem;
-        width: 100%;
     }
 
 
@@ -556,9 +450,5 @@
         width: 150px;
     }
 
-    .board-contents h2 {
-        font-size: 1.5rem;
-    }
 
-
-}
+}}
