@@ -22,7 +22,55 @@
     box-sizing: border-box!important;
     height: 100%;
 }
+/**
+ *------
+ * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
+ * DuckSoupTheRestaurantGame implementation : @ RJ Hidson <rhidson1@nait.ca>, @ Ashton Williams <ashtonw@nait.ca>, @ Rubelyn Ragasa <rragasa1@nait.ca>
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * ducksouptherestaurantgame.css
+ *
+ * DuckSoupTheRestaurantGame stylesheet
+ *
+ */
 
+/*
+    This is the CSS stylesheet of your game User Interface.
+    
+    Styles defined on this file will be applied to the HTML elements you define in your
+    HTML template (ducksouptherestaurantgame_ducksouptherestaurantgame.tpl), and to HTML elements you create dynamically
+    (in ducksouptherestaurantgame.js).
+    
+    Usually, you are using CSS to:
+    
+    1°) define the overall layout of your game
+        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
+
+    2°) create your CSS-sprites:
+        All images of your games should be gathered into a small number of image files. Then, using
+        background-image and background-position CSS properties, you create HTML blocks that can 
+        display these images correctly (see example below).
+    
+    3°) ... anything else:
+        It is really easy to add and remove CSS classes dynamically from your Javascript with
+        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
+        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
+        very often, using CSS classes for the logic of your user interface allow you to do complex
+        thing easily.
+        
+        
+     Note: on the production platform, this file will be compressed and comments will be removed.
+           Consequently, don't hesitate to put as many comments as necessary.
+*/
+
+
+/* Note: you must not use any @import directive */
+
+
+/********* You can start writing your CSS below this line: **********/
 .* {
     margin:0;
     padding:0;
@@ -41,10 +89,13 @@ body {
 }
 
 .container {
-    display: flex;
-    width: 100%;
+    background: linear-gradient(#5c629b, #35346d);
+    background-attachment: fixed;
+    font-size: 16px; 
+    margin:0;
+    padding:0;
+    box-sizing: border-box!important;
     height: 100%;
-    clear: both;
 }
 
 .clearfix::after { 
@@ -85,30 +136,25 @@ body {
 
 #board {
     display: flex;
-    width: 53.125rem;
-    height: 53.125rem;
+    background-size: 60rem 60rem;
+    width: 60rem;
+    height: 60rem;
     background-image: url('img/board.jpg');
     position: relative;
  }
 
  #inner-board {
-    display: flex;
     position: absolute;
     background-size: 28.125rem 28.125rem;
-    height: 28.125rem;
     width: 28.125rem;
+    height: 28.125rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-image: url('img/inner-board.png');
  }
 
-.board-contents.inactive, .inner-board.inactive { 
-    display: none; 
-}
-
-.board-contents {
-    display: flex;
+ .board-contents {
     width: 50%;
     height: auto;
     max-height: 45%;
@@ -120,6 +166,12 @@ body {
     z-index: 1;
     color: #fff;
 }
+
+.board-contents.inactive, .inner-board.inactive { 
+    display: none; 
+}
+
+
 
 .board-contents h2{
     font-family: 'Limelight', sans-serif;
@@ -258,7 +310,7 @@ body {
     top: -0.5rem;
     padding-right: 1.875rem;
     right: 1.875rem;
-    z-index: 2;
+    z-index: 0;
     overflow: hidden;
 }
 
@@ -270,6 +322,7 @@ body {
     width: 90%; 
     margin: 0 auto;
     color: #fff;
+    position: relative;
 }
 
 .name-plate {
@@ -289,6 +342,7 @@ body {
     border-radius: 10px 10px 0px 0px;
     font-size: 1.25rem;
     position: relative;
+    margin: -1rem 0rem 0rem 1rem;
 }
 
 .super-duckat {
@@ -326,21 +380,23 @@ body {
     height: 2.188rem;
     border-radius: 0px 10px 0px 0px;
     margin-top: -2.188rem;
+    margin: -1rem -1rem 0rem 1rem;
 }
 
 .arrow {
     background: #3e3f83;
+    width: 4rem;
     border-radius: 50%;
-    padding: 1.875rem;
-    border: 0px;
+    margin: 3rem 2rem 3rem 3rem;
+    border: 0rem;
     display: inline-block;
     text-transform: uppercase;
     box-shadow: 0 8px 0 #2a2661;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: calc(50% - 1.875px);
+    top: calc(50% - -7.125rem);
     cursor: pointer;
-    z-index: 1;
+    z-index: -1;
 }
 
 #left-arrow { 
@@ -348,7 +404,7 @@ body {
 }
 
 #right-arrow {
-    right: 0;
+    right: -1rem;
 }
 
 .arrow span {
@@ -451,4 +507,4 @@ body {
     }
 
 
-}}
+}

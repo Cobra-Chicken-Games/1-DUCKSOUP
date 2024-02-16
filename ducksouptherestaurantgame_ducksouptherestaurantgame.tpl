@@ -1,10 +1,8 @@
 {OVERALL_GAME_HEADER}
 
-{OVERALL_GAME_HEADER}
-
 <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
+<div class="">
     <div class="clearfix">  
         <!-- RIGHT CONTENT -->
         <div class="right-content">
@@ -79,8 +77,6 @@
 
                     <!-- STAFF BOARD -->
                     <div id="staff-board"></div>
-                    <button id="left-arrow" class="arrow"><span></span></button>
-                    <button id="right-arrow" class="arrow"><span></span></button>
                 </div>
         </div>
 
@@ -104,7 +100,7 @@
             </div>    
         </div> 
     </div>
-
+</div>
 
 
 <script type="text/javascript">
@@ -118,8 +114,5 @@ var jstpl_some_game_item='<div class="my_game_item" id="my_game_item_${MY_ITEM_I
 */
 
 </script>  
-
-{OVERALL_GAME_FOOTER}
-
 
 {OVERALL_GAME_FOOTER}
