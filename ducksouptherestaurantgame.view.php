@@ -54,26 +54,9 @@
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block"); //not showing up
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "left_content"); //nothing in here
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); */
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); 
-        
-
-        $this->page->begin_block( "ducksouptherestaurantgame_ducksouptherestaurantgame", "square" );
-        
-        $hor_scale = 64.8;
-        $ver_scale = 64.4;
-        for( $x=1; $x<=8; $x++ )
-        {
-            for( $y=1; $y<=8; $y++ )
-            {
-                $this->page->insert_block( "square", array(
-                    'X' => $x,
-                    'Y' => $y,
-                    'LEFT' => round( ($x-1)*$hor_scale+10 ),
-                    'TOP' => round( ($y-1)*$ver_scale+7 )
-                ) );
-            }        
-        }
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); */
+    
 
 
 
@@ -147,7 +130,7 @@
     }
 
         public function cssClass() {
-            return "gameboard-spaces gameboard";
+            return "";
         }
         
         public function boardText() {
