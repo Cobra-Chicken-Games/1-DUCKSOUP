@@ -38,45 +38,58 @@
          global $g_user;
          $players = $this->game->loadPlayersBasicInfos(); //loadPlayersBasicInfos() is part of BGA's base code.
          $players_nbr = count($players);
- 
-         /*********** Place your code below:  ************/
-         $this->tpl['MY_HAND'] = self::_("Your staff:");
-         $this->tpl['QUESTIONS'] = self::_("Trivia Questions:");
-         $this->tpl['DUCKATS'] = self::_("Duckats:");
-         $this->tpl['SOUPERDUCKATS'] = self::_("Souper Duckats:");
 
+
+         /*********** Place your code below:  ************/
 
          //Assign the blocks to the tpl
-         /*
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "duckats_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "souperduckats_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block"); //not showing up
+
+         
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block");
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "boardcontent"); 
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staffboard");
+         
+         
+         
+         /* $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block"); //not showing up
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block"); //not showing up
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "left_content"); //nothing in here
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); 
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard"); */
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block"); */
+         
     
 
 
 
-     /*   // Example: setting up the staff area for each player
+         /* Sets up the playstats_block with player information from the global variable g_user */
         foreach ($players as $player_id => $player) {
-            $this->page->insert_block("staff_block", array(
+            $this->page->insert_block("playerstats_block", array(
                 "PLAYER_ID" => $player_id,
                 "PLAYER_COLOR" => $player['player_color'],
                 "PLAYER_NAME"  => $player['player_name']
             ));
         }
-        */
-        //Insert gameboard arry
-        $this->page->insert_block("gameboard", array(
-                'CSS_CLASSES' => $this->cssClass(),
-                'TEXT' => $this->boardText()
+
+        /* Begin the boardcontent block array, fetch command to toggle messages after triva */
+        $this->page->insert_block("boardcontent", array(
+            "HIDDEN-CONTENT-1" => "hidden-content",
+            "HIDDEN-CONTENT-2" => "hidden-content",
+            "HIDDEN-CONTEN-3" => "hidden-content",
+            "HIDDEN-CONTENT-4" => "hidden-content",
+            "HIDDEN-CONTENT-5" => "hidden-content",
+            "HIDDEN-CONTENT-6" => "hidden-content",
+            "HIDDEN-CONTENT-7" => "hidden-content",
+            "HIDDEN-CONTENT-8" => "hidden-content",
+            "HIDDEN-CONTENT-9" => "hidden-content",
+            "HIDDEN-CONTENT-10" => "hidden-content",
+            "HIDDEN-CONTENT-11" => "hidden-content",
+            "HIDDEN-CONTENT-12" => "hidden-content",
         ));
         
+        $this->page->insert_block("staffboard", array(
+            "BOARD-CONTENT-STATE" => "inactive"
+        ));
         /*
-           // Example: setting up the duckats and souper duckats display
+        /* setting up the duckats and souper duckats display 
         foreach ($players as $player_id => $player) {
             $duckatsCount = $this->game->getStat('duckats', $player_id);
             $souperDuckatsCount = $this->game->getStat('souperDuckats', $player_id);
@@ -95,8 +108,7 @@
                 "PLAYER_ID" => $player['player_name']
                 // ... other player-specific variables for souper duckats
             ));
-            $this->page->reset_subblocks( 'duckats_block' );
-            $this->page->reset_subblocks( 'souperduckats_block' );
+            $this->page->reset_subblocks( 'playerstats_block' );
         }
         
          // Example: setting up the trivia questions block
@@ -119,16 +131,11 @@
         $this->page->insert_block("left_content", array(
                 //TODO: Insert left content for player board here.
         ));
-        
+    
          // Dice roll button visibility will be controlled by the game logic
          // Add buttons for rolling dice but these will be shown/hidden via JavaScript based on game state
         $this->tpl['ROLL_DICE_HTML'] = self::raw($this->game->getRollDiceButtonHtml());
-        */
-
-
-         /*********** Do not change anything below this line  ************/
-    }
-
+    
         public function cssClass() {
             return "";
         }
@@ -137,6 +144,8 @@
             return "TESTING THE SPRITES FROM CSS AND VIEW";
         }
 
+         /*********** Do not change anything below this line  ************/
+    }  
 }
 
 
