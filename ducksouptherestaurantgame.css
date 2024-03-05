@@ -103,7 +103,6 @@ body {
     width: 50%;
     float: right;
     position: relative;
-    padding: 2rem;
     box-sizing: border-box;
 }
 
@@ -195,12 +194,14 @@ body {
 }
 
 .dice-buttons {
-    margin-bottom: 2.5rem;
-    display: flex; 
-    margin: 1.625rem 3.625rem 2.625rem 4.625rem;
-    justify-content: center; 
+    display: flex;
+    margin: 1vw 1vw 1vw -9.5vw;
+    justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative;
+    height: 8vw;
+    width: 63vw;
 }
 
 .dice-buttons button {
@@ -278,22 +279,22 @@ body {
 }
 
 #staff-board {
-    height: 27.2vw;
+    height: 21.5vw;
     background-image: URL('img/staff-board.jpg');
     position: relative;
     overflow: hidden;
     background-repeat: no-repeat;
-    background-size: 40vw 25vw;
-    margin: 0rem 1rem 0rem -9rem;
+    background-size: 40vw 21.5vw;
+    margin: 0vw 0vw 0vw -8vw;
+    width: 40vw;
 }
 
 
 .player-stats {
     position: absolute;
-    top: 1vw;
     z-index: 2;
     overflow: hidden;
-    padding-left: 14vw;
+    padding-left: 25vw;
 }
 
 .player-stats img {
@@ -331,13 +332,13 @@ body {
 .player-name {
     font-family: 'Arial Black', 'Arial Bold', 'Helvetica', sans-serif;
     text-transform: uppercase;
-    padding: 2rem 1.25rem 2rem 3rem;
+    padding: 0vw 0vw 1.5vw 1vw;
     border-radius: 10px 10px 0px 0px;
     font-size: 1.25rem;
     position: relative;
-    margin: 0rem 0rem 1rem 0rem;
-    width: 17%;
-    height: 100%;
+    margin: 0vw 0vw 1vw -0.2vw;
+    width: 11.5vw;
+    height: 1vw;
 }
 
 .super-duckat {
@@ -362,8 +363,8 @@ body {
 }
 
 .staff-board-container {
-    position: relative;
-    margin: 1rem -6rem 1rem 12.5rem;
+    position: absolute;
+    margin: 1vw -1vw 0vw 10vw;
 }
 
 
@@ -379,14 +380,13 @@ body {
 
 .player-background {
     height: 3.188rem;
-    width: 91%;
+    width: 39.9vw;
     max-width: 100%;
     box-sizing: border-box;
     border-radius: 0px 10px 0px 0px;
     margin-top: -2.188rem;
-    margin: -3.2rem 0rem 0rem 0rem;
-    position: absolute;
-}
+    margin: -2.1vw 0vw 0vw -0.2vw;
+    position: relative;
 
 #left-arrow { 
     left: 0;
@@ -399,7 +399,7 @@ body {
 .arrow {
     background: #3e3f83;
     border-radius: 50%;
-    padding: 1.875rem;
+    padding: 1vw;
     border: 0px;
     display: inline-block;
     text-transform: uppercase;
@@ -407,8 +407,8 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     position: absolute;
     transform: translate(-50%, -50%);
-    top: calc(50% - 1.5vw);
-    margin: 0vw 1vw 0vw -5vw;
+    top: calc(50% - -9.5vw);
+    margin: 2vw -4vw 2vw -9vw;
     width: 3vw;
     cursor: pointer;
     z-index: 1;
@@ -451,7 +451,7 @@ body {
     gap: 15px;
     width: 36.6vw;
     height: 18.7vw;
-    padding: 1.39vw 0vw 0vw 1.78vw;
+    padding: 1.1vw 0vw 0vw 1.78vw;
   }
   
   .grid-item {
@@ -622,6 +622,39 @@ body {
     grid-column: 5;
     grid-row: 2;
   }
+
+  .custom-prompt-modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Dim the background */
+}
+
+.custom-prompt-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.custom-prompt-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.custom-prompt-close:hover,
+.custom-prompt-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1500px) {
     html {

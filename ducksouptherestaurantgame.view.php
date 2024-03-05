@@ -43,12 +43,9 @@
          /*********** Place your code below:  ************/
 
          //Assign the blocks to the tpl
-
-         
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "boardcontent"); 
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staffboard");
-         
          
          
          /* $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block"); //not showing up
@@ -57,20 +54,34 @@
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block"); */
          
     
-
-
-
          /* Sets up the playstats_block with player information from the global variable g_user */
-        foreach ($players as $player_id => $player) {
-            $this->page->insert_block("playerstats_block", array(
-                "PLAYER_ID" => $player_id,
-                "PLAYER_COLOR" => $player['player_color'],
-                "PLAYER_NAME"  => $player['player_name']
-            ));
-        }
+         $active_player_id = $this->game->getActivePlayerId(); // Method to get the active player's ID
 
-        /* Begin the boardcontent block array, fetch command to toggle messages after triva */
-        $this->page->insert_block("boardcontent", array(
+         $this->page->insert_block("gameboard", array(
+            "BOARD-CONTENT-STATE" => "hidden",
+        ));
+
+         foreach ($players as $player_id => $player) {
+             if ($player_id == $active_player_id) {
+                //get the stats for duckats and souperduckats for each player
+                $duckatsCount = $this->game->getStat('duckats', $player_id);
+                $souperDuckatsCount = $this->game->getStat('souperDuckats', $player_id);
+                 // Insert the playerstats_block only for the active player
+                 $this->page->insert_block("playerstats_block", array(
+                     "PLAYER_ID" => $player_id,
+                     "PLAYER_COLOR" => $player['player_color'],
+                     "PLAYER_NAME" => $player['player_name'],
+                     "PLAYER-SDUCKATS" =>$souperDuckatsCount,
+                     "PLAYER-DUCKATS" =>$duckatsCount
+                 ));
+                 break; // Since we only need to insert the block for the active player, we can break the loop after insertion
+             }
+         }
+
+  
+
+        /* Begin the staffboard block array, fetch command to toggle messages after triva */
+        $this->page->insert_block("staffboard", array(
             "HIDDEN-CONTENT-1" => "hidden-content",
             "HIDDEN-CONTENT-2" => "hidden-content",
             "HIDDEN-CONTEN-3" => "hidden-content",
@@ -85,9 +96,9 @@
             "HIDDEN-CONTENT-12" => "hidden-content",
         ));
         
-        $this->page->insert_block("staffboard", array(
-            "BOARD-CONTENT-STATE" => "inactive"
-        ));
+
+     
+
         /*
         /* setting up the duckats and souper duckats display 
         foreach ($players as $player_id => $player) {

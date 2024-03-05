@@ -4,10 +4,7 @@
 <link rel="stylesheet" href="style.css">
 
 
-<div class="container">
-
-</div>
-
+<div class="container"></div>
 
     <div class="clearfix">  
         <!-- RIGHT CONTENT -->
@@ -19,6 +16,7 @@
                 <button id="letter-c">C</button>
                 <button id="letter-d">D</button>
             </div>
+
             <!-- DICE BUTTONS-->
             <div class="dice-buttons">
                 <!-- STAFF DIE-->
@@ -41,7 +39,7 @@
                         <div class="clearfix">
                             
                             <!-- PLAYER NAME -->
-                            <div class="player-name left {PLAYER_ID}">
+                            <div class="player-name left {PLAYER_ID}" style="background-color: #{PLAYER_COLOR};">
                                 {PLAYER_NAME}
                             </div>
 
@@ -104,10 +102,11 @@
 
          
         <!-- LEFT CONTENT -->
+        
         <div class="left-content">
             <div id="board-container">
-                <!-- BOARD -->
-                <!--BEGIN boardcontent-->
+                <!-- GAME BOARD -->
+                <!-- BEGIN gameboard -->
                 <div id="board">
                     <!-- DUCK IMAGE TO DISPLAY BY DEFAULT, HIDDEN WHEN CONTENT SHOWN -->
                     <div id="inner-board" class="{INBOARD-CONTENT-STATE}"></div>
@@ -118,21 +117,61 @@
                         </div>
                     </div>
                 </div>
-                <!-- END boardcontent -->
+                <!-- END gameboard -->
             </div>    
         </div> 
     </div>
 
+<div id="customPrompt" class="custom-prompt-modal">
+    <div class="custom-prompt-content">
+        <span class="custom-prompt-close">&times;</span>
+        <p id="customPromptQuestion">Question will go here...</p>
+        <div id="customPromptChoices"></div>
+    </div>
+</div>
 
 <script type="text/javascript">
+// Example question and choices
+var question = "What is the capital of France?";
+var choices = ["Paris", "London", "Berlin", "Madrid"];
 
-// Javascript HTML templates
+function showCustomPrompt(question, choices) {
+    var modal = document.getElementById("customPrompt");
+    var closeBtn = document.querySelector(".custom-prompt-close");
+    var questionElement = document.getElementById("customPromptQuestion");
+    var choicesElement = document.getElementById("customPromptChoices");
 
-/*
-// Example:
-var jstpl_some_game_item='<div class="my_game_item" id="my_game_item_${MY_ITEM_ID}"></div>';
+    questionElement.textContent = question;
+    choicesElement.innerHTML = ""; // Clear previous choices
 
-*/
+    choices.forEach(function(choice) {
+        var button = document.createElement("button");
+        button.textContent = choice;
+        button.onclick = function() {
+            console.log("User selected: " + choice);
+            modal.style.display = "none"; // Hide modal after selection
+        };
+        choicesElement.appendChild(button);
+    });
+
+    // Show the modal
+    modal.style.display = "block";
+
+    // When the user clicks on (x), close the modal
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+// Trigger the modal (for demonstration, you might want to call this from an event listener)
+showCustomPrompt(question, choices);
 
 </script>  
 
