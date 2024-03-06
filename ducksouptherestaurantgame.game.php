@@ -129,37 +129,34 @@ class DuckSoupTheRestaurantGame extends Table {
         return array_keys($players)[0];
     }
 
-    function getTriviaQuestions() {
-             // Initialize an array to hold the questions
-             $questions = array();
-        
-             // SQL to get the trivia questions
-             $sql = "SELECT question_id, question_text FROM questions";
-             
-             // Fetch the questions from the database
-             $result = self::DbQuery($sql);
-             
-             // Loop over the result and add each question to the $questions array
-             while ($row = mysql_fetch_assoc($result)) {
-                 $questions[] = array(
-                     'id' => $row['question_id'],
-                     'text' => $row['question_text']
-                 );
-             }
-             
-             // Now you have an array of questions. You can return this array,
-             // or if your front-end expects HTML, you could construct an HTML string.
-             //Here's how you could construct a simple HTML representation:
-             $html = '<ul id="trivia-questions-list" >';
-             foreach ($questions as $question) {
-                 $html .= '<li id="question-' . $question['id'] . '">';
-                 $html .= htmlspecialchars($question['text']);
-                 $html .= '</li>';
-             }
-             $html .= '</ul>';
+    function getTriviaQuestions($questionId) {
+        // Fetch the question and all related details from the database
+        $sql = "SELECT question_id, duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text FROM questions WHERE question_id = ";
+        $result = self::getObjectFromDb($sql, [$questionId]); // Using a prepared statement is recommended for security
 
-             // Return the HTML string
-             return $html;
+            // Check if the result was found
+            if($result) {
+                $response = [
+                    'questionId' => $result['question_id'],
+                    'duckatsValue' => $result['duckats_value'],
+                    'category' => $result['category'],
+                    'questionText' => $result['question_text'],
+                    'answers' => [
+                        'A' => $result['answer_a'],
+                        'B' => $result['answer_b'],
+                        'C' => $result['answer_c'],
+                        'D' => $result['answer_d']
+                    ],
+                    'correctAnswer' => $result['correct_answer'],
+                    'answerText' => $result['answer_text'] // Explanation or detailed answer
+                ];
+
+                // Return the response in JSON format
+                echo json_encode($response);
+            } else {
+                // Handle the case where no question was found
+                echo json_encode(['error' => 'Question not found.']);
+            }
     }
 
     function activeNextPlayer() {

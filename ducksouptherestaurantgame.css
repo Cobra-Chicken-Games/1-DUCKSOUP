@@ -104,6 +104,7 @@ body {
     float: right;
     position: relative;
     box-sizing: border-box;
+    margin: 0vw 0vw 29vw 0vw;
 }
 
 #board-container {
@@ -387,6 +388,7 @@ body {
     margin-top: -2.188rem;
     margin: -2.1vw 0vw 0vw -0.2vw;
     position: relative;
+}
 
 #left-arrow { 
     left: 0;
@@ -407,7 +409,7 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     position: absolute;
     transform: translate(-50%, -50%);
-    top: calc(50% - -9.5vw);
+    top: calc(50% - -1.5vw);
     margin: 2vw -4vw 2vw -9vw;
     width: 3vw;
     cursor: pointer;
@@ -450,8 +452,8 @@ body {
     grid-template-rows: repeat(2, 1fr);
     gap: 15px;
     width: 36.6vw;
-    height: 18.7vw;
-    padding: 1.1vw 0vw 0vw 1.78vw;
+    height: 17.0vw;
+    padding: 0.5vw 0vw 0vw 1.66vw;
   }
   
   .grid-item {
@@ -561,8 +563,8 @@ body {
     background-image: URL('img/ex-maitre-d.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 9.5vw;
-    width: 5.15vw;
+    height: 7.3vw;
+    width: 5vw;
     padding: 0.1vw 0.1vw 0.1vw 0.1vw;
     grid-column: 1;
     grid-row: 2;
@@ -572,8 +574,8 @@ body {
     background-image: URL('img/ex-sommelier.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 9.5vw;
-    width: 5.15vw;
+    height: 7.3vw;
+    width: 5vw;
     padding: 0.1vw 0.1vw 0.1vw 0.1vw;
     grid-column: 2;
     grid-row: 2;
@@ -583,8 +585,8 @@ body {
     background-image: URL('img/ex-captain.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 9.5vw;
-    width: 5.15vw;
+    height: 7.3vw;
+    width: 5vw;
     padding: 0.1vw 0.1vw 0.1vw 0.1vw;
     grid-column: 3;
     grid-row: 2;
@@ -594,8 +596,8 @@ body {
     background-image: URL('img/ex-server.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 9.5vw;
-    width: 5.15vw;
+    height: 7.3vw;
+    width: 5vw;
     padding: 0.1vw 0.1vw 0.1vw 0.1vw;
     grid-column: 4;
     grid-row: 2;
@@ -605,8 +607,8 @@ body {
     background-image: URL('img/ex-server.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 9.5vw;
-    width: 5.15vw;
+    height: 7.3vw;
+    width: 5vw;
     padding: 0.1vw 0.1vw 0.1vw 0.1vw;
     grid-column: 5;
     grid-row: 2;
@@ -616,8 +618,8 @@ body {
     background-image: URL('img/ex-server.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 9.5vw;
-    width: 5.15vw;
+    height: 7.3vw;
+    width: 5vw;
     padding: 0.1vw 0.1vw 0.1vw 0.1vw;
     grid-column: 5;
     grid-row: 2;

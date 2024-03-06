@@ -131,7 +131,28 @@
 </div>
 
 <script type="text/javascript">
-// Example question and choices
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Function to fetch question and display the modal
+    function fetchAndShowModal(questionId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'fetchQuestion.php?questionId=' + questionId, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.error) {
+                    console.error(response.error);
+                } else {
+                    showCustomPrompt(response.questionText, Object.values(response.answers));
+                }
+            } else {
+                console.error('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+        xhr.send();
+    }
+
+function showModal(question) {
 var question = "What is the capital of France?";
 var choices = ["Paris", "London", "Berlin", "Madrid"];
 
@@ -172,6 +193,78 @@ function showCustomPrompt(question, choices) {
 
 // Trigger the modal (for demonstration, you might want to call this from an event listener)
 showCustomPrompt(question, choices);
+
+    document.getElementById('questionText').textContent = question;
+    
+    // Show the modal
+    document.getElementById('customPrompt').style.display = 'block';
+}
+
+    // Attach event listeners to buttons
+    document.getElementById('letter-a').addEventListener('click', function() {
+        showModal('Question for A'); // Pass the specific question for A
+    });
+    document.getElementById('letter-b').addEventListener('click', function() {
+        showModal('Question for B'); // Pass the specific question for B
+    });
+    document.getElementById('letter-c').addEventListener('click', function() {
+        showModal('Question for C'); // Pass the specific question for C
+    });
+    document.getElementById('letter-d').addEventListener('click', function() {
+        showModal('Question for D'); // Pass the specific question for D
+    });
+
+ function showCustomPrompt(question, choices) {
+        var modal = document.getElementById("customPrompt");
+        var closeBtn = document.querySelector(".custom-prompt-close");
+        var questionElement = document.getElementById("customPromptQuestion");
+        var choicesElement = document.getElementById("customPromptChoices");
+
+        questionElement.textContent = question;
+        choicesElement.innerHTML = ""; // Clear previous choices
+
+        choices.forEach(function(choice) {
+            var button = document.createElement("button");
+            button.textContent = choice;
+            button.onclick = function() {
+                console.log("User selected: " + choice);
+                modal.style.display = "none"; // Hide modal after selection
+            };
+            choicesElement.appendChild(button);
+        });
+
+        // Show the modal
+        modal.style.display = "block";
+
+        // When the user clicks on (x), close the modal
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    }
+     // Close modal logic (if not already implemented)
+    var closeBtn = document.querySelector(".custom-prompt-close");
+    closeBtn.onclick = function() {
+        document.getElementById('customPrompt').style.display = 'none';
+    };
+
+    // Close modal if user clicks outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('customPrompt');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+});
+
+
+// Example question and choices
 
 </script>  
 
