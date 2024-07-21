@@ -62,7 +62,38 @@ function (dojo, declare) {
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
+             // Add event listeners for the letter buttons
+             dojo.query('.letter-button').forEach(dojo.hitch(this, function (button) {
+                this.connect(button, 'onclick', 'onLetterClick');
+            }));
+
+            // Add event listener for the close button in the modal
+            this.connect($('question-modal').querySelector('.close-button'), 'onclick', 'closeModal');
+
             console.log( "Ending game setup" );
+        },
+
+        onLetterClick: function (event) {
+            var letter = event.target.id.split('-')[1].toUpperCase();
+
+            // Fetch a random question from the server
+            this.ajaxcall('/ducksoup/ducksoup/fetchQuestion.html', {
+                letter: letter
+            }, this, function (result) {
+                this.showQuestionModal(result.question);
+            });
+        },
+
+        showQuestionModal: function (question) {
+            var modal = $('question-modal');
+            var questionText = modal.querySelector('#question-text');
+            questionText.innerHTML = question;
+            modal.style.display = "block";
+        },
+
+        closeModal: function () {
+            var modal = $('question-modal');
+            modal.style.display = "none";
         },
        
 
