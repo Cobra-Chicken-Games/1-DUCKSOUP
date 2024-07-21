@@ -15,7 +15,7 @@
  *
  */
 
-define([
+ define([
     "dojo","dojo/_base/declare",
     "ebg/core/gamegui",
     "ebg/counter"

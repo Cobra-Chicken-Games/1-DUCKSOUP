@@ -129,34 +129,17 @@ class DuckSoupTheRestaurantGame extends Table {
         return array_keys($players)[0];
     }
 
-    function getTriviaQuestions($questionId) {
-        // Fetch the question and all related details from the database
-        $sql = "SELECT question_id, duckats_value, category, question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, answer_text FROM questions WHERE question_id = ";
-        $result = self::getObjectFromDb($sql, [$questionId]); // Using a prepared statement is recommended for security
+    public function fetchQuestion($args)
+    {
+        $letter = $args['letter'];
 
-            // Check if the result was found
-            if($result) {
-                $response = [
-                    'questionId' => $result['question_id'],
-                    'duckatsValue' => $result['duckats_value'],
-                    'category' => $result['category'],
-                    'questionText' => $result['question_text'],
-                    'answers' => [
-                        'A' => $result['answer_a'],
-                        'B' => $result['answer_b'],
-                        'C' => $result['answer_c'],
-                        'D' => $result['answer_d']
-                    ],
-                    'correctAnswer' => $result['correct_answer'],
-                    'answerText' => $result['answer_text'] // Explanation or detailed answer
-                ];
+        // Fetch a random question from the database based on the letter
+        $sql = "SELECT question FROM questions_table WHERE letter = '$letter' ORDER BY RAND() LIMIT 1";
+        $question = self::getObjectFromDB($sql);
 
-                // Return the response in JSON format
-                echo json_encode($response);
-            } else {
-                // Handle the case where no question was found
-                echo json_encode(['error' => 'Question not found.']);
-            }
+        self::ajaxResponse([
+            'question' => $question['question']
+        ]);
     }
 
     function activeNextPlayer() {
