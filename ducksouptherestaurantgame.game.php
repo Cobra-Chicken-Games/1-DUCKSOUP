@@ -134,13 +134,21 @@ class DuckSoupTheRestaurantGame extends Table {
         $letter = $args['letter'];
 
         // Fetch a random question from the database based on the letter
-        $sql = "SELECT question FROM questions_table WHERE letter = '$letter' ORDER BY RAND() LIMIT 1";
+        $sql = "SELECT question FROM questions WHERE letter = '$letter' ORDER BY RAND() LIMIT 1";
         $question = self::getObjectFromDB($sql);
 
         self::ajaxResponse([
             'question' => $question['question']
         ]);
     }
+
+     // Ensure to include the new JS file in the template
+     protected function getGameJSFiles()
+     {
+         return [
+             'ducksouptherestaurantgame.js'
+         ];
+     }
 
     function activeNextPlayer() {
     

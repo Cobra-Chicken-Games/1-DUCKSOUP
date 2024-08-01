@@ -44,23 +44,12 @@
 
          //Assign the blocks to the tpl
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "gameboard");
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block");
          $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staffboard");
-         
-         
-         /* $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block"); //not showing up
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "trivia_block"); //not showing up
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "left_content"); //nothing in here
-         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "staff_block"); */
-         
-    
-         /* Sets up the playstats_block with player information from the global variable g_user */
-         $active_player_id = $this->game->getActivePlayerId(); // Method to get the active player's ID
+         $this->page->begin_block("ducksouptherestaurantgame_ducksouptherestaurantgame", "playerstats_block");
+         $this->page->insert_block("gameboard", array( "BOARD-CONTENT-STATE" => "hidden",));
 
-         $this->page->insert_block("gameboard", array(
-            "BOARD-CONTENT-STATE" => "hidden",
-        ));
-
+        // Method to get the active player's ID
+        $active_player_id = $this->game->getActivePlayerId(); 
          foreach ($players as $player_id => $player) {
              if ($player_id == $active_player_id) {
                 //get the stats for duckats and souperduckats for each player

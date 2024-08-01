@@ -43,57 +43,58 @@ function (dojo, declare) {
             
             "gamedatas" argument contains all datas retrieved by your "getAllDatas" PHP method.
         */
-        
-        setup: function( gamedatas )
-        {
-            console.log( "Starting game setup" );
-            
-            // Setting up player boards
-            for( var player_id in gamedatas.players )
-            {
-                var player = gamedatas.players[player_id];
-                         
-                // TODO: Setting up players boards if needed
-            }
-            
-            // TODO: Set up your game interface here, according to "gamedatas"
-            
- 
-            // Setup game notifications to handle (see "setupNotifications" method below)
-            this.setupNotifications();
+    
+            setup: function( gamedatas ) {
+                console.log( "Starting game setup" );
+    
+                // Setting up player boards
+                for( var player_id in gamedatas.players ) {
+                    var player = gamedatas.players[player_id];
+                }
+    
+                // Setup game notifications to handle
+                this.setupNotifications();
+    
+                // Add event listeners for the letter buttons
+                dojo.query('.letter-button').forEach(dojo.hitch(this, function (button) {
+                    this.connect(button, 'onclick', 'onLetterClick');
+                }));
+    
+                // Add event listener for the close button in the modal
+                this.connect($('question-modal').querySelector('.close-button'), 'onclick', 'closeModal');
+    
+                console.log( "Ending game setup" );
+            },
+    
+            onLetterClick: function (event) {
+                // Fetch a random question from the server
+                var letter = event.target.id.split('-')[1].toUpperCase();
+    
+                this.ajaxcall('/ducksoup/ducksoup/fetchQuestion.html', {
+                    letter: letter
+                }, this, function (result) {
+                    this.showQuestionModal(result.question);
+                });
+            },
+    
+            showQuestionModal: function (question) {
+                var modal = $('question-modal');
+                var questionText = modal.querySelector('#question-text');
+                questionText.innerHTML = question;
+                modal.style.display = "block";
+            },
+    
+            closeModal: function () {
+                var modal = $('question-modal');
+                modal.style.display = "none";
+            },
+    
+            setupNotifications: function() {
+                console.log( 'notifications subscriptions setup' );
+            },
 
-             // Add event listeners for the letter buttons
-             dojo.query('.letter-button').forEach(dojo.hitch(this, function (button) {
-                this.connect(button, 'onclick', 'onLetterClick');
-            }));
-
-            // Add event listener for the close button in the modal
-            this.connect($('question-modal').querySelector('.close-button'), 'onclick', 'closeModal');
-
-            console.log( "Ending game setup" );
-        },
-
-        onLetterClick: function (event) {
-            var letter = event.target.id.split('-')[1].toUpperCase();
-
-            // Fetch a random question from the server
-            this.ajaxcall('/ducksoup/ducksoup/fetchQuestion.html', {
-                letter: letter
-            }, this, function (result) {
-                this.showQuestionModal(result.question);
-            });
-        },
-
-        showQuestionModal: function (question) {
-            var modal = $('question-modal');
-            var questionText = modal.querySelector('#question-text');
-            questionText.innerHTML = question;
-            modal.style.display = "block";
-        },
-
-        closeModal: function () {
-            var modal = $('question-modal');
-            modal.style.display = "none";
+        setupNotifications: function() {
+            console.log( 'notifications subscriptions setup' );
         },
        
 

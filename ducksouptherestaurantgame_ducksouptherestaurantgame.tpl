@@ -16,14 +16,14 @@
                     <button id="letter-c">C</button>
                     <button id="letter-d">D</button>
             </div>
-
-            <!-- Modal structure -->
-            <div id="question-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close-button">&times;</span>
-                    <p id="question-text">Question will appear here</p>
-                </div>
+            
+        <!-- Modal -->
+        <div id="question-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <p id="question-text">Question will appear here</p>
             </div>
+        </div>
 
             <!-- DICE BUTTONS-->
             <div class="dice-buttons">
